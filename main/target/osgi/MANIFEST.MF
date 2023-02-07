@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 19
+Bundle-Description: The MyBatis parent POM.
+Bundle-DocURL: http://www.mybatis.org
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: JPetStore Demo 6
+Bundle-SymbolicName: org.mybatis.jpetstore
+Bundle-Vendor: MyBatis.org
+Bundle-Version: 6.1.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin 5.1.8
+Export-Package: org.mybatis.jpetstore.domain;version="6.1.1.SNAPSHOT",or
+ g.mybatis.jpetstore.mapper;version="6.1.1.SNAPSHOT",org.mybatis.jpetsto
+ re.service;version="6.1.1.SNAPSHOT",org.mybatis.jpetstore.web.actions;v
+ ersion="6.1.1.SNAPSHOT"
+Git-Revision: 452f433c8a0831db274c62d06776ebb730c7f45d
+Import-Package: javax.servlet.http,net.sourceforge.stripes.action,net.so
+ urceforge.stripes.integration.spring,net.sourceforge.stripes.validation
+ ,org.springframework.stereotype,org.springframework.transaction.annotat
+ ion
+Include-Resource: {org/mybatis/jpetstore/mapper/LineItemMapper.xml=src/m
+ ain/resources/org/mybatis/jpetstore/mapper/LineItemMapper.xml},{org/myb
+ atis/jpetstore/mapper/SequenceMapper.xml=src/main/resources/org/mybatis
+ /jpetstore/mapper/SequenceMapper.xml},{org/mybatis/jpetstore/mapper/Cat
+ egoryMapper.xml=src/main/resources/org/mybatis/jpetstore/mapper/Categor
+ yMapper.xml},{org/mybatis/jpetstore/mapper/ProductMapper.xml=src/main/r
+ esources/org/mybatis/jpetstore/mapper/ProductMapper.xml},{org/mybatis/j
+ petstore/mapper/ItemMapper.xml=src/main/resources/org/mybatis/jpetstore
+ /mapper/ItemMapper.xml},{org/mybatis/jpetstore/mapper/AccountMapper.xml
+ =src/main/resources/org/mybatis/jpetstore/mapper/AccountMapper.xml},{or
+ g/mybatis/jpetstore/mapper/OrderMapper.xml=src/main/resources/org/mybat
+ is/jpetstore/mapper/OrderMapper.xml},{StripesResources.properties=src/m
+ ain/resources/StripesResources.properties},{db.properties=src/main/reso
+ urces/db.properties},{database/jpetstore-hsqldb-schema.sql=src/main/res
+ ources/database/jpetstore-hsqldb-schema.sql},{database/jpetstore-hsqldb
+ -dataload.sql=src/main/resources/database/jpetstore-hsqldb-dataload.sql
+ },META-INF/NOTICE=NOTICE,META-INF/LICENSE=LICENSE
+Private-Package: database
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-6.4.0.202211291949

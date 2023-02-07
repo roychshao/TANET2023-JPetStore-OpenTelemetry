@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  
+  database: 
+    container_name: database
+    restart: unless-stopped
+    build: database
+    volumes:
+      - jpetstore-data:/var/lib/mysql
+    command: [
+      '--wait_timeout=28800',
+    ]
+    ports:
+      - "3306:3306"
+    networks:
+      - myNetwork
+
+  main:
+    container_name: main
+    restart: unless-stopped
+    build: main
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    networks:
+      - myNetwork
+
+volumes:
+  jpetstore-data:
+
+networks:
+  myNetwork:
+    driver: bridge
+    external: true
