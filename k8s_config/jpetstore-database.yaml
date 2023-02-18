@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jpetstore-database
+  labels:
+    app: jpetstore-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jpetstore-database
+  template:
+    metadata:
+      labels:
+        app: jpetstore-database
+    spec:
+      containers:
+      - name: jpetstore-database
+        image: roychshao/jpetstore-database
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: jpetstore-secret
+              key: database_username
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jpetstore-secret
+              key: database_password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: jpetstore-configmap
+              key: database_database
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: jpetstore-configmap
+              key: timezone
+        volumeMounts:
+        - name: jpetstore-mysql-pv
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: jpetstore-mysql-pv
+        hostPath:
+          path: /mnt/data
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-service
+spec:
+  selector:
+    app: jpetstore-database
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

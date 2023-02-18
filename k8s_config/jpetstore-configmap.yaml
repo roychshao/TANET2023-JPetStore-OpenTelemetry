@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jpetstore-configmap
+data:
+  database_url: jdbc:mysql://database-service.default.svc.cluster.local:3306/jpetstore?serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+  timezone: "Asia/Taipei"
+  database_database: jpetstore

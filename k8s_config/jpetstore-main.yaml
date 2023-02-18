@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jpetstore-main
+  labels:
+    app: jpetstore-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jpetstore-main
+  template:
+    metadata:
+      labels:
+        app: jpetstore-main
+    spec:
+      containers:
+      - name: jpetstore-main
+        image: roychshao/jpetstore-main
+        ports:
+        - containerPort: 8080
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: jpetstore-configmap
+              key: timezone
+        - name: DB_URL 
+          valueFrom:
+            configMapKeyRef:
+              name: jpetstore-configmap
+              key: database_url
+        - name: DB_USN
+          valueFrom:
+            secretKeyRef:
+              name: jpetstore-secret
+              key: database_username
+        - name: DB_PSW
+          valueFrom:
+            secretKeyRef:
+              name: jpetstore-secret
+              key: database_password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-service
+spec:
+  selector:
+    app: jpetstore-main
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
+
