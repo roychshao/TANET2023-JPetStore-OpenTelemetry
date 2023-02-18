@@ -14,6 +14,27 @@ spec:
       labels:
         app: jpetstore-database
     spec:
+      initContainers:
+      - name: init-script
+        image: mysql
+        command: ["/bin/bash", "-c", "until nc -z database-service 3306; do sleep 1; done;"]
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jpetstore-secret
+              key: database_password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: jpetstore-configmap
+              key: database_database
+        volumeMounts:
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+        - name: jpetstore-mysql-pv
+          mountPath: /var/lib/mysql
       containers:
       - name: jpetstore-database
         image: roychshao/jpetstore-database
