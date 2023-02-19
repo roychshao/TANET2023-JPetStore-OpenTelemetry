@@ -17,7 +17,13 @@ spec:
       initContainers:
       - name: init-script
         image: mysql
-        command: ["/bin/bash", "-c", "until nc -z database-service 3306; do sleep 1; done;"]
+        command:
+        - "/bin/bash"
+        - "-c"
+        - |
+          /usr/sbin/mysqld --user=root --skip-networking &
+          mysql -h database-service -u root -proot -e "use jpetstore; source /docker-enrtypoint-initdb.d/01-schema.sql; source /docker-entrypoint-initdb.d/02-dataload.sql"
+          sleep 10
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -68,7 +74,10 @@ spec:
       - name: jpetstore-mysql-pv
         hostPath:
           path: /mnt/data
-          type: DirectoryOrCreate
+          type: Directory
+      - name: init-script
+        configMap:
+          name: init-script
 ---
 apiVersion: v1
 kind: Service

@@ -3,4 +3,5 @@ kubectl delete statefulset jpetstore-database
 kubectl delete service database-service
 kubectl delete service main-service
 kubectl delete configmap jpetstore-configmap
+kubectl delete configmap init-script
 kubectl delete secret jpetstore-secret
