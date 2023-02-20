@@ -3,9 +3,23 @@ kind: PersistentVolume
 metadata:
   name: jpetstore-mysql-pv
 spec:
+  storageClassName: manual
   capacity:
-    storage: 10Gi
+    storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: /mnt/data
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jpetstore-mysql-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

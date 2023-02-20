@@ -72,9 +72,8 @@ spec:
           mountPath: /var/lib/mysql
       volumes:
       - name: jpetstore-mysql-pv
-        hostPath:
-          path: /mnt/data
-          type: Directory
+        persistentVolumeClaim:
+          claimName: jpetstore-mysql-pvc
       - name: init-script
         configMap:
           name: init-script
