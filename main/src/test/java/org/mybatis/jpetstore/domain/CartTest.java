@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 
-class CartTest {
+class CartTest extends TracingTest {
 
   @Test
   void addItemWhenIsInStockIsTrue() {

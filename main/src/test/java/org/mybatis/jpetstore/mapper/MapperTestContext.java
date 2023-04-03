@@ -17,6 +17,7 @@ package org.mybatis.jpetstore.mapper;
 
 import javax.sql.DataSource;
 
+import org.mybatis.jpetstore.domain.TracingTest;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @MapperScan("org.mybatis.jpetstore.mapper")
-public class MapperTestContext {
+public class MapperTestContext extends TracingTest {
 
   @Bean
   DataSource dataSource() {

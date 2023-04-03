@@ -15,14 +15,17 @@
  */
 package org.mybatis.jpetstore.service;
 
-// import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
-// import org.mybatis.jpetstore.domain.Tracing;
+import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
@@ -39,7 +42,8 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
-  // private final Tracing tracing = new Tracing();
+  private final Tracing tracing = new Tracing();
+  private final Tracer tracer = Tracing.getTracer();
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;
@@ -48,21 +52,28 @@ public class CatalogService {
   }
 
   public List<Category> getCategoryList() {
-    // Tracer tracer = tracing.getTracer();
-    // System.out.println(tracer);
     return categoryMapper.getCategoryList();
   }
 
-  public Category getCategory(String categoryId) {
-    return categoryMapper.getCategory(categoryId);
+  public Category getCategory(String categoryId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getCategory").setParent(Context.current().with(parentSpan)).startSpan();
+
+    Category result = categoryMapper.getCategory(categoryId);
+    span.end();
+    return result;
   }
 
   public Product getProduct(String productId) {
     return productMapper.getProduct(productId);
   }
 
-  public List<Product> getProductListByCategory(String categoryId) {
-    return productMapper.getProductListByCategory(categoryId);
+  public List<Product> getProductListByCategory(String categoryId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getProductListByCategory").setParent(Context.current().with(parentSpan))
+        .startSpan();
+
+    List<Product> result = productMapper.getProductListByCategory(categoryId);
+    span.end();
+    return result;
   }
 
   /**

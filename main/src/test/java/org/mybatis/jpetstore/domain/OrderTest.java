@@ -22,7 +22,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-class OrderTest {
+class OrderTest extends TracingTest {
 
   @Test
   void initOrder() {

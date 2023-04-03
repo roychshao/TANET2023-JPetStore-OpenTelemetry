@@ -18,8 +18,9 @@ package org.mybatis.jpetstore.web.actions;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.jpetstore.domain.TracingTest;
 
-class CatalogActionBeanTest {
+class CatalogActionBeanTest extends TracingTest {
 
   @Test
   void getItemListOutputNull() {

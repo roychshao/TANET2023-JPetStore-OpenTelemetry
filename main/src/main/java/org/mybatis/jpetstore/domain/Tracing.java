@@ -15,65 +15,60 @@
  */
 package org.mybatis.jpetstore.domain;
 
-import java.util.concurrent.TimeUnit;
-
+// Jaeger
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.propagation.ContextPropagators;
-// Jaeger
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
-
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
 import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
 
+import java.util.concurrent.TimeUnit;
+
 public class Tracing {
-  public Resource resource;
-  public SdkTracerProvider sdkTracerProvider;
-  public OpenTelemetry openTelemetry;
-  private Tracer tracer;
-  private JaegerGrpcSpanExporter jaegerExporter;
+  public static Resource resource;
+  public static SdkTracerProvider sdkTracerProvider;
+  public static OpenTelemetry openTelemetry;
+  public static Tracer tracer;
+  private static JaegerGrpcSpanExporter jaegerExporter;
 
-  public Tracing() {
-
+  static {
     // Jaeger
-    ManagedChannel jaegerChannel = ManagedChannelBuilder.forAddress("localhost", 3336)
-        .usePlaintext()
-        .build();
-    
-    jaegerExporter = JaegerGrpcSpanExporter.builder()
-        .setEndpoint("localhost:3336")
-        .setTimeout(30, TimeUnit.SECONDS)
-        .build();
+    ManagedChannel jaegerChannel = ManagedChannelBuilder.forAddress("localhost", 14250).usePlaintext().build();
+
+    jaegerExporter = JaegerGrpcSpanExporter.builder().setEndpoint("http://localhost:14250")
+        .setTimeout(30, TimeUnit.SECONDS).build();
 
     // Create a default resource with a service name attribute
     Resource defaultResource = Resource.getDefault();
     Resource serviceNameResource = Resource.create(Attributes.of(ResourceAttributes.SERVICE_NAME, "jpetstore-main"));
-    this.resource = defaultResource.merge(serviceNameResource);
+    resource = defaultResource.merge(serviceNameResource);
 
     // Create a tracer provider with a batch span processor and the given resource
     // BatchSpanProcessor spanProcessor = BatchSpanProcessor.builder(OtlpGrpcSpanExporter.builder().build()).build();
     BatchSpanProcessor spanProcessor = BatchSpanProcessor.builder(jaegerExporter).build();
-    this.sdkTracerProvider = SdkTracerProvider.builder().addSpanProcessor(spanProcessor).setResource(resource).build();
+    sdkTracerProvider = SdkTracerProvider.builder().addSpanProcessor(spanProcessor).setResource(resource).build();
 
     // Create an OpenTelemetry instance with the given tracer provider and propagator
     W3CTraceContextPropagator propagator = W3CTraceContextPropagator.getInstance();
     ContextPropagators propagators = ContextPropagators.create(propagator);
 
-    this.openTelemetry = OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).setPropagators(propagators)
+    openTelemetry = OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).setPropagators(propagators)
         .buildAndRegisterGlobal();
 
-    this.tracer = this.openTelemetry.getTracer("jpetstore-main", "1.0.0");
+    tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
     System.out.println(tracer);
   }
 
-  public Tracer getTracer() {
-    return this.tracer;
+  public static Tracer getTracer() {
+    return tracer;
   }
+
 }

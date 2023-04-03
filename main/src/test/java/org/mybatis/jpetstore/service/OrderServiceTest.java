@@ -35,6 +35,7 @@ import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.LineItem;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.Sequence;
+import org.mybatis.jpetstore.domain.TracingTest;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.LineItemMapper;
 import org.mybatis.jpetstore.mapper.OrderMapper;
@@ -44,7 +45,7 @@ import org.mybatis.jpetstore.mapper.SequenceMapper;
  * @author coderliux
  */
 @ExtendWith(MockitoExtension.class)
-class OrderServiceTest {
+class OrderServiceTest extends TracingTest {
 
   @Mock
   private ItemMapper itemMapper;

@@ -15,6 +15,10 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
+
 import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -25,6 +29,8 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
+// opentelemetry
+import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.service.CatalogService;
 
 /**
@@ -42,6 +48,8 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
+  private final Tracing tracing = new Tracing();
+  private final Tracer tracer = Tracing.getTracer();
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -151,11 +159,16 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewCategory() {
-    if (categoryId != null) {
-      productList = catalogService.getProductListByCategory(categoryId);
-      category = catalogService.getCategory(categoryId);
+    Span span = tracer.spanBuilder("ActionBean: viewCategory").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (categoryId != null) {
+        productList = catalogService.getProductListByCategory(categoryId, span);
+        category = catalogService.getCategory(categoryId, span);
+      }
+    } finally {
+      span.end();
+      return new ForwardResolution(VIEW_CATEGORY);
     }
-    return new ForwardResolution(VIEW_CATEGORY);
   }
 
   /**
@@ -164,11 +177,16 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewProduct() {
-    if (productId != null) {
-      itemList = catalogService.getItemListByProduct(productId);
-      product = catalogService.getProduct(productId);
+    Span span = tracer.spanBuilder("ActionBean: viewProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (productId != null) {
+        itemList = catalogService.getItemListByProduct(productId);
+        product = catalogService.getProduct(productId);
+      }
+    } finally {
+      span.end();
+      return new ForwardResolution(VIEW_PRODUCT);
     }
-    return new ForwardResolution(VIEW_PRODUCT);
   }
 
   /**
@@ -177,9 +195,14 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewItem() {
-    item = catalogService.getItem(itemId);
-    product = item.getProduct();
-    return new ForwardResolution(VIEW_ITEM);
+    Span span = tracer.spanBuilder("ActionBean: viewItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      item = catalogService.getItem(itemId);
+      product = item.getProduct();
+    } finally {
+      span.end();
+      return new ForwardResolution(VIEW_ITEM);
+    }
   }
 
   /**
@@ -188,12 +211,17 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution searchProducts() {
-    if (keyword == null || keyword.length() < 1) {
-      setMessage("Please enter a keyword to search for, then press the search button.");
-      return new ForwardResolution(ERROR);
-    } else {
-      productList = catalogService.searchProductList(keyword.toLowerCase());
-      return new ForwardResolution(SEARCH_PRODUCTS);
+    Span span = tracer.spanBuilder("ActionBean: searchProducts").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (keyword == null || keyword.length() < 1) {
+        setMessage("Please enter a keyword to search for, then press the search button.");
+        span.end();
+        return new ForwardResolution(ERROR);
+      } else {
+        productList = catalogService.searchProductList(keyword.toLowerCase());
+        span.end();
+        return new ForwardResolution(SEARCH_PRODUCTS);
+      }
     }
   }
 
@@ -201,19 +229,24 @@ public class CatalogActionBean extends AbstractActionBean {
    * Clear.
    */
   public void clear() {
-    keyword = null;
+    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      keyword = null;
 
-    categoryId = null;
-    category = null;
-    categoryList = null;
+      categoryId = null;
+      category = null;
+      categoryList = null;
 
-    productId = null;
-    product = null;
-    productList = null;
+      productId = null;
+      product = null;
+      productList = null;
 
-    itemId = null;
-    item = null;
-    itemList = null;
+      itemId = null;
+      item = null;
+      itemList = null;
+    } finally {
+      span.end();
+    }
   }
 
 }

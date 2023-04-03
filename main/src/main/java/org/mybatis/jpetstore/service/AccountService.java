@@ -59,7 +59,7 @@ public class AccountService {
   @Transactional
   public void insertAccount(Account account) {
     Tracer tracer = tracing.getTracer();
-    Span span = tracer.spanBuilder("insertAccount").startSpan();
+    Span span = tracer.spanBuilder("service: insertAccount").startSpan();
     try (Scope ss = span.makeCurrent()) {
       accountMapper.insertAccount(account);
       accountMapper.insertProfile(account);
@@ -77,11 +77,17 @@ public class AccountService {
    */
   @Transactional
   public void updateAccount(Account account) {
-    accountMapper.updateAccount(account);
-    accountMapper.updateProfile(account);
+    Tracer tracer = tracing.getTracer();
+    Span span = tracer.spanBuilder("service: updateAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      accountMapper.updateAccount(account);
+      accountMapper.updateProfile(account);
 
-    Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
-        .ifPresent(password -> accountMapper.updateSignon(account));
+      Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
+          .ifPresent(password -> accountMapper.updateSignon(account));
+    } finally {
+      span.end();
+    }
   }
 
 }
