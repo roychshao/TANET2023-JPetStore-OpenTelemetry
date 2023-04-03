@@ -14,10 +14,6 @@
 --    limitations under the License.
 --
 
-create database if not exist jpetstore;
-
-use jpetstore;
-
 create table SUPPLIER (
     suppid int not null,
     name varchar(80) null,

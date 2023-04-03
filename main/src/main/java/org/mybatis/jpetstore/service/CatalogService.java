@@ -15,12 +15,14 @@
  */
 package org.mybatis.jpetstore.service;
 
+// import io.opentelemetry.api.trace.Tracer;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
+// import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
@@ -37,6 +39,7 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
+  // private final Tracing tracing = new Tracing();
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;
@@ -45,6 +48,8 @@ public class CatalogService {
   }
 
   public List<Category> getCategoryList() {
+    // Tracer tracer = tracing.getTracer();
+    // System.out.println(tracer);
     return categoryMapper.getCategoryList();
   }
 

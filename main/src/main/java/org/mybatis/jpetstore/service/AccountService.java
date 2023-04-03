@@ -15,9 +15,14 @@
  */
 package org.mybatis.jpetstore.service;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
+
 import java.util.Optional;
 
 import org.mybatis.jpetstore.domain.Account;
+import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.mapper.AccountMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
   private final AccountMapper accountMapper;
+  private final Tracing tracing = new Tracing();
 
   public AccountService(AccountMapper accountMapper) {
     this.accountMapper = accountMapper;
@@ -52,9 +58,15 @@ public class AccountService {
    */
   @Transactional
   public void insertAccount(Account account) {
-    accountMapper.insertAccount(account);
-    accountMapper.insertProfile(account);
-    accountMapper.insertSignon(account);
+    Tracer tracer = tracing.getTracer();
+    Span span = tracer.spanBuilder("insertAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      accountMapper.insertAccount(account);
+      accountMapper.insertProfile(account);
+      accountMapper.insertSignon(account);
+    } finally {
+      span.end();
+    }
   }
 
   /**
