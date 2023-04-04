@@ -96,11 +96,15 @@ public class CatalogService {
     return itemMapper.getItemListByProduct(productId);
   }
 
-  public Item getItem(String itemId) {
+  public Item getItem(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getItem").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemMapper.getItem(itemId);
   }
 
-  public boolean isItemInStock(String itemId) {
+  public boolean isItemInStock(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: isItemInStock").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemMapper.getInventoryQuantity(itemId) > 0;
   }
 }

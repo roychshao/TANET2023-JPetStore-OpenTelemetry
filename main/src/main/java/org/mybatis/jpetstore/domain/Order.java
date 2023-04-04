@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class Order.
@@ -58,13 +63,18 @@ public class Order implements Serializable {
   private String locale;
   private String status;
   private List<LineItem> lineItems = new ArrayList<>();
+  private transient final Tracer tracer = Tracing.getTracer();
 
-  public int getOrderId() {
+  public int getOrderId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getOrderId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return orderId;
   }
 
-  public void setOrderId(int orderId) {
+  public void setOrderId(int orderId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setOrderId").setParent(Context.current().with(parentSpan)).startSpan();
     this.orderId = orderId;
+    span.end();
   }
 
   public String getUsername() {
@@ -283,30 +293,31 @@ public class Order implements Serializable {
    * @param cart
    *          the cart
    */
-  public void initOrder(Account account, Cart cart) {
+  public void initOrder(Account account, Cart cart, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: initOrder").setParent(Context.current().with(parentSpan)).startSpan();
 
-    username = account.getUsername();
+    username = account.getUsername(span);
     orderDate = new Date();
 
-    shipToFirstName = account.getFirstName();
-    shipToLastName = account.getLastName();
-    shipAddress1 = account.getAddress1();
-    shipAddress2 = account.getAddress2();
-    shipCity = account.getCity();
-    shipState = account.getState();
-    shipZip = account.getZip();
-    shipCountry = account.getCountry();
+    shipToFirstName = account.getFirstName(span);
+    shipToLastName = account.getLastName(span);
+    shipAddress1 = account.getAddress1(span);
+    shipAddress2 = account.getAddress2(span);
+    shipCity = account.getCity(span);
+    shipState = account.getState(span);
+    shipZip = account.getZip(span);
+    shipCountry = account.getCountry(span);
 
-    billToFirstName = account.getFirstName();
-    billToLastName = account.getLastName();
-    billAddress1 = account.getAddress1();
-    billAddress2 = account.getAddress2();
-    billCity = account.getCity();
-    billState = account.getState();
-    billZip = account.getZip();
-    billCountry = account.getCountry();
+    billToFirstName = account.getFirstName(span);
+    billToLastName = account.getLastName(span);
+    billAddress1 = account.getAddress1(span);
+    billAddress2 = account.getAddress2(span);
+    billCity = account.getCity(span);
+    billState = account.getState(span);
+    billZip = account.getZip(span);
+    billCountry = account.getCountry(span);
 
-    totalPrice = cart.getSubTotal();
+    totalPrice = cart.getSubTotal(span);
 
     creditCard = "999 9999 9999 9999";
     expiryDate = "12/03";
@@ -315,21 +326,25 @@ public class Order implements Serializable {
     locale = "CA";
     status = "P";
 
-    Iterator<CartItem> i = cart.getAllCartItems();
+    Iterator<CartItem> i = cart.getAllCartItems(span);
     while (i.hasNext()) {
       CartItem cartItem = i.next();
-      addLineItem(cartItem);
+      addLineItem(cartItem, span);
     }
 
   }
 
-  public void addLineItem(CartItem cartItem) {
+  public void addLineItem(CartItem cartItem, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: addLineItem (CartItem)").setParent(Context.current().with(parentSpan)).startSpan();
     LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
-    addLineItem(lineItem);
+    addLineItem(lineItem, span);
+    span.end();
   }
 
-  public void addLineItem(LineItem lineItem) {
+  public void addLineItem(LineItem lineItem, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: addLineItem (LineItem)").setParent(Context.current().with(parentSpan)).startSpan();
     lineItems.add(lineItem);
+    span.end();
   }
 
 }

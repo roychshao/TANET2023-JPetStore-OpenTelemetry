@@ -29,7 +29,6 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
-// opentelemetry
 import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.service.CatalogService;
 
@@ -48,8 +47,7 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
-  private final Tracing tracing = new Tracing();
-  private final Tracer tracer = Tracing.getTracer();
+  private transient final Tracer tracer = Tracing.getTracer();
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -197,7 +195,7 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution viewItem() {
     Span span = tracer.spanBuilder("ActionBean: viewItem").startSpan();
     try (Scope ss = span.makeCurrent()) {
-      item = catalogService.getItem(itemId);
+      item = catalogService.getItem(itemId, span);
       product = item.getProduct();
     } finally {
       span.end();

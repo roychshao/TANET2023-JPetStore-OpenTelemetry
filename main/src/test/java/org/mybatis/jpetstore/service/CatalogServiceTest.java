@@ -18,6 +18,8 @@ package org.mybatis.jpetstore.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import io.opentelemetry.api.trace.Tracer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
+import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.domain.TracingTest;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
@@ -47,14 +50,11 @@ class CatalogServiceTest extends TracingTest {
   private CategoryMapper categoryMapper;
   @Mock
   private ItemMapper itemMapper;
+  @Mock
+  private Tracer tracer = Tracing.getTracer();
 
   @InjectMocks
   private CatalogService catalogService;
-
-  // @BeforeEach
-  // void setUp() {
-  // GlobalOpenTelemetry.resetForTest();
-  // }
 
   @Test
   void shouldCallTheSearchMapperTwice() {
@@ -91,7 +91,6 @@ class CatalogServiceTest extends TracingTest {
 
   @Test
   void shouldReturnCategory() {
-
     // given
     String categoryId = "C01";
     Category expectedCategory = new Category();
@@ -102,7 +101,6 @@ class CatalogServiceTest extends TracingTest {
 
     // then
     assertThat(category).isSameAs(expectedCategory);
-
   }
 
   @Test
@@ -133,7 +131,6 @@ class CatalogServiceTest extends TracingTest {
 
     // then
     assertThat(products).isSameAs(expectedProducts);
-
   }
 
   @Test

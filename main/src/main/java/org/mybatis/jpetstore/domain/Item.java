@@ -15,6 +15,11 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -40,8 +45,11 @@ public class Item implements Serializable {
   private String attribute5;
   private Product product;
   private int quantity;
+  private transient final Tracer tracer = Tracing.getTracer();
 
-  public String getItemId() {
+  public String getItemId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemId;
   }
 
@@ -73,7 +81,9 @@ public class Item implements Serializable {
     this.supplierId = supplierId;
   }
 
-  public BigDecimal getListPrice() {
+  public BigDecimal getListPrice(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getListPrice").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return listPrice;
   }
 
@@ -139,7 +149,14 @@ public class Item implements Serializable {
 
   @Override
   public String toString() {
-    return "(" + getItemId() + "-" + getProduct().getProductId() + ")";
+    Span span = tracer.spanBuilder("Domain: toString").startSpan();
+    String result = "";
+    try (Scope ss = span.makeCurrent()) {
+      result = "(" + getItemId(span) + "-" + getProduct().getProductId() + ")";
+    } finally {
+      span.end();
+      return result;
+    }
   }
 
 }

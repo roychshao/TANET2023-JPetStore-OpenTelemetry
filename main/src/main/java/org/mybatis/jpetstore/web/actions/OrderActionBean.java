@@ -28,6 +28,11 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.service.OrderService;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class OrderActionBean.
@@ -54,48 +59,76 @@ public class OrderActionBean extends AbstractActionBean {
   private boolean shippingAddressRequired;
   private boolean confirmed;
   private List<Order> orderList;
+  private transient final Tracer tracer = Tracing.getTracer();
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));
   }
 
   public int getOrderId() {
-    return order.getOrderId();
+    Span span = tracr.spanBuilder("ActionBean: getOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        int result = order.getOrderId(span);
+    } finally {
+        span.end();
+        return result;
+    }
   }
 
   public void setOrderId(int orderId) {
-    order.setOrderId(orderId);
+    Span span = tracr.spanBuilder("ActionBean: setOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        order.setOrderId(orderId, span);
+    } finally {
+        span.end();
+    }
   }
 
   public Order getOrder() {
+    Span span = tracer.spanBuilder("ActionBean: getOrder").startSpan();
+    span.end();
     return order;
   }
 
   public void setOrder(Order order) {
+    Span span = tracer.spanBuilder("ActionBean: setOrder").startSpan();
     this.order = order;
+    span.end();
   }
 
   public boolean isShippingAddressRequired() {
+    Span span = tracer.spanBuilder("ActionBean: isShippingAddressRequired").startSpan();
+    span.end();
     return shippingAddressRequired;
   }
 
   public void setShippingAddressRequired(boolean shippingAddressRequired) {
+    Span span = tracer.spanBuilder("ActionBean: setShippingAddressRequired").startSpan();
     this.shippingAddressRequired = shippingAddressRequired;
+    span.end();
   }
 
   public boolean isConfirmed() {
+    Span span = tracer.spanBuilder("ActionBean: isConfirmed").startSpan();
+    span.end();
     return confirmed;
   }
 
   public void setConfirmed(boolean confirmed) {
+    Span span = tracer.spanBuilder("ActionBean: setConfirmed").startSpan();
     this.confirmed = confirmed;
+    span.end();
   }
 
   public List<String> getCreditCardTypes() {
+    Span span = tracer.spanBuilder("ActionBean: getCreditCardTypes").startSpan();
+    span.end();
     return CARD_TYPE_LIST;
   }
 
   public List<Order> getOrderList() {
+    Span span = tracer.spanBuilder("ActionBean: getOrderList").startSpan();
+    span.end();
     return orderList;
   }
 
@@ -105,10 +138,15 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution listOrders() {
-    HttpSession session = context.getRequest().getSession();
-    AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-    orderList = orderService.getOrdersByUsername(accountBean.getAccount().getUsername());
-    return new ForwardResolution(LIST_ORDERS);
+    Span span = tracer.spanBuilder("ActionBean: listOrders").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        HttpSession session = context.getRequest().getSession();
+        AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+        orderList = orderService.getOrdersByUsername(accountBean.getAccount().getUsername(span), span);
+    } finally {
+        span.end();
+        return new ForwardResolution(LIST_ORDERS);
+    }
   }
 
   /**
@@ -117,20 +155,26 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newOrderForm() {
-    HttpSession session = context.getRequest().getSession();
-    AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-    CartActionBean cartBean = (CartActionBean) session.getAttribute("/actions/Cart.action");
+    Span span = tracer.spanBuilder("ActionBean: newOrderForm").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        HttpSession session = context.getRequest().getSession();
+        AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+        CartActionBean cartBean = (CartActionBean) session.getAttribute("/actions/Cart.action");
 
-    clear();
-    if (accountBean == null || !accountBean.isAuthenticated()) {
-      setMessage("You must sign on before attempting to check out.  Please sign on and try checking out again.");
-      return new ForwardResolution(AccountActionBean.class);
-    } else if (cartBean != null) {
-      order.initOrder(accountBean.getAccount(), cartBean.getCart());
-      return new ForwardResolution(NEW_ORDER);
-    } else {
-      setMessage("An order could not be created because a cart could not be found.");
-      return new ForwardResolution(ERROR);
+        clear();
+        if (accountBean == null || !accountBean.isAuthenticated()) {
+          setMessage("You must sign on before attempting to check out.  Please sign on and try checking out again.");
+          span.end();
+          return new ForwardResolution(AccountActionBean.class);
+        } else if (cartBean != null) {
+          order.initOrder(accountBean.getAccount(), cartBean.getCart(), span);
+          span.end();
+          return new ForwardResolution(NEW_ORDER);
+        } else {
+          setMessage("An order could not be created because a cart could not be found.");
+          span.end();
+          return new ForwardResolution(ERROR);
+        }
     }
   }
 
@@ -140,26 +184,27 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newOrder() {
-    HttpSession session = context.getRequest().getSession();
+        HttpSession session = context.getRequest().getSession();
 
-    if (shippingAddressRequired) {
-      shippingAddressRequired = false;
-      return new ForwardResolution(SHIPPING);
-    } else if (!isConfirmed()) {
-      return new ForwardResolution(CONFIRM_ORDER);
-    } else if (getOrder() != null) {
+        if (shippingAddressRequired) {
+            shippingAddressRequired = false;
+          return new ForwardResolution(SHIPPING);
+        } else if (!isConfirmed()) {
+          return new ForwardResolution(CONFIRM_ORDER);
+        } else if (getOrder() != null) {
 
-      orderService.insertOrder(order);
+          orderService.insertOrder(order);
 
-      CartActionBean cartBean = (CartActionBean) session.getAttribute("/actions/Cart.action");
-      cartBean.clear();
+          CartActionBean cartBean = (CartActionBean) session.getAttribute("/actions/Cart.action");
+          cartBean.clear();
 
-      setMessage("Thank you, your order has been submitted.");
+          setMessage("Thank you, your order has been submitted.");
 
-      return new ForwardResolution(VIEW_ORDER);
-    } else {
-      setMessage("An error occurred processing your order (order was null).");
-      return new ForwardResolution(ERROR);
+          return new ForwardResolution(VIEW_ORDER);
+        } else {
+          setMessage("An error occurred processing your order (order was null).");
+          return new ForwardResolution(ERROR);
+        }
     }
   }
 

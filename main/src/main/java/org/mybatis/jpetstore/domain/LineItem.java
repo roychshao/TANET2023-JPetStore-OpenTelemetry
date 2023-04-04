@@ -18,6 +18,11 @@ package org.mybatis.jpetstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class LineItem.
@@ -35,6 +40,7 @@ public class LineItem implements Serializable {
   private BigDecimal unitPrice;
   private Item item;
   private BigDecimal total;
+  private transient final Tracer tracer = Tracing.getTracer();
 
   public LineItem() {
   }
@@ -48,12 +54,17 @@ public class LineItem implements Serializable {
    *          the cart item
    */
   public LineItem(int lineNumber, CartItem cartItem) {
-    this.lineNumber = lineNumber;
-    this.quantity = cartItem.getQuantity();
-    this.itemId = cartItem.getItem().getItemId();
-    this.unitPrice = cartItem.getItem().getListPrice();
-    this.item = cartItem.getItem();
-    calculateTotal();
+    Span span = tracer.spanBuilder("Domain: LineItem Contructor").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        this.lineNumber = lineNumber;
+        this.quantity = cartItem.getQuantity(span);
+        this.itemId = cartItem.getItem(span).getItemId(span);
+        this.unitPrice = cartItem.getItem(span).getListPrice(span);
+        this.item = cartItem.getItem(span);
+        calculateTotal(span);
+    } finally {
+        span.end();
+    }
   }
 
   public int getOrderId() {
@@ -110,9 +121,11 @@ public class LineItem implements Serializable {
     calculateTotal();
   }
 
-  private void calculateTotal() {
-    total = Optional.ofNullable(item).map(Item::getListPrice).map(v -> v.multiply(new BigDecimal(quantity)))
+  private void calculateTotal(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: calculateTotal").setParent(Context.current().with(parentSpan)).startSpan();
+    total = Optional.ofNullable(item).map(i -> i.getListPrice(span)).map(v -> v.multiply(new BigDecimal(quantity)))
         .orElse(null);
+    span.end();
   }
 
 }

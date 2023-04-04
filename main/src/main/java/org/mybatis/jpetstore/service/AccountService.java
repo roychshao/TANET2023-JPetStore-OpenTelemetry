@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
   private final AccountMapper accountMapper;
-  private final Tracing tracing = new Tracing();
+  private transient final Tracer tracer = Tracing.getTracer();
 
   public AccountService(AccountMapper accountMapper) {
     this.accountMapper = accountMapper;
@@ -58,7 +58,6 @@ public class AccountService {
    */
   @Transactional
   public void insertAccount(Account account) {
-    Tracer tracer = tracing.getTracer();
     Span span = tracer.spanBuilder("service: insertAccount").startSpan();
     try (Scope ss = span.makeCurrent()) {
       accountMapper.insertAccount(account);
@@ -77,7 +76,6 @@ public class AccountService {
    */
   @Transactional
   public void updateAccount(Account account) {
-    Tracer tracer = tracing.getTracer();
     Span span = tracer.spanBuilder("service: updateAccount").startSpan();
     try (Scope ss = span.makeCurrent()) {
       accountMapper.updateAccount(account);

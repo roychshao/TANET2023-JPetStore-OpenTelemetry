@@ -15,6 +15,10 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ public class Cart implements Serializable {
 
   private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<>());
   private final List<CartItem> itemList = new ArrayList<>();
+  private transient final Tracer tracer = Tracing.getTracer();
 
   public Iterator<CartItem> getCartItems() {
     return itemList.iterator();
@@ -48,11 +53,15 @@ public class Cart implements Serializable {
     return itemList.size();
   }
 
-  public Iterator<CartItem> getAllCartItems() {
+  public Iterator<CartItem> getAllCartItems(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAllCartItems").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemList.iterator();
   }
 
-  public boolean containsItemId(String itemId) {
+  public boolean containsItemId(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: containsItemId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemMap.containsKey(itemId);
   }
 
@@ -64,17 +73,19 @@ public class Cart implements Serializable {
    * @param isInStock
    *          the is in stock
    */
-  public void addItem(Item item, boolean isInStock) {
-    CartItem cartItem = itemMap.get(item.getItemId());
+  public void addItem(Item item, boolean isInStock, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: addItem").setParent(Context.current().with(parentSpan)).startSpan();
+    CartItem cartItem = itemMap.get(item.getItemId(span));
     if (cartItem == null) {
       cartItem = new CartItem();
-      cartItem.setItem(item);
-      cartItem.setQuantity(0);
-      cartItem.setInStock(isInStock);
-      itemMap.put(item.getItemId(), cartItem);
+      cartItem.setItem(item, span);
+      cartItem.setQuantity(0, span);
+      cartItem.setInStock(isInStock, span);
+      itemMap.put(item.getItemId(span), cartItem);
       itemList.add(cartItem);
     }
-    cartItem.incrementQuantity();
+    cartItem.incrementQuantity(span);
+    span.end();
   }
 
   /**
@@ -85,13 +96,17 @@ public class Cart implements Serializable {
    *
    * @return the item
    */
-  public Item removeItemById(String itemId) {
+  public Item removeItemById(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: removeItemById").setParent(Context.current().with(parentSpan)).startSpan();
     CartItem cartItem = itemMap.remove(itemId);
     if (cartItem == null) {
+      span.end();
       return null;
     } else {
       itemList.remove(cartItem);
-      return cartItem.getItem();
+      Item result = cartItem.getItem(span);
+      span.end();
+      return result;
     }
   }
 
@@ -101,14 +116,20 @@ public class Cart implements Serializable {
    * @param itemId
    *          the item id
    */
-  public void incrementQuantityByItemId(String itemId) {
+  public void incrementQuantityByItemId(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: incrementQuantityByItemId").setParent(Context.current().with(parentSpan))
+        .startSpan();
     CartItem cartItem = itemMap.get(itemId);
-    cartItem.incrementQuantity();
+    cartItem.incrementQuantity(span);
+    span.end();
   }
 
-  public void setQuantityByItemId(String itemId, int quantity) {
+  public void setQuantityByItemId(String itemId, int quantity, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setQuantityByItemId").setParent(Context.current().with(parentSpan))
+        .startSpan();
     CartItem cartItem = itemMap.get(itemId);
-    cartItem.setQuantity(quantity);
+    cartItem.setQuantity(quantity, span);
+    span.end();
   }
 
   /**
@@ -116,10 +137,13 @@ public class Cart implements Serializable {
    *
    * @return the sub total
    */
-  public BigDecimal getSubTotal() {
-    return itemList.stream()
-        .map(cartItem -> cartItem.getItem().getListPrice().multiply(new BigDecimal(cartItem.getQuantity())))
+  public BigDecimal getSubTotal(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getSubTotal").setParent(Context.current().with(parentSpan)).startSpan();
+    BigDecimal result = itemList.stream()
+        .map(cartItem -> cartItem.getItem(span).getListPrice(span).multiply(new BigDecimal(cartItem.getQuantity(span))))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
+    span.end();
+    return result;
   }
 
 }

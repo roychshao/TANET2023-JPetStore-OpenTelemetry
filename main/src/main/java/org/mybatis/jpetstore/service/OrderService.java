@@ -28,6 +28,11 @@ import org.mybatis.jpetstore.mapper.OrderMapper;
 import org.mybatis.jpetstore.mapper.SequenceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class OrderService.
@@ -41,6 +46,7 @@ public class OrderService {
   private final OrderMapper orderMapper;
   private final SequenceMapper sequenceMapper;
   private final LineItemMapper lineItemMapper;
+  private transient final Tracer tracer = Tracing.getTracer();
 
   public OrderService(ItemMapper itemMapper, OrderMapper orderMapper, SequenceMapper sequenceMapper,
       LineItemMapper lineItemMapper) {
@@ -106,7 +112,9 @@ public class OrderService {
    *
    * @return the orders by username
    */
-  public List<Order> getOrdersByUsername(String username) {
+  public List<Order> getOrdersByUsername(String username, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getOrdersByUsername").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return orderMapper.getOrdersByUsername(username);
   }
 
