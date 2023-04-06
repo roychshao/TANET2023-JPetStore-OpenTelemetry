@@ -15,14 +15,14 @@
  */
 package org.mybatis.jpetstore.domain;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Optional;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
-import org.mybatis.jpetstore.domain.Tracing;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * The Class LineItem.
@@ -56,14 +56,14 @@ public class LineItem implements Serializable {
   public LineItem(int lineNumber, CartItem cartItem) {
     Span span = tracer.spanBuilder("Domain: LineItem Contructor").startSpan();
     try (Scope ss = span.makeCurrent()) {
-        this.lineNumber = lineNumber;
-        this.quantity = cartItem.getQuantity(span);
-        this.itemId = cartItem.getItem(span).getItemId(span);
-        this.unitPrice = cartItem.getItem(span).getListPrice(span);
-        this.item = cartItem.getItem(span);
-        calculateTotal(span);
+      this.lineNumber = lineNumber;
+      this.quantity = cartItem.getQuantity(span);
+      this.itemId = cartItem.getItem(span).getItemId(span);
+      this.unitPrice = cartItem.getItem(span).getListPrice(span);
+      this.item = cartItem.getItem(span);
+      calculateTotal(span);
     } finally {
-        span.end();
+      span.end();
     }
   }
 
@@ -71,8 +71,10 @@ public class LineItem implements Serializable {
     return orderId;
   }
 
-  public void setOrderId(int orderId) {
+  public void setOrderId(int orderId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setOrderId").setParent(Context.current().with(parentSpan)).startSpan();
     this.orderId = orderId;
+    span.end();
   }
 
   public int getLineNumber() {
@@ -83,7 +85,9 @@ public class LineItem implements Serializable {
     this.lineNumber = lineNumber;
   }
 
-  public String getItemId() {
+  public String getItemId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemId;
   }
 
@@ -107,18 +111,24 @@ public class LineItem implements Serializable {
     return item;
   }
 
-  public void setItem(Item item) {
+  public void setItem(Item item, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setItem").setParent(Context.current().with(parentSpan)).startSpan();
     this.item = item;
-    calculateTotal();
+    calculateTotal(span);
+    span.end();
   }
 
-  public int getQuantity() {
+  public int getQuantity(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getQuantity").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return quantity;
   }
 
-  public void setQuantity(int quantity) {
+  public void setQuantity(int quantity, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setQuantity").setParent(Context.current().with(parentSpan)).startSpan();
     this.quantity = quantity;
-    calculateTotal();
+    calculateTotal(span);
+    span.end();
   }
 
   private void calculateTotal(Span parentSpan) {

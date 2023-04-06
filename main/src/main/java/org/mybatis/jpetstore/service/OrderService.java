@@ -15,6 +15,10 @@
  */
 package org.mybatis.jpetstore.service;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +26,13 @@ import java.util.Map;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.Sequence;
+import org.mybatis.jpetstore.domain.Tracing;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.LineItemMapper;
 import org.mybatis.jpetstore.mapper.OrderMapper;
 import org.mybatis.jpetstore.mapper.SequenceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
-import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class OrderService.
@@ -63,11 +63,12 @@ public class OrderService {
    *          the order
    */
   @Transactional
-  public void insertOrder(Order order) {
-    order.setOrderId(getNextId("ordernum"));
-    order.getLineItems().forEach(lineItem -> {
-      String itemId = lineItem.getItemId();
-      Integer increment = lineItem.getQuantity();
+  public void insertOrder(Order order, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: insertOrder").setParent(Context.current().with(parentSpan)).startSpan();
+    order.setOrderId(getNextId("ordernum"), span);
+    order.getLineItems(span).forEach(lineItem -> {
+      String itemId = lineItem.getItemId(span);
+      Integer increment = lineItem.getQuantity(span);
       Map<String, Object> param = new HashMap<>(2);
       param.put("itemId", itemId);
       param.put("increment", increment);
@@ -76,10 +77,11 @@ public class OrderService {
 
     orderMapper.insertOrder(order);
     orderMapper.insertOrderStatus(order);
-    order.getLineItems().forEach(lineItem -> {
-      lineItem.setOrderId(order.getOrderId());
+    order.getLineItems(span).forEach(lineItem -> {
+      lineItem.setOrderId(order.getOrderId(span), span);
       lineItemMapper.insertLineItem(lineItem);
     });
+    span.end();
   }
 
   /**
@@ -91,14 +93,15 @@ public class OrderService {
    * @return the order
    */
   @Transactional
-  public Order getOrder(int orderId) {
+  public Order getOrder(int orderId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getOrder").setParent(Context.current().with(parentSpan)).startSpan();
     Order order = orderMapper.getOrder(orderId);
-    order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
+    order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId), span);
 
-    order.getLineItems().forEach(lineItem -> {
-      Item item = itemMapper.getItem(lineItem.getItemId());
-      item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId()));
-      lineItem.setItem(item);
+    order.getLineItems(span).forEach(lineItem -> {
+      Item item = itemMapper.getItem(lineItem.getItemId(span));
+      item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId(span)), span);
+      lineItem.setItem(item, span);
     });
 
     return order;
@@ -113,7 +116,8 @@ public class OrderService {
    * @return the orders by username
    */
   public List<Order> getOrdersByUsername(String username, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getOrdersByUsername").setParent(Context.current().with(parentSpan)).startSpan();
+    Span span = tracer.spanBuilder("Service: getOrdersByUsername").setParent(Context.current().with(parentSpan))
+        .startSpan();
     span.end();
     return orderMapper.getOrdersByUsername(username);
   }

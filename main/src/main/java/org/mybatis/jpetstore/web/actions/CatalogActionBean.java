@@ -67,87 +67,129 @@ public class CatalogActionBean extends AbstractActionBean {
   private List<Item> itemList;
 
   public String getKeyword() {
+    Span span = tracer.spanBuilder("ActionBean: getKeyword").startSpan();
+    span.end();
     return keyword;
   }
 
   public void setKeyword(String keyword) {
+    Span span = tracer.spanBuilder("ActionBean: setKeyword").startSpan();
     this.keyword = keyword;
+    span.end();
   }
 
   public String getCategoryId() {
+    Span span = tracer.spanBuilder("ActionBean: getCategoryId").startSpan();
+    span.end();
     return categoryId;
   }
 
   public void setCategoryId(String categoryId) {
+    Span span = tracer.spanBuilder("ActionBean: setCategoryId").startSpan();
     this.categoryId = categoryId;
+    span.end();
   }
 
   public String getProductId() {
+    Span span = tracer.spanBuilder("ActionBean: getProductId").startSpan();
+    span.end();
     return productId;
   }
 
   public void setProductId(String productId) {
+    Span span = tracer.spanBuilder("ActionBean: setProductId").startSpan();
     this.productId = productId;
+    span.end();
   }
 
   public String getItemId() {
+    Span span = tracer.spanBuilder("ActionBean: getItemId").startSpan();
+    span.end();
     return itemId;
   }
 
   public void setItemId(String itemId) {
+    Span span = tracer.spanBuilder("ActionBean: setItemId").startSpan();
     this.itemId = itemId;
+    span.end();
   }
 
   public Category getCategory() {
+    Span span = tracer.spanBuilder("ActionBean: getCategoryd").startSpan();
+    span.end();
     return category;
   }
 
   public void setCategory(Category category) {
+    Span span = tracer.spanBuilder("ActionBean: setCategory").startSpan();
     this.category = category;
+    span.end();
   }
 
   public Product getProduct() {
+    Span span = tracer.spanBuilder("ActionBean: getProduct").startSpan();
+    span.end();
     return product;
   }
 
   public void setProduct(Product product) {
+    Span span = tracer.spanBuilder("ActionBean: setProduct").startSpan();
     this.product = product;
+    span.end();
   }
 
   public Item getItem() {
+    Span span = tracer.spanBuilder("ActionBean: getItem").startSpan();
+    span.end();
     return item;
   }
 
   public void setItem(Item item) {
+    Span span = tracer.spanBuilder("ActionBean: setItem").startSpan();
     this.item = item;
+    span.end();
   }
 
   public List<Category> getCategoryList() {
+    Span span = tracer.spanBuilder("ActionBean: getCategoryList").startSpan();
+    span.end();
     return categoryList;
   }
 
   public void setCategoryList(List<Category> categoryList) {
+    Span span = tracer.spanBuilder("ActionBean: setCategoryList").startSpan();
     this.categoryList = categoryList;
+    span.end();
   }
 
   public List<Product> getProductList() {
+    Span span = tracer.spanBuilder("ActionBean: getProductList").startSpan();
+    span.end();
     return productList;
   }
 
   public void setProductList(List<Product> productList) {
+    Span span = tracer.spanBuilder("ActionBean: setProductList").startSpan();
     this.productList = productList;
+    span.end();
   }
 
   public List<Item> getItemList() {
+    Span span = tracer.spanBuilder("ActionBean: getItemList").startSpan();
+    span.end();
     return itemList;
   }
 
   public void setItemList(List<Item> itemList) {
+    Span span = tracer.spanBuilder("ActionBean: setItemList").startSpan();
     this.itemList = itemList;
+    span.end();
   }
 
   @DefaultHandler
   public ForwardResolution viewMain() {
+    Span span = tracer.spanBuilder("ActionBean: viewMain").startSpan();
+    span.end();
     return new ForwardResolution(MAIN);
   }
 

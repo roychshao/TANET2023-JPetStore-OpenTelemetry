@@ -17,6 +17,7 @@ package org.mybatis.jpetstore.service;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.Optional;
@@ -46,7 +47,9 @@ public class AccountService {
     return accountMapper.getAccountByUsername(username);
   }
 
-  public Account getAccount(String username, String password) {
+  public Account getAccount(String username, String password, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getAccount").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return accountMapper.getAccountByUsernameAndPassword(username, password);
   }
 
@@ -81,7 +84,7 @@ public class AccountService {
       accountMapper.updateAccount(account);
       accountMapper.updateProfile(account);
 
-      Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
+      Optional.ofNullable(account.getPassword(span)).filter(password -> password.length() > 0)
           .ifPresent(password -> accountMapper.updateSignon(account));
     } finally {
       span.end();

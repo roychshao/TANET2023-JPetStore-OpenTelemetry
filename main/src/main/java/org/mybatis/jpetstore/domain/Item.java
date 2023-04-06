@@ -61,8 +61,10 @@ public class Item implements Serializable {
     return quantity;
   }
 
-  public void setQuantity(int quantity) {
+  public void setQuantity(int quantity, Span parentSpan) {
+    Span span = tracer.spanBuilder("setQuantity").setParent(Context.current().with(parentSpan)).startSpan();
     this.quantity = quantity;
+    span.end();
   }
 
   public Product getProduct() {

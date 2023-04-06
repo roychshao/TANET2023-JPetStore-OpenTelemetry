@@ -15,17 +15,16 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
-import org.mybatis.jpetstore.domain.Tracing;
 
 /**
  * The Class Order.
@@ -77,7 +76,9 @@ public class Order implements Serializable {
     span.end();
   }
 
-  public String getUsername() {
+  public String getUsername(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getUsername").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return username;
   }
 
@@ -277,11 +278,15 @@ public class Order implements Serializable {
     this.status = status;
   }
 
-  public void setLineItems(List<LineItem> lineItems) {
+  public void setLineItems(List<LineItem> lineItems, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setLineItems").setParent(Context.current().with(parentSpan)).startSpan();
     this.lineItems = lineItems;
+    span.end();
   }
 
-  public List<LineItem> getLineItems() {
+  public List<LineItem> getLineItems(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getLineItems").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return lineItems;
   }
 
@@ -335,14 +340,16 @@ public class Order implements Serializable {
   }
 
   public void addLineItem(CartItem cartItem, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: addLineItem (CartItem)").setParent(Context.current().with(parentSpan)).startSpan();
+    Span span = tracer.spanBuilder("Domain: addLineItem (CartItem)").setParent(Context.current().with(parentSpan))
+        .startSpan();
     LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
     addLineItem(lineItem, span);
     span.end();
   }
 
   public void addLineItem(LineItem lineItem, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: addLineItem (LineItem)").setParent(Context.current().with(parentSpan)).startSpan();
+    Span span = tracer.spanBuilder("Domain: addLineItem (LineItem)").setParent(Context.current().with(parentSpan))
+        .startSpan();
     lineItems.add(lineItem);
     span.end();
   }

@@ -98,7 +98,8 @@ public class AccountActionBean extends AbstractActionBean {
   public String getPassword() {
     Span span = tracer.spanBuilder("ActionBean: getPassword").startSpan();
     span.end();
-    return account.getPassword();
+    String result = account.getPassword(span);
+    return result;
   }
 
   @Validate(required = true, on = { "signon", "newAccount", "editAccount" })
@@ -150,8 +151,8 @@ public class AccountActionBean extends AbstractActionBean {
     Span span = tracer.spanBuilder("ActionBean: newAccount").startSpan();
     try (Scope ss = span.makeCurrent()) {
       accountService.insertAccount(account);
-      account = accountService.getAccount(account.getUsername());
-      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(), span);
+      account = accountService.getAccount(account.getUsername(span));
+      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
       authenticated = true;
     } finally {
       span.end();
@@ -179,8 +180,8 @@ public class AccountActionBean extends AbstractActionBean {
     Span span = tracer.spanBuilder("ActionBean: editAccount").startSpan();
     try (Scope ss = span.makeCurrent()) {
       accountService.updateAccount(account);
-      account = accountService.getAccount(account.getUsername());
-      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(), span);
+      account = accountService.getAccount(account.getUsername(span));
+      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
     } finally {
       span.end();
       return new RedirectResolution(CatalogActionBean.class);
@@ -207,7 +208,7 @@ public class AccountActionBean extends AbstractActionBean {
   public Resolution signon() {
     Span span = tracer.spanBuilder("ActionBean: signon").startSpan();
     try (Scope ss = span.makeCurrent()) {
-      account = accountService.getAccount(getUsername(), getPassword());
+      account = accountService.getAccount(getUsername(), getPassword(), span);
 
       if (account == null) {
         String value = "Invalid username or password.  Signon failed.";
@@ -217,7 +218,7 @@ public class AccountActionBean extends AbstractActionBean {
         return new ForwardResolution(SIGNON);
       } else {
         account.setPassword(null, span);
-        myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(), span);
+        myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
         authenticated = true;
         HttpSession s = context.getRequest().getSession();
         // this bean is already registered as /actions/Account.action
@@ -252,7 +253,7 @@ public class AccountActionBean extends AbstractActionBean {
   public boolean isAuthenticated() {
     Span span = tracer.spanBuilder("ActionBean: isAuthenticated").startSpan();
     span.end();
-    return authenticated && account != null && account.getUsername() != null;
+    return authenticated && account != null && account.getUsername(span) != null;
   }
 
   /**
