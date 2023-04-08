@@ -15,6 +15,10 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+
 import java.io.Serializable;
 
 /**
@@ -29,34 +33,50 @@ public class Category implements Serializable {
   private String categoryId;
   private String name;
   private String description;
+  private transient final Tracer tracer = Tracing.getTracer();
 
-  public String getCategoryId() {
+  public String getCategoryId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getCategoryId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return categoryId;
   }
 
-  public void setCategoryId(String categoryId) {
+  public void setCategoryId(String categoryId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setCategoryId").setParent(Context.current().with(parentSpan)).startSpan();
     this.categoryId = categoryId.trim();
+    span.end();
   }
 
-  public String getName() {
+  public String getName(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getName").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setName").setParent(Context.current().with(parentSpan)).startSpan();
     this.name = name;
+    span.end();
   }
 
-  public String getDescription() {
+  public String getDescription(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getDescription").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(String description, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setDescription").setParent(Context.current().with(parentSpan)).startSpan();
     this.description = description;
+    span.end();
   }
 
   @Override
   public String toString() {
-    return getCategoryId();
+    Span span = tracer.spanBuilder("Domain: toString").startSpan();
+    String result = getCategoryId(span);
+    span.end();
+    return result;
   }
 
 }

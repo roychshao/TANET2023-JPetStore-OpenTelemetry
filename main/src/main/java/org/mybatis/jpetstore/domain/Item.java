@@ -53,11 +53,15 @@ public class Item implements Serializable {
     return itemId;
   }
 
-  public void setItemId(String itemId) {
+  public void setItemId(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setItemId").setParent(Context.current().with(parentSpan)).startSpan();
     this.itemId = itemId.trim();
+    span.end();
   }
 
-  public int getQuantity() {
+  public int getQuantity(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getQuantity").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return quantity;
   }
 
@@ -67,20 +71,28 @@ public class Item implements Serializable {
     span.end();
   }
 
-  public Product getProduct() {
+  public Product getProduct(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getProduct").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return product;
   }
 
-  public void setProduct(Product product) {
+  public void setProduct(Product product, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setProduct").setParent(Context.current().with(parentSpan)).startSpan();
     this.product = product;
+    span.end();
   }
 
-  public int getSupplierId() {
+  public int getSupplierId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getSupplierId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return supplierId;
   }
 
-  public void setSupplierId(int supplierId) {
+  public void setSupplierId(int supplierId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setSupplierId").setParent(Context.current().with(parentSpan)).startSpan();
     this.supplierId = supplierId;
+    span.end();
   }
 
   public BigDecimal getListPrice(Span parentSpan) {
@@ -89,64 +101,94 @@ public class Item implements Serializable {
     return listPrice;
   }
 
-  public void setListPrice(BigDecimal listPrice) {
+  public void setListPrice(BigDecimal listPrice, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setListPrice").setParent(Context.current().with(parentSpan)).startSpan();
     this.listPrice = listPrice;
+    span.end();
   }
 
-  public BigDecimal getUnitCost() {
+  public BigDecimal getUnitCost(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getUnitCost").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return unitCost;
   }
 
-  public void setUnitCost(BigDecimal unitCost) {
+  public void setUnitCost(BigDecimal unitCost, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setUnitCost").setParent(Context.current().with(parentSpan)).startSpan();
     this.unitCost = unitCost;
+    span.end();
   }
 
-  public String getStatus() {
+  public String getStatus(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getStatus").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(String status, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setStatus").setParent(Context.current().with(parentSpan)).startSpan();
     this.status = status;
+    span.end();
   }
 
-  public String getAttribute1() {
+  public String getAttribute1(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAttribute1").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return attribute1;
   }
 
-  public void setAttribute1(String attribute1) {
+  public void setAttribute1(String attribute1, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setAttribute1").setParent(Context.current().with(parentSpan)).startSpan();
     this.attribute1 = attribute1;
+    span.end();
   }
 
-  public String getAttribute2() {
+  public String getAttribute2(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAttribute2").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return attribute2;
   }
 
-  public void setAttribute2(String attribute2) {
+  public void setAttribute2(String attribute2, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setAttribute2").setParent(Context.current().with(parentSpan)).startSpan();
     this.attribute2 = attribute2;
+    span.end();
   }
 
-  public String getAttribute3() {
+  public String getAttribute3(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAttribute3").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return attribute3;
   }
 
-  public void setAttribute3(String attribute3) {
+  public void setAttribute3(String attribute3, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setAttribute3").setParent(Context.current().with(parentSpan)).startSpan();
     this.attribute3 = attribute3;
+    span.end();
   }
 
-  public String getAttribute4() {
+  public String getAttribute4(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAttribute4").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return attribute4;
   }
 
-  public void setAttribute4(String attribute4) {
+  public void setAttribute4(String attribute4, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setAttribute4").setParent(Context.current().with(parentSpan)).startSpan();
     this.attribute4 = attribute4;
+    span.end();
   }
 
-  public String getAttribute5() {
+  public String getAttribute5(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getAttribute5").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return attribute5;
   }
 
-  public void setAttribute5(String attribute5) {
+  public void setAttribute5(String attribute5, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setAttribute5").setParent(Context.current().with(parentSpan)).startSpan();
     this.attribute5 = attribute5;
+    span.end();
   }
 
   @Override
@@ -154,7 +196,7 @@ public class Item implements Serializable {
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
     try (Scope ss = span.makeCurrent()) {
-      result = "(" + getItemId(span) + "-" + getProduct().getProductId() + ")";
+      result = "(" + getItemId(span) + "-" + getProduct(span).getProductId(span) + ")";
     } finally {
       span.end();
       return result;

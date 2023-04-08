@@ -41,15 +41,22 @@ public class Cart implements Serializable {
   private final List<CartItem> itemList = new ArrayList<>();
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public Iterator<CartItem> getCartItems() {
+  public Iterator<CartItem> getCartItems(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getCartItems").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemList.iterator();
   }
 
-  public List<CartItem> getCartItemList() {
+  public List<CartItem> getCartItemList(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getCartItemList").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return itemList;
   }
 
-  public int getNumberOfItems() {
+  public int getNumberOfItems(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getNumberOfItems").setParent(Context.current().with(parentSpan))
+        .startSpan();
+    span.end();
     return itemList.size();
   }
 

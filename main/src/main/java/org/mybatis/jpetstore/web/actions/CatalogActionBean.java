@@ -238,7 +238,7 @@ public class CatalogActionBean extends AbstractActionBean {
     Span span = tracer.spanBuilder("ActionBean: viewItem").startSpan();
     try (Scope ss = span.makeCurrent()) {
       item = catalogService.getItem(itemId, span);
-      product = item.getProduct();
+      product = item.getProduct(span);
     } finally {
       span.end();
       return new ForwardResolution(VIEW_ITEM);

@@ -38,7 +38,9 @@ public class CartItem implements Serializable {
   private BigDecimal total;
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public boolean isInStock() {
+  public boolean isInStock(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: isInStock").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return inStock;
   }
 
@@ -48,7 +50,9 @@ public class CartItem implements Serializable {
     span.end();
   }
 
-  public BigDecimal getTotal() {
+  public BigDecimal getTotal(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getTotal").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return total;
   }
 

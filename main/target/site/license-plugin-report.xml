@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1680800112170">
+<licensePluginReport goal="FORMAT" timestamp="1680962286675">
     <module artifactId="jpetstore" groupId="org.mybatis" version="6.1.1-SNAPSHOT"/>
     <files>
         <file path=".mvn/extensions.xml" result="NOOP"/>
@@ -7,8 +7,9 @@
         <file path="dockerfile" result="NOOP"/>
         <file path="exec.sh" result="NOOP"/>
         <file path="format.xml" result="NOOP"/>
+        <file path="logs.txt" result="ADDED"/>
         <file path="pom.xml" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/domain/.Product.java.swp" result="UNKNOWN"/>
+        <file path="src/main/java/org/mybatis/jpetstore/domain/.Account.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Account.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Cart.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/CartItem.java" result="NOOP"/>
@@ -29,7 +30,7 @@
         <file path="src/main/java/org/mybatis/jpetstore/service/AccountService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/CatalogService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/OrderService.java" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/web/actions/.CatalogActionBean.java.swp" result="UNKNOWN"/>
+        <file path="src/main/java/org/mybatis/jpetstore/web/actions/.AccountActionBean.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AbstractActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AccountActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/CartActionBean.java" result="NOOP"/>
@@ -47,6 +48,7 @@
         <file path="src/main/resources/org/mybatis/jpetstore/mapper/ProductMapper.xml" result="NOOP"/>
         <file path="src/main/resources/org/mybatis/jpetstore/mapper/SequenceMapper.xml" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/applicationContext.xml" result="NOOP"/>
+        <file path="src/main/webapp/WEB-INF/jsp/account/.NewAccountForm.jsp.swp" result="UNKNOWN"/>
         <file path="src/main/webapp/WEB-INF/jsp/account/EditAccountForm.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/account/NewAccountForm.jsp" result="NOOP"/>
@@ -54,12 +56,12 @@
         <file path="src/main/webapp/WEB-INF/jsp/cart/Cart.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/cart/Checkout.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/cart/IncludeMyList.jsp" result="NOOP"/>
-        <file path="src/main/webapp/WEB-INF/jsp/catalog/.Product.jsp.swp" result="UNKNOWN"/>
         <file path="src/main/webapp/WEB-INF/jsp/catalog/Category.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/catalog/Item.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/catalog/Main.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/catalog/Product.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/catalog/SearchProducts.jsp" result="NOOP"/>
+        <file path="src/main/webapp/WEB-INF/jsp/common/.IncludeTop.jsp.swp" result="UNKNOWN"/>
         <file path="src/main/webapp/WEB-INF/jsp/common/Error.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp" result="NOOP"/>
         <file path="src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" result="NOOP"/>

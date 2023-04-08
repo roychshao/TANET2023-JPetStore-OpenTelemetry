@@ -67,7 +67,9 @@ public class LineItem implements Serializable {
     }
   }
 
-  public int getOrderId() {
+  public int getOrderId(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getOrderId").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return orderId;
   }
 
@@ -77,12 +79,16 @@ public class LineItem implements Serializable {
     span.end();
   }
 
-  public int getLineNumber() {
+  public int getLineNumber(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getLineNumber").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return lineNumber;
   }
 
-  public void setLineNumber(int lineNumber) {
+  public void setLineNumber(int lineNumber, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setLineNumber").setParent(Context.current().with(parentSpan)).startSpan();
     this.lineNumber = lineNumber;
+    span.end();
   }
 
   public String getItemId(Span parentSpan) {
@@ -91,23 +97,33 @@ public class LineItem implements Serializable {
     return itemId;
   }
 
-  public void setItemId(String itemId) {
+  public void setItemId(String itemId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
     this.itemId = itemId;
+    span.end();
   }
 
-  public BigDecimal getUnitPrice() {
+  public BigDecimal getUnitPrice(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getUnitPrice").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return unitPrice;
   }
 
-  public void setUnitPrice(BigDecimal unitprice) {
+  public void setUnitPrice(BigDecimal unitprice, Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: setUnitPrice").setParent(Context.current().with(parentSpan)).startSpan();
     this.unitPrice = unitprice;
+    span.end();
   }
 
-  public BigDecimal getTotal() {
+  public BigDecimal getTotal(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getTotal").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return total;
   }
 
-  public Item getItem() {
+  public Item getItem(Span parentSpan) {
+    Span span = tracer.spanBuilder("Domain: getItem").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return item;
   }
 
