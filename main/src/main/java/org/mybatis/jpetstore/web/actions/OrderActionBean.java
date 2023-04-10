@@ -17,6 +17,7 @@ package org.mybatis.jpetstore.web.actions;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.Arrays;
@@ -60,13 +61,14 @@ public class OrderActionBean extends AbstractActionBean {
   private boolean confirmed;
   private List<Order> orderList;
   private transient final Tracer tracer = Tracing.getTracer();
+  private transient final Context rootContext = Tracing.getRootContext();
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));
   }
 
   public int getOrderId() {
-    Span span = tracer.spanBuilder("ActionBean: getOrderId").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getOrderId").setParent(rootContext).startSpan();
     int result = 0;
     try (Scope ss = span.makeCurrent()) {
       result = order.getOrderId(span);
@@ -77,7 +79,7 @@ public class OrderActionBean extends AbstractActionBean {
   }
 
   public void setOrderId(int orderId) {
-    Span span = tracer.spanBuilder("ActionBean: setOrderId").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setOrderId").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       order.setOrderId(orderId, span);
     } finally {
@@ -86,49 +88,49 @@ public class OrderActionBean extends AbstractActionBean {
   }
 
   public Order getOrder() {
-    Span span = tracer.spanBuilder("ActionBean: getOrder").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getOrder").setParent(rootContext).startSpan();
     span.end();
     return order;
   }
 
   public void setOrder(Order order) {
-    Span span = tracer.spanBuilder("ActionBean: setOrder").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setOrder").setParent(rootContext).startSpan();
     this.order = order;
     span.end();
   }
 
   public boolean isShippingAddressRequired() {
-    Span span = tracer.spanBuilder("ActionBean: isShippingAddressRequired").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: isShippingAddressRequired").setParent(rootContext).startSpan();
     span.end();
     return shippingAddressRequired;
   }
 
   public void setShippingAddressRequired(boolean shippingAddressRequired) {
-    Span span = tracer.spanBuilder("ActionBean: setShippingAddressRequired").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setShippingAddressRequired").setParent(rootContext).startSpan();
     this.shippingAddressRequired = shippingAddressRequired;
     span.end();
   }
 
   public boolean isConfirmed() {
-    Span span = tracer.spanBuilder("ActionBean: isConfirmed").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: isConfirmed").setParent(rootContext).startSpan();
     span.end();
     return confirmed;
   }
 
   public void setConfirmed(boolean confirmed) {
-    Span span = tracer.spanBuilder("ActionBean: setConfirmed").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setConfirmed").setParent(rootContext).startSpan();
     this.confirmed = confirmed;
     span.end();
   }
 
   public List<String> getCreditCardTypes() {
-    Span span = tracer.spanBuilder("ActionBean: getCreditCardTypes").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getCreditCardTypes").setParent(rootContext).startSpan();
     span.end();
     return CARD_TYPE_LIST;
   }
 
   public List<Order> getOrderList() {
-    Span span = tracer.spanBuilder("ActionBean: getOrderList").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getOrderList").setParent(rootContext).startSpan();
     span.end();
     return orderList;
   }
@@ -139,7 +141,7 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution listOrders() {
-    Span span = tracer.spanBuilder("ActionBean: listOrders").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: listOrders").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       HttpSession session = context.getRequest().getSession();
       AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
@@ -156,7 +158,7 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newOrderForm() {
-    Span span = tracer.spanBuilder("ActionBean: newOrderForm").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: newOrderForm").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       HttpSession session = context.getRequest().getSession();
       AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
@@ -185,7 +187,7 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newOrder() {
-    Span span = tracer.spanBuilder("ActionBean: newOrder").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: newOrder").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       HttpSession session = context.getRequest().getSession();
 
@@ -219,7 +221,7 @@ public class OrderActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution viewOrder() {
-    Span span = tracer.spanBuilder("ActionBean: viewOrder").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: viewOrder").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       HttpSession session = context.getRequest().getSession();
 
@@ -243,7 +245,7 @@ public class OrderActionBean extends AbstractActionBean {
    * Clear.
    */
   public void clear() {
-    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       order = new Order();
       shippingAddressRequired = false;

@@ -22,6 +22,7 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
@@ -37,6 +38,7 @@ public class Tracing {
   public static SdkTracerProvider sdkTracerProvider;
   public static OpenTelemetry openTelemetry;
   public static Tracer tracer;
+  public static Context rootContext;
   private static JaegerGrpcSpanExporter jaegerExporter;
 
   static {
@@ -65,10 +67,16 @@ public class Tracing {
 
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
     System.out.println(tracer);
+
+    rootContext = Context.root();
   }
 
   public static Tracer getTracer() {
     return tracer;
+  }
+
+  public static Context getRootContext() {
+    return rootContext;
   }
 
 }

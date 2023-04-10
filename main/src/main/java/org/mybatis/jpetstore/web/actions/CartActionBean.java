@@ -17,6 +17,7 @@ package org.mybatis.jpetstore.web.actions;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.Iterator;
@@ -47,6 +48,7 @@ public class CartActionBean extends AbstractActionBean {
   private static final String VIEW_CART = "/WEB-INF/jsp/cart/Cart.jsp";
   private static final String CHECK_OUT = "/WEB-INF/jsp/cart/Checkout.jsp";
   private transient final Tracer tracer = Tracing.getTracer();
+  private transient final Context rootContext = Tracing.getRootContext();
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -55,19 +57,19 @@ public class CartActionBean extends AbstractActionBean {
   private String workingItemId;
 
   public Cart getCart() {
-    Span span = tracer.spanBuilder("ActionBean: getCart").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getCart").setParent(rootContext).startSpan();
     span.end();
     return cart;
   }
 
   public void setCart(Cart cart) {
-    Span span = tracer.spanBuilder("ActionBean: setCart").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setCart").setParent(rootContext).startSpan();
     this.cart = cart;
     span.end();
   }
 
   public void setWorkingItemId(String workingItemId) {
-    Span span = tracer.spanBuilder("ActionBean: setWorkingItemId").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: setWorkingItemId").setParent(rootContext).startSpan();
     this.workingItemId = workingItemId;
     span.end();
   }
@@ -78,7 +80,7 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution addItemToCart() {
-    Span span = tracer.spanBuilder("ActionBean: addItemToCart").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: addItemToCart").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       if (cart.containsItemId(workingItemId, span)) {
         cart.incrementQuantityByItemId(workingItemId, span);
@@ -101,7 +103,7 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution removeItemFromCart() {
-    Span span = tracer.spanBuilder("ActionBean: removeItemFromCart").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: removeItemFromCart").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       Item item = cart.removeItemById(workingItemId, span);
 
@@ -122,7 +124,7 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution updateCartQuantities() {
-    Span span = tracer.spanBuilder("ActionBean: updateCartQuantities").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: updateCartQuantities").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       HttpServletRequest request = context.getRequest();
 
@@ -147,19 +149,19 @@ public class CartActionBean extends AbstractActionBean {
   }
 
   public ForwardResolution viewCart() {
-    Span span = tracer.spanBuilder("ActionBean: viewCart").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: viewCart").setParent(rootContext).startSpan();
     span.end();
     return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution checkOut() {
-    Span span = tracer.spanBuilder("ActionBean: checkOut").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: checkOut").setParent(rootContext).startSpan();
     span.end();
     return new ForwardResolution(CHECK_OUT);
   }
 
   public void clear() {
-    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
     try (Scope ss = span.makeCurrent()) {
       cart = new Cart();
       workingItemId = null;
