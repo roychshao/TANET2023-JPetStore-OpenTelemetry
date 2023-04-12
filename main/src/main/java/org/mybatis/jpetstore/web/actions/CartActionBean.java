@@ -18,7 +18,6 @@ package org.mybatis.jpetstore.web.actions;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
 
 import java.util.Iterator;
 
@@ -81,19 +80,17 @@ public class CartActionBean extends AbstractActionBean {
    */
   public Resolution addItemToCart() {
     Span span = tracer.spanBuilder("ActionBean: addItemToCart").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      if (cart.containsItemId(workingItemId, span)) {
-        cart.incrementQuantityByItemId(workingItemId, span);
-      } else {
-        // isInStock is a "real-time" property that must be updated
-        // every time an item is added to the cart, even if other
-        // item details are cached.
-        boolean isInStock = catalogService.isItemInStock(workingItemId, span);
-        Item item = catalogService.getItem(workingItemId, span);
-        cart.addItem(item, isInStock, span);
-      }
-      span.end();
+    if (cart.containsItemId(workingItemId, span)) {
+      cart.incrementQuantityByItemId(workingItemId, span);
+    } else {
+      // isInStock is a "real-time" property that must be updated
+      // every time an item is added to the cart, even if other
+      // item details are cached.
+      boolean isInStock = catalogService.isItemInStock(workingItemId, span);
+      Item item = catalogService.getItem(workingItemId, span);
+      cart.addItem(item, isInStock, span);
     }
+    span.end();
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -104,17 +101,15 @@ public class CartActionBean extends AbstractActionBean {
    */
   public Resolution removeItemFromCart() {
     Span span = tracer.spanBuilder("ActionBean: removeItemFromCart").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      Item item = cart.removeItemById(workingItemId, span);
+    Item item = cart.removeItemById(workingItemId, span);
 
-      if (item == null) {
-        setMessage("Attempted to remove null CartItem from Cart.");
-        span.end();
-        return new ForwardResolution(ERROR);
-      } else {
-        span.end();
-        return new ForwardResolution(VIEW_CART);
-      }
+    if (item == null) {
+      setMessage("Attempted to remove null CartItem from Cart.");
+      span.end();
+      return new ForwardResolution(ERROR);
+    } else {
+      span.end();
+      return new ForwardResolution(VIEW_CART);
     }
   }
 
@@ -125,27 +120,24 @@ public class CartActionBean extends AbstractActionBean {
    */
   public Resolution updateCartQuantities() {
     Span span = tracer.spanBuilder("ActionBean: updateCartQuantities").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      HttpServletRequest request = context.getRequest();
+    HttpServletRequest request = context.getRequest();
 
-      Iterator<CartItem> cartItems = getCart().getAllCartItems(span);
-      while (cartItems.hasNext()) {
-        CartItem cartItem = cartItems.next();
-        String itemId = cartItem.getItem(span).getItemId(span);
-        try {
-          int quantity = Integer.parseInt(request.getParameter(itemId));
-          getCart().setQuantityByItemId(itemId, quantity, span);
-          if (quantity < 1) {
-            cartItems.remove();
-          }
-        } catch (Exception e) {
-          // ignore parse exceptions on purpose
+    Iterator<CartItem> cartItems = getCart().getAllCartItems(span);
+    while (cartItems.hasNext()) {
+      CartItem cartItem = cartItems.next();
+      String itemId = cartItem.getItem(span).getItemId(span);
+      try {
+        int quantity = Integer.parseInt(request.getParameter(itemId));
+        getCart().setQuantityByItemId(itemId, quantity, span);
+        if (quantity < 1) {
+          cartItems.remove();
         }
+      } catch (Exception e) {
+        // ignore parse exceptions on purpose
       }
-    } finally {
-      span.end();
-      return new ForwardResolution(VIEW_CART);
     }
+    span.end();
+    return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution viewCart() {
@@ -162,12 +154,9 @@ public class CartActionBean extends AbstractActionBean {
 
   public void clear() {
     Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      cart = new Cart();
-      workingItemId = null;
-    } finally {
-      span.end();
-    }
+    cart = new Cart();
+    workingItemId = null;
+    span.end();
   }
 
 }

@@ -18,7 +18,6 @@ package org.mybatis.jpetstore.web.actions;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
 
 import java.util.List;
 
@@ -202,15 +201,12 @@ public class CatalogActionBean extends AbstractActionBean {
    */
   public ForwardResolution viewCategory() {
     Span span = tracer.spanBuilder("ActionBean: viewCategory").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      if (categoryId != null) {
-        productList = catalogService.getProductListByCategory(categoryId, span);
-        category = catalogService.getCategory(categoryId, span);
-      }
-    } finally {
-      span.end();
-      return new ForwardResolution(VIEW_CATEGORY);
+    if (categoryId != null) {
+      productList = catalogService.getProductListByCategory(categoryId, span);
+      category = catalogService.getCategory(categoryId, span);
     }
+    span.end();
+    return new ForwardResolution(VIEW_CATEGORY);
   }
 
   /**
@@ -220,15 +216,12 @@ public class CatalogActionBean extends AbstractActionBean {
    */
   public ForwardResolution viewProduct() {
     Span span = tracer.spanBuilder("ActionBean: viewProduct").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      if (productId != null) {
-        itemList = catalogService.getItemListByProduct(productId);
-        product = catalogService.getProduct(productId);
-      }
-    } finally {
-      span.end();
-      return new ForwardResolution(VIEW_PRODUCT);
+    if (productId != null) {
+      itemList = catalogService.getItemListByProduct(productId, span);
+      product = catalogService.getProduct(productId, span);
     }
+    span.end();
+    return new ForwardResolution(VIEW_PRODUCT);
   }
 
   /**
@@ -238,13 +231,10 @@ public class CatalogActionBean extends AbstractActionBean {
    */
   public ForwardResolution viewItem() {
     Span span = tracer.spanBuilder("ActionBean: viewItem").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      item = catalogService.getItem(itemId, span);
-      product = item.getProduct(span);
-    } finally {
-      span.end();
-      return new ForwardResolution(VIEW_ITEM);
-    }
+    item = catalogService.getItem(itemId, span);
+    product = item.getProduct(span);
+    span.end();
+    return new ForwardResolution(VIEW_ITEM);
   }
 
   /**
@@ -254,16 +244,14 @@ public class CatalogActionBean extends AbstractActionBean {
    */
   public ForwardResolution searchProducts() {
     Span span = tracer.spanBuilder("ActionBean: searchProducts").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      if (keyword == null || keyword.length() < 1) {
-        setMessage("Please enter a keyword to search for, then press the search button.");
-        span.end();
-        return new ForwardResolution(ERROR);
-      } else {
-        productList = catalogService.searchProductList(keyword.toLowerCase());
-        span.end();
-        return new ForwardResolution(SEARCH_PRODUCTS);
-      }
+    if (keyword == null || keyword.length() < 1) {
+      setMessage("Please enter a keyword to search for, then press the search button.");
+      span.end();
+      return new ForwardResolution(ERROR);
+    } else {
+      productList = catalogService.searchProductList(keyword.toLowerCase());
+      span.end();
+      return new ForwardResolution(SEARCH_PRODUCTS);
     }
   }
 
@@ -272,23 +260,20 @@ public class CatalogActionBean extends AbstractActionBean {
    */
   public void clear() {
     Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      keyword = null;
+    keyword = null;
 
-      categoryId = null;
-      category = null;
-      categoryList = null;
+    categoryId = null;
+    category = null;
+    categoryList = null;
 
-      productId = null;
-      product = null;
-      productList = null;
+    productId = null;
+    product = null;
+    productList = null;
 
-      itemId = null;
-      item = null;
-      itemList = null;
-    } finally {
-      span.end();
-    }
+    itemId = null;
+    item = null;
+    itemList = null;
+    span.end();
   }
 
 }

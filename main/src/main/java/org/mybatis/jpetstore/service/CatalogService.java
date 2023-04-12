@@ -63,7 +63,9 @@ public class CatalogService {
     return result;
   }
 
-  public Product getProduct(String productId) {
+  public Product getProduct(String productId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getProduct").setParent(Context.current().with(parentSpan)).startSpan();
+    span.end();
     return productMapper.getProduct(productId);
   }
 
@@ -92,7 +94,10 @@ public class CatalogService {
     return products;
   }
 
-  public List<Item> getItemListByProduct(String productId) {
+  public List<Item> getItemListByProduct(String productId, Span parentSpan) {
+    Span span = tracer.spanBuilder("Service: getItemListByProduct").setParent(Context.current().with(parentSpan))
+        .startSpan();
+    span.end();
     return itemMapper.getItemListByProduct(productId);
   }
 

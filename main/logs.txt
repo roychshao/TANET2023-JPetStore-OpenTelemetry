@@ -1,0 +1,332 @@
+====
+       Copyright 2010-2023 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+====
+
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< org.mybatis:jpetstore >------------------------
+[INFO] Building JPetStore Demo 6 6.1.1-SNAPSHOT
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- cargo-maven3-plugin:1.10.4:run (default-cli) @ jpetstore ---
+[INFO] [en3.ContainerRunMojo] Resolved container artifact org.codehaus.cargo:cargo-core-container-tomcat:jar:1.10.4 for container tomcat9x
+[INFO] [talledLocalContainer] Tomcat 9.x starting...
+[INFO] [stalledLocalDeployer] Deploying [/home/roy/Codes/Monographic/jpetstore-6/main/target/jpetstore.war] to [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps]...
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:36 PM org.apache.tomcat.util.digester.SetPropertiesRule begin
+[INFO] [talledLocalContainer] WARNING: Match [Server/Service/Connector] failed to set property [emptySessionPath] to [cargo.tomcat.connector.emptySessionPath]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Server version name:   Apache Tomcat/9.0.70
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Server built:          Dec 1 2022 14:05:47 UTC
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Server version number: 9.0.70.0
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: OS Name:               Linux
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: OS Version:            5.19.0-35-generic
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Architecture:          amd64
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Java Home:             /usr/lib/jvm/java-19-openjdk-amd64
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: JVM Version:           19.0.2+7-Ubuntu-0ubuntu322.04
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: JVM Vendor:            Private Build
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: CATALINA_BASE:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: CATALINA_HOME:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Xms128m
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Xmx512m
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Dcatalina.home=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Dcatalina.base=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Djava.io.tmpdir=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/temp
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.startup.VersionLoggerListener log
+[INFO] [talledLocalContainer] INFO: Command line argument: -Djava.util.logging.config.file=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/conf/logging.properties
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:37 PM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+[INFO] [talledLocalContainer] INFO: The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:38 PM org.apache.coyote.AbstractProtocol init
+[INFO] [talledLocalContainer] INFO: Initializing ProtocolHandler ["http-nio-8080"]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:39 PM org.apache.catalina.startup.Catalina load
+[INFO] [talledLocalContainer] INFO: Server initialization in [2748] milliseconds
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:39 PM org.apache.catalina.core.StandardService startInternal
+[INFO] [talledLocalContainer] INFO: Starting service [Catalina]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:39 PM org.apache.catalina.core.StandardEngine startInternal
+[INFO] [talledLocalContainer] INFO: Starting Servlet engine: [Apache Tomcat/9.0.70]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:39 PM org.apache.catalina.startup.HostConfig deployWAR
+[INFO] [talledLocalContainer] INFO: Deploying web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/jpetstore.war]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:47 PM org.apache.jasper.servlet.TldScanner scanJars
+[INFO] [talledLocalContainer] INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:47 PM org.apache.catalina.core.ApplicationContext log
+[INFO] [talledLocalContainer] INFO: No Spring WebApplicationInitializer types detected on classpath
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:47 PM org.apache.catalina.core.ApplicationContext log
+[INFO] [talledLocalContainer] INFO: Initializing Spring root WebApplicationContext
+[INFO] [talledLocalContainer] [main] INFO org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization started
+[INFO] [talledLocalContainer] io.opentelemetry.sdk.trace.SdkTracer@589b0021
+[INFO] [talledLocalContainer] [main] INFO org.springframework.web.context.ContextLoader - Root WebApplicationContext initialized in 8322 ms
+[INFO] [talledLocalContainer] [main] INFO net.sourceforge.stripes.vfs.VFS - Using VFS adapter net.sourceforge.stripes.vfs.DefaultVFS
+[INFO] [talledLocalContainer] [main] INFO net.sourceforge.stripes.localization.DefaultLocalePicker - No locale list specified, defaulting to single locale: en_US
+[INFO] [talledLocalContainer] [main] WARN net.sourceforge.stripes.controller.multipart.DefaultMultipartWrapperFactory - No MultipartWrapper implementation could be loaded
+[INFO] [talledLocalContainer] [main] INFO net.sourceforge.stripes.controller.StripesFilter - Stripes Initialization Complete. Version: 1.6.0, Build: 1.6.0
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:57 PM org.apache.catalina.startup.HostConfig deployWAR
+[INFO] [talledLocalContainer] INFO: Deployment of web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/jpetstore.war] has finished in [18,530] ms
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:57 PM org.apache.catalina.startup.HostConfig deployWAR
+[INFO] [talledLocalContainer] INFO: Deploying web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/cargocpc.war]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:57 PM org.apache.catalina.startup.HostConfig deployWAR
+[INFO] [talledLocalContainer] INFO: Deployment of web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/cargocpc.war] has finished in [166] ms
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:57 PM org.apache.catalina.startup.HostConfig deployDirectory
+[INFO] [talledLocalContainer] INFO: Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/host-manager]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:58 PM org.apache.catalina.startup.HostConfig deployDirectory
+[INFO] [talledLocalContainer] INFO: Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/host-manager] has finished in [180] ms
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:58 PM org.apache.catalina.startup.HostConfig deployDirectory
+[INFO] [talledLocalContainer] INFO: Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/manager]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:58 PM org.apache.catalina.startup.HostConfig deployDirectory
+[INFO] [talledLocalContainer] INFO: Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/configurations/tomcat9x/webapps/manager] has finished in [115] ms
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:58 PM org.apache.coyote.AbstractProtocol start
+[INFO] [talledLocalContainer] INFO: Starting ProtocolHandler ["http-nio-8080"]
+[INFO] [talledLocalContainer] Apr 12, 2023 1:37:58 PM org.apache.catalina.startup.Catalina start
+[INFO] [talledLocalContainer] INFO: Server startup in [19364] milliseconds
+[INFO] [talledLocalContainer] Tomcat 9.x started on port [8080]
+[INFO] Press Ctrl-C to stop the container...
+[INFO] [talledLocalContainer] [http-nio-8080-exec-3] INFO net.sourceforge.stripes.validation.expression.ExpressionValidator - Expression validation will be performed using: net.sourceforge.stripes.validation.expression.Jsp21ExpressionExecutor
+[INFO] [talledLocalContainer] {}
+[INFO] [talledLocalContainer] service: 
+[INFO] [talledLocalContainer] {opentelemetry-trace-span-key=SdkSpan{traceId=36b0aca9de300503062ec923c9b374e7, spanId=c56380212bfc21f3, parentSpanContext=ImmutableSpanContext{traceId=00000000000000000000000000000000, spanId=0000000000000000, traceFlags=00, traceState=ArrayBasedTraceState{entries=[]}, remote=false, valid=false}, name=ActionBean: viewCategory, kind=INTERNAL, attributes=null, status=ImmutableStatusData{statusCode=UNSET, description=}, totalRecordedEvents=0, totalRecordedLinks=0, startEpochNanos=1681277889302263557, endEpochNanos=0}}
+[INFO] [talledLocalContainer] Apr 12, 2023 1:38:18 PM org.apache.catalina.core.ApplicationDispatcher invoke
+[INFO] [talledLocalContainer] SEVERE: Servlet.service() for servlet [jsp] threw exception
+[INFO] [talledLocalContainer] javax.el.PropertyNotFoundException: Property [name] not found on type [org.mybatis.jpetstore.domain.Category]
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.get(BeanELResolver.java:261)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.access$300(BeanELResolver.java:213)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.property(BeanELResolver.java:334)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.getValue(BeanELResolver.java:95)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.el.JasperELResolver.getValue(JasperELResolver.java:124)
+[INFO] [talledLocalContainer] 	at org.apache.el.parser.AstValue.getValue(AstValue.java:168)
+[INFO] [talledLocalContainer] 	at org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:692)
+[INFO] [talledLocalContainer] 	at org.apache.jsp.WEB_002dINF.jsp.catalog.Category_jsp._jspService(Category_jsp.java:251)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:466)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:379)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:327)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:711)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:459)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:385)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:313)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.action.ForwardResolution.execute(ForwardResolution.java:131)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper$7.intercept(DispatcherHelper.java:497)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:176)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.HttpCacheInterceptor.intercept(HttpCacheInterceptor.java:103)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.BeforeAfterMethodInterceptor.intercept(BeforeAfterMethodInterceptor.java:113)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.wrap(ExecutionContext.java:86)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper.executeResolution(DispatcherHelper.java:491)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.executeResolution(DispatcherServlet.java:286)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.service(DispatcherServlet.java:170)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.StripesFilter.doFilter(StripesFilter.java:260)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+[INFO] [talledLocalContainer] 	at java.base/java.lang.Thread.run(Thread.java:1589)
+[INFO] [talledLocalContainer] 
+[INFO] [talledLocalContainer] [http-nio-8080-exec-3] WARN net.sourceforge.stripes.exception.DefaultExceptionHandler - Unhandled exception caught by the Stripes default exception handler.
+[INFO] [talledLocalContainer] org.apache.jasper.JasperException: javax.el.PropertyNotFoundException: Property [name] not found on type [org.mybatis.jpetstore.domain.Category]
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:623)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:499)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:379)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:327)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:711)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:459)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:385)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:313)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.action.ForwardResolution.execute(ForwardResolution.java:131)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper$7.intercept(DispatcherHelper.java:497)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:176)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.HttpCacheInterceptor.intercept(HttpCacheInterceptor.java:103)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.BeforeAfterMethodInterceptor.intercept(BeforeAfterMethodInterceptor.java:113)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.wrap(ExecutionContext.java:86)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper.executeResolution(DispatcherHelper.java:491)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.executeResolution(DispatcherServlet.java:286)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.service(DispatcherServlet.java:170)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.StripesFilter.doFilter(StripesFilter.java:260)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+[INFO] [talledLocalContainer] 	at java.base/java.lang.Thread.run(Thread.java:1589)
+[INFO] [talledLocalContainer] Caused by: javax.el.PropertyNotFoundException: Property [name] not found on type [org.mybatis.jpetstore.domain.Category]
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.get(BeanELResolver.java:261)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.access$300(BeanELResolver.java:213)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.property(BeanELResolver.java:334)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.getValue(BeanELResolver.java:95)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.el.JasperELResolver.getValue(JasperELResolver.java:124)
+[INFO] [talledLocalContainer] 	at org.apache.el.parser.AstValue.getValue(AstValue.java:168)
+[INFO] [talledLocalContainer] 	at org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:692)
+[INFO] [talledLocalContainer] 	at org.apache.jsp.WEB_002dINF.jsp.catalog.Category_jsp._jspService(Category_jsp.java:251)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:466)
+[INFO] [talledLocalContainer] 	... 49 more
+[INFO] [talledLocalContainer] Apr 12, 2023 1:38:18 PM org.apache.catalina.core.StandardWrapperValve invoke
+[INFO] [talledLocalContainer] SEVERE: Servlet.service() for servlet [StripesDispatcher] in context with path [/jpetstore] threw exception [javax.el.PropertyNotFoundException: Property [name] not found on type [org.mybatis.jpetstore.domain.Category]] with root cause
+[INFO] [talledLocalContainer] javax.el.PropertyNotFoundException: Property [name] not found on type [org.mybatis.jpetstore.domain.Category]
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.get(BeanELResolver.java:261)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver$BeanProperties.access$300(BeanELResolver.java:213)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.property(BeanELResolver.java:334)
+[INFO] [talledLocalContainer] 	at javax.el.BeanELResolver.getValue(BeanELResolver.java:95)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.el.JasperELResolver.getValue(JasperELResolver.java:124)
+[INFO] [talledLocalContainer] 	at org.apache.el.parser.AstValue.getValue(AstValue.java:168)
+[INFO] [talledLocalContainer] 	at org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:692)
+[INFO] [talledLocalContainer] 	at org.apache.jsp.WEB_002dINF.jsp.catalog.Category_jsp._jspService(Category_jsp.java:251)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:466)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:379)
+[INFO] [talledLocalContainer] 	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:327)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:711)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:459)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:385)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:313)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.action.ForwardResolution.execute(ForwardResolution.java:131)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper$7.intercept(DispatcherHelper.java:497)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:176)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.HttpCacheInterceptor.intercept(HttpCacheInterceptor.java:103)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.BeforeAfterMethodInterceptor.intercept(BeforeAfterMethodInterceptor.java:113)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.proceed(ExecutionContext.java:173)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.ExecutionContext.wrap(ExecutionContext.java:86)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherHelper.executeResolution(DispatcherHelper.java:491)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.executeResolution(DispatcherServlet.java:286)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.DispatcherServlet.service(DispatcherServlet.java:170)
+[INFO] [talledLocalContainer] 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at net.sourceforge.stripes.controller.StripesFilter.doFilter(StripesFilter.java:260)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+[INFO] [talledLocalContainer] 	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+[INFO] [talledLocalContainer] 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+[INFO] [talledLocalContainer] 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+[INFO] [talledLocalContainer] 	at java.base/java.lang.Thread.run(Thread.java:1589)
+[INFO] [talledLocalContainer] 
+[INFO] [talledLocalContainer] Tomcat 9.x is stopping...
+[WARNING] [cherLoggerRedirector] Error reading process stream: java.io.IOException: Stream closed
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  19:52 min
+[INFO] Finished at: 2023-04-12T13:57:20+08:00
+[INFO] ------------------------------------------------------------------------
+[WARNING] Failed stopping the container
+org.codehaus.cargo.container.ContainerException: Failed to stop the Tomcat 9.x container.
+    at org.codehaus.cargo.container.spi.AbstractLocalContainer.stop (AbstractLocalContainer.java:309)
+    at org.codehaus.cargo.maven3.ContainerRunMojo$1.run (ContainerRunMojo.java:81)
+Caused by: java.lang.IllegalStateException: Shutdown in progress
+    at java.lang.ApplicationShutdownHooks.add (ApplicationShutdownHooks.java:67)
+    at java.lang.Runtime.addShutdownHook (Runtime.java:216)
+    at org.codehaus.cargo.container.spi.jvm.DefaultJvmLauncher.start (DefaultJvmLauncher.java:555)
+    at org.codehaus.cargo.container.tomcat.internal.AbstractCatalinaInstalledLocalContainer.invokeContainer (AbstractCatalinaInstalledLocalContainer.java:199)
+    at org.codehaus.cargo.container.tomcat.Tomcat7xInstalledLocalContainer.invokeContainer (Tomcat7xInstalledLocalContainer.java:79)
+    at org.codehaus.cargo.container.tomcat.internal.AbstractCatalinaInstalledLocalContainer.doStop (AbstractCatalinaInstalledLocalContainer.java:143)
+    at org.codehaus.cargo.container.spi.AbstractInstalledLocalContainer.stopInternal (AbstractInstalledLocalContainer.java:312)
+    at org.codehaus.cargo.container.spi.AbstractLocalContainer.stop (AbstractLocalContainer.java:288)
+    at org.codehaus.cargo.maven3.ContainerRunMojo$1.run (ContainerRunMojo.java:81)
