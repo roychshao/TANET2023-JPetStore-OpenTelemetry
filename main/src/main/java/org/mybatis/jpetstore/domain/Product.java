@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 
@@ -36,58 +36,88 @@ public class Product implements Serializable {
   private String description;
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public String getProductId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getProductId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getProductId() {
+    Span span = tracer.spanBuilder("Domain: getProductId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return productId;
   }
 
-  public void setProductId(String productId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setProductId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.productId = productId.trim();
-    span.end();
+  public void setProductId(String productId) {
+    Span span = tracer.spanBuilder("Domain: setProductId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.productId = productId.trim();
+    } finally {
+      span.end();
+    }
   }
 
-  public String getCategoryId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCategoryId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getCategoryId() {
+    Span span = tracer.spanBuilder("Domain: getCategoryId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return categoryId;
   }
 
-  public void setCategoryId(String categoryId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setCategoryId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.categoryId = categoryId;
-    span.end();
+  public void setCategoryId(String categoryId) {
+    Span span = tracer.spanBuilder("Domain: setCategoryId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.categoryId = categoryId;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getName(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getName").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getName() {
+    Span span = tracer.spanBuilder("Domain: getName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return name;
   }
 
-  public void setName(String name, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setName").setParent(Context.current().with(parentSpan)).startSpan();
-    this.name = name;
-    span.end();
+  public void setName(String name) {
+    Span span = tracer.spanBuilder("Domain: setName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.name = name;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getDescription(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getDescription").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getDescription() {
+    Span span = tracer.spanBuilder("Domain: getDescription").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return description;
   }
 
-  public void setDescription(String description, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setDescription").setParent(Context.current().with(parentSpan)).startSpan();
-    this.description = description;
-    span.end();
+  public void setDescription(String description) {
+    Span span = tracer.spanBuilder("Domain: setDescription").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.description = description;
+    } finally {
+      span.end();
+    }
   }
 
   @Override
   public String toString() {
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
-    return getName(span);
+    String result = "";
+    try (Scope ss = span.makeCurrent()) {
+      result = getName();
+    } finally {
+      span.end();
+    }
+    return result;
   }
 
 }

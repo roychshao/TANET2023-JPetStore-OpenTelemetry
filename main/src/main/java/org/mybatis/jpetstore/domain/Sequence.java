@@ -15,6 +15,10 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
+
 import java.io.Serializable;
 
 /**
@@ -28,6 +32,7 @@ public class Sequence implements Serializable {
 
   private String name;
   private int nextId;
+  private transient final Tracer tracer = Tracing.getTracer();
 
   public Sequence() {
   }
@@ -38,19 +43,39 @@ public class Sequence implements Serializable {
   }
 
   public String getName() {
+    Span span = tracer.spanBuilder("Sequence Domain: getName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return name;
   }
 
   public void setName(String name) {
-    this.name = name;
+    Span span = tracer.spanBuilder("Sequence Domain: setName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.name = name;
+    } finally {
+      span.end();
+    }
   }
 
   public int getNextId() {
+    Span span = tracer.spanBuilder("Sequence Domain: getNextId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return nextId;
   }
 
   public void setNextId(int nextId) {
-    this.nextId = nextId;
+    Span span = tracer.spanBuilder("Sequence Domain: setNextId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.nextId = nextId;
+    } finally {
+      span.end();
+    }
   }
 
 }

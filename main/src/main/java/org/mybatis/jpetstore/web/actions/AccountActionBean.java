@@ -18,6 +18,7 @@ package org.mybatis.jpetstore.web.actions;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,73 +74,104 @@ public class AccountActionBean extends AbstractActionBean {
   }
 
   public Account getAccount() {
-    Span span = tracer.spanBuilder("ActionBean: getAccount").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return this.account;
   }
 
   public String getUsername() {
-    Span span = tracer.spanBuilder("ActionBean: getUsername").setParent(rootContext).startSpan();
-    String result = account.getUsername(span);
-    System.out.println("from getUsername: " + result);
-    System.out.println(rootContext);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getUsername").startSpan();
+    String result = "";
+    try (Scope ss = span.makeCurrent()) {
+      result = account.getUsername();
+      // System.out.println("from getUsername: " + result);
+      // System.out.println(rootContext);
+    } finally {
+      span.end();
+    }
     return result;
   }
 
   @Validate(required = true, on = { "signon", "newAccount", "editAccount" })
   public void setUsername(String username) {
-    Span span = tracer.spanBuilder("ActionBean: setUsername").setParent(rootContext).startSpan();
-    account.setUsername(username, span);
+    Span span = tracer.spanBuilder("ActionBean: setUsername").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      account.setUsername(username);
 
-    String result = account.getUsername(span);
-    System.out.println("from setUsername: " + result);
-    System.out.println(rootContext);
-
-    span.end();
+      // String result = account.getUsername(span);
+      // System.out.println("from setUsername: " + result);
+      // System.out.println(rootContext);
+    } finally {
+      span.end();
+    }
   }
 
   public String getPassword() {
-    Span span = tracer.spanBuilder("ActionBean: getPassword").setParent(rootContext).startSpan();
-    String result = account.getPassword(span);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getPassword").startSpan();
+    String result = "";
+    try (Scope ss = span.makeCurrent()) {
+      result = account.getPassword();
+    } finally {
+      span.end();
+    }
     return result;
   }
 
   @Validate(required = true, on = { "signon", "newAccount", "editAccount" })
   public void setPassword(String password) {
-    Span span = tracer.spanBuilder("ActionBeanL setPassword").setParent(rootContext).startSpan();
-    account.setPassword(password, span);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBeanL setPassword").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      account.setPassword(password);
+    } finally {
+      span.end();
+    }
   }
 
   public List<Product> getMyList() {
-    Span span = tracer.spanBuilder("ActionBean: getMyList").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getMyList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return myList;
   }
 
   public void setMyList(List<Product> myList) {
-    Span span = tracer.spanBuilder("ActionBean: setMyList").setParent(rootContext).startSpan();
-    this.myList = myList;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setMyList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.myList = myList;
+    } finally {
+      span.end();
+    }
   }
 
   public List<String> getLanguages() {
-    Span span = tracer.spanBuilder("ActionBean: getLanguages").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getLanguages").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return LANGUAGE_LIST;
   }
 
   public List<String> getCategories() {
-    Span span = tracer.spanBuilder("ActionBean: getCategories").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getCategories").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return CATEGORY_LIST;
   }
 
   public Resolution newAccountForm() {
-    Span span = tracer.spanBuilder("ActionBean: newAccountForm").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: newAccountForm").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(NEW_ACCOUNT);
   }
 
@@ -149,12 +181,15 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newAccount() {
-    Span span = tracer.spanBuilder("ActionBean: newAccount").setParent(rootContext).startSpan();
-    accountService.insertAccount(account, span);
-    account = accountService.getAccount(account.getUsername(span));
-    myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
-    authenticated = true;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: newAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      accountService.insertAccount(account);
+      account = accountService.getAccount(account.getUsername());
+      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+      authenticated = true;
+    } finally {
+      span.end();
+    }
     return new RedirectResolution(CatalogActionBean.class);
   }
 
@@ -164,8 +199,11 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution editAccountForm() {
-    Span span = tracer.spanBuilder("ActionBean: editAccountForm").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: editAccountForm").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(EDIT_ACCOUNT);
   }
 
@@ -175,11 +213,14 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution editAccount() {
-    Span span = tracer.spanBuilder("ActionBean: editAccount").setParent(rootContext).startSpan();
-    accountService.updateAccount(account);
-    account = accountService.getAccount(account.getUsername(span));
-    myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: editAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      accountService.updateAccount(account);
+      account = accountService.getAccount(account.getUsername());
+      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+    } finally {
+      span.end();
+    }
     return new RedirectResolution(CatalogActionBean.class);
   }
 
@@ -190,8 +231,11 @@ public class AccountActionBean extends AbstractActionBean {
    */
   @DefaultHandler
   public Resolution signonForm() {
-    Span span = tracer.spanBuilder("ActionBean: signonForm").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: signonForm").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(SIGNON);
   }
 
@@ -201,24 +245,26 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution signon() {
-    Span span = tracer.spanBuilder("ActionBean: signon").setParent(rootContext).startSpan();
-    account = accountService.getAccount(getUsername(), getPassword(), span);
+    Span span = tracer.spanBuilder("ActionBean: signon").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      account = accountService.getAccount(getUsername(), getPassword());
 
-    if (account == null) {
-      String value = "Invalid username or password.  Signon failed.";
-      setMessage(value);
-      clear(span);
-      span.end();
-      return new ForwardResolution(SIGNON);
-    } else {
-      account.setPassword(null, span);
-      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId(span), span);
-      authenticated = true;
-      HttpSession s = context.getRequest().getSession();
-      // this bean is already registered as /actions/Account.action
-      s.setAttribute("accountBean", this);
-      span.end();
-      return new RedirectResolution(CatalogActionBean.class);
+      if (account == null) {
+        String value = "Invalid username or password.  Signon failed.";
+        setMessage(value);
+        clear();
+        span.end();
+        return new ForwardResolution(SIGNON);
+      } else {
+        account.setPassword(null);
+        myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+        authenticated = true;
+        HttpSession s = context.getRequest().getSession();
+        // this bean is already registered as /actions/Account.action
+        s.setAttribute("accountBean", this);
+        span.end();
+        return new RedirectResolution(CatalogActionBean.class);
+      }
     }
   }
 
@@ -228,10 +274,13 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution signoff() {
-    Span span = tracer.spanBuilder("ActionBean: signoff").setParent(rootContext).startSpan();
-    context.getRequest().getSession().invalidate();
-    clear(span);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: signoff").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      context.getRequest().getSession().invalidate();
+      clear();
+    } finally {
+      span.end();
+    }
     return new RedirectResolution(CatalogActionBean.class);
   }
 
@@ -241,20 +290,26 @@ public class AccountActionBean extends AbstractActionBean {
    * @return true, if is authenticated
    */
   public boolean isAuthenticated() {
-    Span span = tracer.spanBuilder("ActionBean: isAuthenticated").setParent(rootContext).startSpan();
-    span.end();
-    return authenticated && account != null && account.getUsername(span) != null;
+    Span span = tracer.spanBuilder("ActionBean: isAuthenticated").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
+    return authenticated && account != null && account.getUsername() != null;
   }
 
   /**
    * Clear.
    */
-  public void clear(Span parentSpan) {
-    Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
-    account = new Account();
-    myList = null;
-    authenticated = false;
-    span.end();
+  public void clear() {
+    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      account = new Account();
+      myList = null;
+      authenticated = false;
+    } finally {
+      span.end();
+    }
   }
 
 }

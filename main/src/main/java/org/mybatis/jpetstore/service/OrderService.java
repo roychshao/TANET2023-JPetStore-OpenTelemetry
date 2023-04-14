@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.service;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,25 +63,28 @@ public class OrderService {
    *          the order
    */
   @Transactional
-  public void insertOrder(Order order, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: insertOrder").setParent(Context.current().with(parentSpan)).startSpan();
-    order.setOrderId(getNextId("ordernum"), span);
-    order.getLineItems(span).forEach(lineItem -> {
-      String itemId = lineItem.getItemId(span);
-      Integer increment = lineItem.getQuantity(span);
-      Map<String, Object> param = new HashMap<>(2);
-      param.put("itemId", itemId);
-      param.put("increment", increment);
-      itemMapper.updateInventoryQuantity(param);
-    });
+  public void insertOrder(Order order) {
+    Span span = tracer.spanBuilder("Service: insertOrder").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      order.setOrderId(getNextId("ordernum"));
+      order.getLineItems().forEach(lineItem -> {
+        String itemId = lineItem.getItemId();
+        Integer increment = lineItem.getQuantity();
+        Map<String, Object> param = new HashMap<>(2);
+        param.put("itemId", itemId);
+        param.put("increment", increment);
+        itemMapper.updateInventoryQuantity(param);
+      });
 
-    orderMapper.insertOrder(order);
-    orderMapper.insertOrderStatus(order);
-    order.getLineItems(span).forEach(lineItem -> {
-      lineItem.setOrderId(order.getOrderId(span), span);
-      lineItemMapper.insertLineItem(lineItem);
-    });
-    span.end();
+      orderMapper.insertOrder(order);
+      orderMapper.insertOrderStatus(order);
+      order.getLineItems().forEach(lineItem -> {
+        lineItem.setOrderId(order.getOrderId());
+        lineItemMapper.insertLineItem(lineItem);
+      });
+    } finally {
+      span.end();
+    }
   }
 
   /**
@@ -93,16 +96,21 @@ public class OrderService {
    * @return the order
    */
   @Transactional
-  public Order getOrder(int orderId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getOrder").setParent(Context.current().with(parentSpan)).startSpan();
-    Order order = orderMapper.getOrder(orderId);
-    order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId), span);
+  public Order getOrder(int orderId) {
+    Span span = tracer.spanBuilder("Service: getOrder").startSpan();
+    Order order = new Order();
+    try (Scope ss = span.makeCurrent()) {
+      order = orderMapper.getOrder(orderId);
+      order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
 
-    order.getLineItems(span).forEach(lineItem -> {
-      Item item = itemMapper.getItem(lineItem.getItemId(span));
-      item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId(span)), span);
-      lineItem.setItem(item, span);
-    });
+      order.getLineItems().forEach(lineItem -> {
+        Item item = itemMapper.getItem(lineItem.getItemId());
+        item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId()));
+        lineItem.setItem(item);
+      });
+    } finally {
+      span.end();
+    }
 
     return order;
   }
@@ -115,10 +123,12 @@ public class OrderService {
    *
    * @return the orders by username
    */
-  public List<Order> getOrdersByUsername(String username, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getOrdersByUsername").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public List<Order> getOrdersByUsername(String username) {
+    Span span = tracer.spanBuilder("Service: getOrdersByUsername").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return orderMapper.getOrdersByUsername(username);
   }
 
@@ -131,14 +141,21 @@ public class OrderService {
    * @return the next id
    */
   public int getNextId(String name) {
-    Sequence sequence = sequenceMapper.getSequence(new Sequence(name, -1));
-    if (sequence == null) {
-      throw new RuntimeException(
-          "Error: A null sequence was returned from the database (could not get next " + name + " sequence).");
+    Span span = tracer.spanBuilder("Service: getNextId").startSpan();
+    int result = 0;
+    try (Scope ss = span.makeCurrent()) {
+      Sequence sequence = sequenceMapper.getSequence(new Sequence(name, -1));
+      if (sequence == null) {
+        throw new RuntimeException(
+            "Error: A null sequence was returned from the database (could not get next " + name + " sequence).");
+      }
+      Sequence parameterObject = new Sequence(name, sequence.getNextId() + 1);
+      sequenceMapper.updateSequence(parameterObject);
+      result = sequence.getNextId();
+    } finally {
+      span.end();
     }
-    Sequence parameterObject = new Sequence(name, sequence.getNextId() + 1);
-    sequenceMapper.updateSequence(parameterObject);
-    return sequence.getNextId();
+    return result;
   }
 
 }

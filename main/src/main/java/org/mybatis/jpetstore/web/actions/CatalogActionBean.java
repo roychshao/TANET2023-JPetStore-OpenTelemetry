@@ -18,6 +18,7 @@ package org.mybatis.jpetstore.web.actions;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.List;
 
@@ -68,129 +69,192 @@ public class CatalogActionBean extends AbstractActionBean {
   private List<Item> itemList;
 
   public String getKeyword() {
-    Span span = tracer.spanBuilder("ActionBean: getKeyword").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getKeyword").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return keyword;
   }
 
   public void setKeyword(String keyword) {
-    Span span = tracer.spanBuilder("ActionBean: setKeyword").setParent(rootContext).startSpan();
-    this.keyword = keyword;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setKeyword").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.keyword = keyword;
+    } finally {
+      span.end();
+    }
   }
 
   public String getCategoryId() {
-    Span span = tracer.spanBuilder("ActionBean: getCategoryId").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getCategoryId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return categoryId;
   }
 
   public void setCategoryId(String categoryId) {
-    Span span = tracer.spanBuilder("ActionBean: setCategoryId").setParent(rootContext).startSpan();
-    this.categoryId = categoryId;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setCategoryId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.categoryId = categoryId;
+    } finally {
+      span.end();
+    }
   }
 
   public String getProductId() {
-    Span span = tracer.spanBuilder("ActionBean: getProductId").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getProductId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return productId;
   }
 
   public void setProductId(String productId) {
-    Span span = tracer.spanBuilder("ActionBean: setProductId").setParent(rootContext).startSpan();
-    this.productId = productId;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setProductId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.productId = productId;
+    } finally {
+      span.end();
+    }
   }
 
   public String getItemId() {
-    Span span = tracer.spanBuilder("ActionBean: getItemId").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemId;
   }
 
   public void setItemId(String itemId) {
-    Span span = tracer.spanBuilder("ActionBean: setItemId").setParent(rootContext).startSpan();
-    this.itemId = itemId;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.itemId = itemId;
+    } finally {
+      span.end();
+    }
   }
 
   public Category getCategory() {
-    Span span = tracer.spanBuilder("ActionBean: getCategoryd").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getCategoryd").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return category;
   }
 
   public void setCategory(Category category) {
-    Span span = tracer.spanBuilder("ActionBean: setCategory").setParent(rootContext).startSpan();
-    this.category = category;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setCategory").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.category = category;
+    } finally {
+      span.end();
+    }
   }
 
   public Product getProduct() {
-    Span span = tracer.spanBuilder("ActionBean: getProduct").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return product;
   }
 
   public void setProduct(Product product) {
-    Span span = tracer.spanBuilder("ActionBean: setProduct").setParent(rootContext).startSpan();
-    this.product = product;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.product = product;
+    } finally {
+      span.end();
+    }
   }
 
   public Item getItem() {
-    Span span = tracer.spanBuilder("ActionBean: getItem").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return item;
   }
 
   public void setItem(Item item) {
-    Span span = tracer.spanBuilder("ActionBean: setItem").setParent(rootContext).startSpan();
-    this.item = item;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.item = item;
+    } finally {
+      span.end();
+    }
   }
 
   public List<Category> getCategoryList() {
-    Span span = tracer.spanBuilder("ActionBean: getCategoryList").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getCategoryList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return categoryList;
   }
 
   public void setCategoryList(List<Category> categoryList) {
-    Span span = tracer.spanBuilder("ActionBean: setCategoryList").setParent(rootContext).startSpan();
-    this.categoryList = categoryList;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setCategoryList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.categoryList = categoryList;
+    } finally {
+      span.end();
+    }
   }
 
   public List<Product> getProductList() {
-    Span span = tracer.spanBuilder("ActionBean: getProductList").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getProductList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return productList;
   }
 
   public void setProductList(List<Product> productList) {
-    Span span = tracer.spanBuilder("ActionBean: setProductList").setParent(rootContext).startSpan();
-    this.productList = productList;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setProductList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.productList = productList;
+    } finally {
+      span.end();
+    }
   }
 
   public List<Item> getItemList() {
-    Span span = tracer.spanBuilder("ActionBean: getItemList").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: getItemList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemList;
   }
 
   public void setItemList(List<Item> itemList) {
-    Span span = tracer.spanBuilder("ActionBean: setItemList").setParent(rootContext).startSpan();
-    this.itemList = itemList;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setItemList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.itemList = itemList;
+    } finally {
+      span.end();
+    }
   }
 
   @DefaultHandler
   public ForwardResolution viewMain() {
-    Span span = tracer.spanBuilder("ActionBean: viewMain").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: viewMain").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(MAIN);
   }
 
@@ -200,12 +264,15 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewCategory() {
-    Span span = tracer.spanBuilder("ActionBean: viewCategory").setParent(rootContext).startSpan();
-    if (categoryId != null) {
-      productList = catalogService.getProductListByCategory(categoryId, span);
-      category = catalogService.getCategory(categoryId, span);
+    Span span = tracer.spanBuilder("ActionBean: viewCategory").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (categoryId != null) {
+        productList = catalogService.getProductListByCategory(categoryId);
+        category = catalogService.getCategory(categoryId);
+      }
+    } finally {
+      span.end();
     }
-    span.end();
     return new ForwardResolution(VIEW_CATEGORY);
   }
 
@@ -215,12 +282,15 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewProduct() {
-    Span span = tracer.spanBuilder("ActionBean: viewProduct").setParent(rootContext).startSpan();
-    if (productId != null) {
-      itemList = catalogService.getItemListByProduct(productId, span);
-      product = catalogService.getProduct(productId, span);
+    Span span = tracer.spanBuilder("ActionBean: viewProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (productId != null) {
+        itemList = catalogService.getItemListByProduct(productId);
+        product = catalogService.getProduct(productId);
+      }
+    } finally {
+      span.end();
     }
-    span.end();
     return new ForwardResolution(VIEW_PRODUCT);
   }
 
@@ -230,10 +300,13 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution viewItem() {
-    Span span = tracer.spanBuilder("ActionBean: viewItem").setParent(rootContext).startSpan();
-    item = catalogService.getItem(itemId, span);
-    product = item.getProduct(span);
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: viewItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      item = catalogService.getItem(itemId);
+      product = item.getProduct();
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(VIEW_ITEM);
   }
 
@@ -243,15 +316,17 @@ public class CatalogActionBean extends AbstractActionBean {
    * @return the forward resolution
    */
   public ForwardResolution searchProducts() {
-    Span span = tracer.spanBuilder("ActionBean: searchProducts").setParent(rootContext).startSpan();
-    if (keyword == null || keyword.length() < 1) {
-      setMessage("Please enter a keyword to search for, then press the search button.");
-      span.end();
-      return new ForwardResolution(ERROR);
-    } else {
-      productList = catalogService.searchProductList(keyword.toLowerCase());
-      span.end();
-      return new ForwardResolution(SEARCH_PRODUCTS);
+    Span span = tracer.spanBuilder("ActionBean: searchProducts").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (keyword == null || keyword.length() < 1) {
+        setMessage("Please enter a keyword to search for, then press the search button.");
+        span.end();
+        return new ForwardResolution(ERROR);
+      } else {
+        productList = catalogService.searchProductList(keyword.toLowerCase());
+        span.end();
+        return new ForwardResolution(SEARCH_PRODUCTS);
+      }
     }
   }
 
@@ -259,21 +334,24 @@ public class CatalogActionBean extends AbstractActionBean {
    * Clear.
    */
   public void clear() {
-    Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
-    keyword = null;
+    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      keyword = null;
 
-    categoryId = null;
-    category = null;
-    categoryList = null;
+      categoryId = null;
+      category = null;
+      categoryList = null;
 
-    productId = null;
-    product = null;
-    productList = null;
+      productId = null;
+      product = null;
+      productList = null;
 
-    itemId = null;
-    item = null;
-    itemList = null;
-    span.end();
+      itemId = null;
+      item = null;
+      itemList = null;
+    } finally {
+      span.end();
+    }
   }
 
 }

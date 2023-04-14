@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -46,156 +46,231 @@ public class Item implements Serializable {
   private int quantity;
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public String getItemId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getItemId() {
+    Span span = tracer.spanBuilder("Domain: getItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemId;
   }
 
-  public void setItemId(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setItemId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.itemId = itemId.trim();
-    span.end();
+  public void setItemId(String itemId) {
+    Span span = tracer.spanBuilder("Domain: setItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.itemId = itemId.trim();
+    } finally {
+      span.end();
+    }
   }
 
-  public int getQuantity(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getQuantity").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getQuantity() {
+    Span span = tracer.spanBuilder("Domain: getQuantity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return quantity;
   }
 
-  public void setQuantity(int quantity, Span parentSpan) {
-    Span span = tracer.spanBuilder("setQuantity").setParent(Context.current().with(parentSpan)).startSpan();
-    this.quantity = quantity;
-    span.end();
+  public void setQuantity(int quantity) {
+    Span span = tracer.spanBuilder("setQuantity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.quantity = quantity;
+    } finally {
+      span.end();
+    }
   }
 
-  public Product getProduct(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getProduct").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Product getProduct() {
+    Span span = tracer.spanBuilder("Domain: getProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return product;
   }
 
-  public void setProduct(Product product, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setProduct").setParent(Context.current().with(parentSpan)).startSpan();
-    this.product = product;
-    span.end();
+  public void setProduct(Product product) {
+    Span span = tracer.spanBuilder("Domain: setProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.product = product;
+    } finally {
+      span.end();
+    }
   }
 
-  public int getSupplierId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getSupplierId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getSupplierId() {
+    Span span = tracer.spanBuilder("Domain: getSupplierId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return supplierId;
   }
 
-  public void setSupplierId(int supplierId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setSupplierId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.supplierId = supplierId;
-    span.end();
+  public void setSupplierId(int supplierId) {
+    Span span = tracer.spanBuilder("Domain: setSupplierId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.supplierId = supplierId;
+    } finally {
+      span.end();
+    }
   }
 
-  public BigDecimal getListPrice(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getListPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public BigDecimal getListPrice() {
+    Span span = tracer.spanBuilder("Domain: getListPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return listPrice;
   }
 
-  public void setListPrice(BigDecimal listPrice, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setListPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    this.listPrice = listPrice;
-    span.end();
+  public void setListPrice(BigDecimal listPrice) {
+    Span span = tracer.spanBuilder("Domain: setListPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.listPrice = listPrice;
+    } finally {
+      span.end();
+    }
   }
 
-  public BigDecimal getUnitCost(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getUnitCost").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public BigDecimal getUnitCost() {
+    Span span = tracer.spanBuilder("Domain: getUnitCost").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return unitCost;
   }
 
-  public void setUnitCost(BigDecimal unitCost, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setUnitCost").setParent(Context.current().with(parentSpan)).startSpan();
-    this.unitCost = unitCost;
-    span.end();
+  public void setUnitCost(BigDecimal unitCost) {
+    Span span = tracer.spanBuilder("Domain: setUnitCost").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.unitCost = unitCost;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getStatus(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getStatus").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getStatus() {
+    Span span = tracer.spanBuilder("Domain: getStatus").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return status;
   }
 
-  public void setStatus(String status, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setStatus").setParent(Context.current().with(parentSpan)).startSpan();
-    this.status = status;
-    span.end();
+  public void setStatus(String status) {
+    Span span = tracer.spanBuilder("Domain: setStatus").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.status = status;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getAttribute1(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAttribute1").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getAttribute1() {
+    Span span = tracer.spanBuilder("Domain: getAttribute1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return attribute1;
   }
 
-  public void setAttribute1(String attribute1, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setAttribute1").setParent(Context.current().with(parentSpan)).startSpan();
-    this.attribute1 = attribute1;
-    span.end();
+  public void setAttribute1(String attribute1) {
+    Span span = tracer.spanBuilder("Domain: setAttribute1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.attribute1 = attribute1;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getAttribute2(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAttribute2").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getAttribute2() {
+    Span span = tracer.spanBuilder("Domain: getAttribute2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return attribute2;
   }
 
-  public void setAttribute2(String attribute2, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setAttribute2").setParent(Context.current().with(parentSpan)).startSpan();
-    this.attribute2 = attribute2;
-    span.end();
+  public void setAttribute2(String attribute2) {
+    Span span = tracer.spanBuilder("Domain: setAttribute2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.attribute2 = attribute2;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getAttribute3(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAttribute3").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getAttribute3() {
+    Span span = tracer.spanBuilder("Domain: getAttribute3").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return attribute3;
   }
 
-  public void setAttribute3(String attribute3, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setAttribute3").setParent(Context.current().with(parentSpan)).startSpan();
-    this.attribute3 = attribute3;
-    span.end();
+  public void setAttribute3(String attribute3) {
+    Span span = tracer.spanBuilder("Domain: setAttribute3").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.attribute3 = attribute3;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getAttribute4(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAttribute4").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getAttribute4() {
+    Span span = tracer.spanBuilder("Domain: getAttribute4").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return attribute4;
   }
 
-  public void setAttribute4(String attribute4, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setAttribute4").setParent(Context.current().with(parentSpan)).startSpan();
-    this.attribute4 = attribute4;
-    span.end();
+  public void setAttribute4(String attribute4) {
+    Span span = tracer.spanBuilder("Domain: setAttribute4").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.attribute4 = attribute4;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getAttribute5(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAttribute5").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getAttribute5() {
+    Span span = tracer.spanBuilder("Domain: getAttribute5").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return attribute5;
   }
 
-  public void setAttribute5(String attribute5, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setAttribute5").setParent(Context.current().with(parentSpan)).startSpan();
-    this.attribute5 = attribute5;
-    span.end();
+  public void setAttribute5(String attribute5) {
+    Span span = tracer.spanBuilder("Domain: setAttribute5").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.attribute5 = attribute5;
+    } finally {
+      span.end();
+    }
   }
 
   @Override
   public String toString() {
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
-    result = "(" + getItemId(span) + "-" + getProduct(span).getProductId(span) + ")";
-    span.end();
+    try (Scope ss = span.makeCurrent()) {
+      result = "(" + getItemId() + "-" + getProduct().getProductId() + ")";
+    } finally {
+      span.end();
+    }
     return result;
   }
 

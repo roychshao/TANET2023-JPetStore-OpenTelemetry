@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -41,34 +41,48 @@ public class Cart implements Serializable {
   private final List<CartItem> itemList = new ArrayList<>();
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public Iterator<CartItem> getCartItems(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCartItems").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Iterator<CartItem> getCartItems() {
+    Span span = tracer.spanBuilder("Domain: getCartItems").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemList.iterator();
   }
 
-  public List<CartItem> getCartItemList(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCartItemList").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public List<CartItem> getCartItemList() {
+    Span span = tracer.spanBuilder("Domain: getCartItemList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemList;
   }
 
-  public int getNumberOfItems(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getNumberOfItems").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public int getNumberOfItems() {
+    Span span = tracer.spanBuilder("Domain: getNumberOfItems").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemList.size();
   }
 
-  public Iterator<CartItem> getAllCartItems(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getAllCartItems").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Iterator<CartItem> getAllCartItems() {
+    Span span = tracer.spanBuilder("Domain: getAllCartItems").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemList.iterator();
   }
 
-  public boolean containsItemId(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: containsItemId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public boolean containsItemId(String itemId) {
+    Span span = tracer.spanBuilder("Domain: containsItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemMap.containsKey(itemId);
   }
 
@@ -80,19 +94,22 @@ public class Cart implements Serializable {
    * @param isInStock
    *          the is in stock
    */
-  public void addItem(Item item, boolean isInStock, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: addItem").setParent(Context.current().with(parentSpan)).startSpan();
-    CartItem cartItem = itemMap.get(item.getItemId(span));
-    if (cartItem == null) {
-      cartItem = new CartItem();
-      cartItem.setItem(item, span);
-      cartItem.setQuantity(0, span);
-      cartItem.setInStock(isInStock, span);
-      itemMap.put(item.getItemId(span), cartItem);
-      itemList.add(cartItem);
+  public void addItem(Item item, boolean isInStock) {
+    Span span = tracer.spanBuilder("Domain: addItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      CartItem cartItem = itemMap.get(item.getItemId());
+      if (cartItem == null) {
+        cartItem = new CartItem();
+        cartItem.setItem(item);
+        cartItem.setQuantity(0);
+        cartItem.setInStock(isInStock);
+        itemMap.put(item.getItemId(), cartItem);
+        itemList.add(cartItem);
+      }
+      cartItem.incrementQuantity();
+    } finally {
+      span.end();
     }
-    cartItem.incrementQuantity(span);
-    span.end();
   }
 
   /**
@@ -103,17 +120,19 @@ public class Cart implements Serializable {
    *
    * @return the item
    */
-  public Item removeItemById(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: removeItemById").setParent(Context.current().with(parentSpan)).startSpan();
-    CartItem cartItem = itemMap.remove(itemId);
-    if (cartItem == null) {
-      span.end();
-      return null;
-    } else {
-      itemList.remove(cartItem);
-      Item result = cartItem.getItem(span);
-      span.end();
-      return result;
+  public Item removeItemById(String itemId) {
+    Span span = tracer.spanBuilder("Domain: removeItemById").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      CartItem cartItem = itemMap.remove(itemId);
+      if (cartItem == null) {
+        span.end();
+        return null;
+      } else {
+        itemList.remove(cartItem);
+        Item result = cartItem.getItem();
+        span.end();
+        return result;
+      }
     }
   }
 
@@ -123,20 +142,24 @@ public class Cart implements Serializable {
    * @param itemId
    *          the item id
    */
-  public void incrementQuantityByItemId(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: incrementQuantityByItemId").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    CartItem cartItem = itemMap.get(itemId);
-    cartItem.incrementQuantity(span);
-    span.end();
+  public void incrementQuantityByItemId(String itemId) {
+    Span span = tracer.spanBuilder("Domain: incrementQuantityByItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      CartItem cartItem = itemMap.get(itemId);
+      cartItem.incrementQuantity();
+    } finally {
+      span.end();
+    }
   }
 
-  public void setQuantityByItemId(String itemId, int quantity, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setQuantityByItemId").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    CartItem cartItem = itemMap.get(itemId);
-    cartItem.setQuantity(quantity, span);
-    span.end();
+  public void setQuantityByItemId(String itemId, int quantity) {
+    Span span = tracer.spanBuilder("Domain: setQuantityByItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      CartItem cartItem = itemMap.get(itemId);
+      cartItem.setQuantity(quantity);
+    } finally {
+      span.end();
+    }
   }
 
   /**
@@ -144,13 +167,15 @@ public class Cart implements Serializable {
    *
    * @return the sub total
    */
-  public BigDecimal getSubTotal(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getSubTotal").setParent(Context.current().with(parentSpan)).startSpan();
-    BigDecimal result = itemList.stream()
-        .map(cartItem -> cartItem.getItem(span).getListPrice(span).multiply(new BigDecimal(cartItem.getQuantity(span))))
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-    span.end();
-    return result;
+  public BigDecimal getSubTotal() {
+    Span span = tracer.spanBuilder("Domain: getSubTotal").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      BigDecimal result = itemList.stream()
+          .map(cartItem -> cartItem.getItem().getListPrice().multiply(new BigDecimal(cartItem.getQuantity())))
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
+      span.end();
+      return result;
+    }
   }
 
 }

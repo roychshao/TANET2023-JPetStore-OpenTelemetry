@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -54,100 +54,145 @@ public class LineItem implements Serializable {
    */
   public LineItem(int lineNumber, CartItem cartItem) {
     Span span = tracer.spanBuilder("Domain: LineItem Contructor").startSpan();
-    this.lineNumber = lineNumber;
-    this.quantity = cartItem.getQuantity(span);
-    this.itemId = cartItem.getItem(span).getItemId(span);
-    this.unitPrice = cartItem.getItem(span).getListPrice(span);
-    this.item = cartItem.getItem(span);
-    calculateTotal(span);
-    span.end();
+    try (Scope ss = span.makeCurrent()) {
+      this.lineNumber = lineNumber;
+      this.quantity = cartItem.getQuantity();
+      this.itemId = cartItem.getItem().getItemId();
+      this.unitPrice = cartItem.getItem().getListPrice();
+      this.item = cartItem.getItem();
+      calculateTotal();
+    } finally {
+      span.end();
+    }
   }
 
-  public int getOrderId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getOrderId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getOrderId() {
+    Span span = tracer.spanBuilder("Domain: getOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return orderId;
   }
 
-  public void setOrderId(int orderId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setOrderId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.orderId = orderId;
-    span.end();
+  public void setOrderId(int orderId) {
+    Span span = tracer.spanBuilder("Domain: setOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.orderId = orderId;
+    } finally {
+      span.end();
+    }
   }
 
-  public int getLineNumber(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getLineNumber").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getLineNumber() {
+    Span span = tracer.spanBuilder("Domain: getLineNumber").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return lineNumber;
   }
 
-  public void setLineNumber(int lineNumber, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setLineNumber").setParent(Context.current().with(parentSpan)).startSpan();
-    this.lineNumber = lineNumber;
-    span.end();
+  public void setLineNumber(int lineNumber) {
+    Span span = tracer.spanBuilder("Domain: setLineNumber").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.lineNumber = lineNumber;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getItemId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getItemId() {
+    Span span = tracer.spanBuilder("Domain: getItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemId;
   }
 
-  public void setItemId(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getItemId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.itemId = itemId;
-    span.end();
+  public void setItemId(String itemId) {
+    Span span = tracer.spanBuilder("Domain: getItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.itemId = itemId;
+    } finally {
+      span.end();
+    }
   }
 
-  public BigDecimal getUnitPrice(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getUnitPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public BigDecimal getUnitPrice() {
+    Span span = tracer.spanBuilder("Domain: getUnitPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return unitPrice;
   }
 
-  public void setUnitPrice(BigDecimal unitprice, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setUnitPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    this.unitPrice = unitprice;
-    span.end();
+  public void setUnitPrice(BigDecimal unitprice) {
+    Span span = tracer.spanBuilder("Domain: setUnitPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.unitPrice = unitprice;
+    } finally {
+      span.end();
+    }
   }
 
-  public BigDecimal getTotal(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getTotal").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public BigDecimal getTotal() {
+    Span span = tracer.spanBuilder("Domain: getTotal").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return total;
   }
 
-  public Item getItem(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getItem").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Item getItem() {
+    Span span = tracer.spanBuilder("Domain: getItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return item;
   }
 
-  public void setItem(Item item, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setItem").setParent(Context.current().with(parentSpan)).startSpan();
-    this.item = item;
-    calculateTotal(span);
-    span.end();
+  public void setItem(Item item) {
+    Span span = tracer.spanBuilder("Domain: setItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.item = item;
+      calculateTotal();
+    } finally {
+      span.end();
+    }
   }
 
-  public int getQuantity(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getQuantity").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getQuantity() {
+    Span span = tracer.spanBuilder("Domain: getQuantity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return quantity;
   }
 
-  public void setQuantity(int quantity, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setQuantity").setParent(Context.current().with(parentSpan)).startSpan();
-    this.quantity = quantity;
-    calculateTotal(span);
-    span.end();
+  public void setQuantity(int quantity) {
+    Span span = tracer.spanBuilder("Domain: setQuantity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.quantity = quantity;
+      calculateTotal();
+    } finally {
+      span.end();
+    }
   }
 
-  private void calculateTotal(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: calculateTotal").setParent(Context.current().with(parentSpan)).startSpan();
-    total = Optional.ofNullable(item).map(i -> i.getListPrice(span)).map(v -> v.multiply(new BigDecimal(quantity)))
-        .orElse(null);
-    span.end();
+  private void calculateTotal() {
+    Span span = tracer.spanBuilder("Domain: calculateTotal").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      total = Optional.ofNullable(item).map(i -> i.getListPrice()).map(v -> v.multiply(new BigDecimal(quantity)))
+          .orElse(null);
+    } finally {
+      span.end();
+    }
   }
 
 }

@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -64,335 +64,489 @@ public class Order implements Serializable {
   private List<LineItem> lineItems = new ArrayList<>();
   private transient final Tracer tracer = Tracing.getTracer();
 
-  public int getOrderId(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getOrderId").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public int getOrderId() {
+    Span span = tracer.spanBuilder("Domain: getOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return orderId;
   }
 
-  public void setOrderId(int orderId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setOrderId").setParent(Context.current().with(parentSpan)).startSpan();
-    this.orderId = orderId;
-    span.end();
+  public void setOrderId(int orderId) {
+    Span span = tracer.spanBuilder("Domain: setOrderId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.orderId = orderId;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getUsername(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getUsername").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getUsername() {
+    Span span = tracer.spanBuilder("Domain: getUsername").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return username;
   }
 
-  public void setUsername(String username, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setUsername").setParent(Context.current().with(parentSpan)).startSpan();
-    this.username = username;
-    span.end();
+  public void setUsername(String username) {
+    Span span = tracer.spanBuilder("Domain: setUsername").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.username = username;
+    } finally {
+      span.end();
+    }
   }
 
-  public Date getOrderDate(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getOrderDate").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Date getOrderDate() {
+    Span span = tracer.spanBuilder("Domain: getOrderDate").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return orderDate;
   }
 
-  public void setOrderDate(Date orderDate, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setOrderDate").setParent(Context.current().with(parentSpan)).startSpan();
-    this.orderDate = orderDate;
-    span.end();
+  public void setOrderDate(Date orderDate) {
+    Span span = tracer.spanBuilder("Domain: setOrderDate").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.orderDate = orderDate;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipAddress1(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipAddress1").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipAddress1() {
+    Span span = tracer.spanBuilder("Domain: getShipAddress1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipAddress1;
   }
 
-  public void setShipAddress1(String shipAddress1, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipAddress1").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipAddress1 = shipAddress1;
-    span.end();
+  public void setShipAddress1(String shipAddress1) {
+    Span span = tracer.spanBuilder("Domain: setShipAddress1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipAddress1 = shipAddress1;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipAddress2(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipAddress2").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipAddress2() {
+    Span span = tracer.spanBuilder("Domain: getShipAddress2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipAddress2;
   }
 
-  public void setShipAddress2(String shipAddress2, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipAddress2").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipAddress2 = shipAddress2;
-    span.end();
+  public void setShipAddress2(String shipAddress2) {
+    Span span = tracer.spanBuilder("Domain: setShipAddress2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipAddress2 = shipAddress2;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipCity(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipCity").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipCity() {
+    Span span = tracer.spanBuilder("Domain: getShipCity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipCity;
   }
 
-  public void setShipCity(String shipCity, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipCity").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipCity = shipCity;
-    span.end();
+  public void setShipCity(String shipCity) {
+    Span span = tracer.spanBuilder("Domain: setShipCity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipCity = shipCity;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipState(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipState").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipState() {
+    Span span = tracer.spanBuilder("Domain: getShipState").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipState;
   }
 
-  public void setShipState(String shipState, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipState").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipState = shipState;
-    span.end();
+  public void setShipState(String shipState) {
+    Span span = tracer.spanBuilder("Domain: setShipState").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipState = shipState;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipZip(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipZip").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipZip() {
+    Span span = tracer.spanBuilder("Domain: getShipZip").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipZip;
   }
 
-  public void setShipZip(String shipZip, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipZip").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipZip = shipZip;
-    span.end();
+  public void setShipZip(String shipZip) {
+    Span span = tracer.spanBuilder("Domain: setShipZip").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipZip = shipZip;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipCountry(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipCountry").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getShipCountry() {
+    Span span = tracer.spanBuilder("Domain: getShipCountry").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipCountry;
   }
 
-  public void setShipCountry(String shipCountry, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipCountry").setParent(Context.current().with(parentSpan)).startSpan();
-    this.shipCountry = shipCountry;
-    span.end();
+  public void setShipCountry(String shipCountry) {
+    Span span = tracer.spanBuilder("Domain: setShipCountry").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipCountry = shipCountry;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillAddress1(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillAddress1").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillAddress1() {
+    Span span = tracer.spanBuilder("Domain: getBillAddress1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billAddress1;
   }
 
-  public void setBillAddress1(String billAddress1, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillAddress1").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billAddress1 = billAddress1;
-    span.end();
+  public void setBillAddress1(String billAddress1) {
+    Span span = tracer.spanBuilder("Domain: setBillAddress1").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billAddress1 = billAddress1;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillAddress2(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillAddress2").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillAddress2() {
+    Span span = tracer.spanBuilder("Domain: getBillAddress2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billAddress2;
   }
 
-  public void setBillAddress2(String billAddress2, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillAddress2").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billAddress2 = billAddress2;
-    span.end();
+  public void setBillAddress2(String billAddress2) {
+    Span span = tracer.spanBuilder("Domain: setBillAddress2").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billAddress2 = billAddress2;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillCity(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillCity").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillCity() {
+    Span span = tracer.spanBuilder("Domain: getBillCity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billCity;
   }
 
-  public void setBillCity(String billCity, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillCity").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billCity = billCity;
-    span.end();
+  public void setBillCity(String billCity) {
+    Span span = tracer.spanBuilder("Domain: setBillCity").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billCity = billCity;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillState(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillState").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillState() {
+    Span span = tracer.spanBuilder("Domain: getBillState").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billState;
   }
 
-  public void setBillState(String billState, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillState").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billState = billState;
-    span.end();
+  public void setBillState(String billState) {
+    Span span = tracer.spanBuilder("Domain: setBillState").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billState = billState;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillZip(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillZip").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillZip() {
+    Span span = tracer.spanBuilder("Domain: getBillZip").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billZip;
   }
 
-  public void setBillZip(String billZip, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillZip").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billZip = billZip;
-    span.end();
+  public void setBillZip(String billZip) {
+    Span span = tracer.spanBuilder("Domain: setBillZip").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billZip = billZip;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillCountry(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillCountry").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getBillCountry() {
+    Span span = tracer.spanBuilder("Domain: getBillCountry").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billCountry;
   }
 
-  public void setBillCountry(String billCountry, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillCountry").setParent(Context.current().with(parentSpan)).startSpan();
-    this.billCountry = billCountry;
-    span.end();
+  public void setBillCountry(String billCountry) {
+    Span span = tracer.spanBuilder("Domain: setBillCountry").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billCountry = billCountry;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getCourier(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCourier").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getCourier() {
+    Span span = tracer.spanBuilder("Domain: getCourier").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return courier;
   }
 
-  public void setCourier(String courier, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setCourier").setParent(Context.current().with(parentSpan)).startSpan();
-    this.courier = courier;
-    span.end();
+  public void setCourier(String courier) {
+    Span span = tracer.spanBuilder("Domain: setCourier").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.courier = courier;
+    } finally {
+      span.end();
+    }
   }
 
-  public BigDecimal getTotalPrice(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getTotalPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public BigDecimal getTotalPrice() {
+    Span span = tracer.spanBuilder("Domain: getTotalPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return totalPrice;
   }
 
-  public void setTotalPrice(BigDecimal totalPrice, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setTotalPrice").setParent(Context.current().with(parentSpan)).startSpan();
-    this.totalPrice = totalPrice;
-    span.end();
+  public void setTotalPrice(BigDecimal totalPrice) {
+    Span span = tracer.spanBuilder("Domain: setTotalPrice").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.totalPrice = totalPrice;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillToFirstName(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillToFirstName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public String getBillToFirstName() {
+    Span span = tracer.spanBuilder("Domain: getBillToFirstName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billToFirstName;
   }
 
-  public void setBillToFirstName(String billToFirstName, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillToFirstName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    this.billToFirstName = billToFirstName;
-    span.end();
+  public void setBillToFirstName(String billToFirstName) {
+    Span span = tracer.spanBuilder("Domain: setBillToFirstName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billToFirstName = billToFirstName;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getBillToLastName(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getBillToLastName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public String getBillToLastName() {
+    Span span = tracer.spanBuilder("Domain: getBillToLastName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return billToLastName;
   }
 
-  public void setBillToLastName(String billToLastName, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setBillToLastName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    this.billToLastName = billToLastName;
-    span.end();
+  public void setBillToLastName(String billToLastName) {
+    Span span = tracer.spanBuilder("Domain: setBillToLastName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.billToLastName = billToLastName;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipToFirstName(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipToFirstName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public String getShipToFirstName() {
+    Span span = tracer.spanBuilder("Domain: getShipToFirstName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipToFirstName;
   }
 
-  public void setShipToFirstName(String shipFoFirstName, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipToFirstName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    this.shipToFirstName = shipFoFirstName;
-    span.end();
+  public void setShipToFirstName(String shipFoFirstName) {
+    Span span = tracer.spanBuilder("Domain: setShipToFirstName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipToFirstName = shipFoFirstName;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getShipToLastName(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getShipToLastName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public String getShipToLastName() {
+    Span span = tracer.spanBuilder("Domain: getShipToLastName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return shipToLastName;
   }
 
-  public void setShipToLastName(String shipToLastName, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setShipToLastName").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    this.shipToLastName = shipToLastName;
-    span.end();
+  public void setShipToLastName(String shipToLastName) {
+    Span span = tracer.spanBuilder("Domain: setShipToLastName").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.shipToLastName = shipToLastName;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getCreditCard(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCreditCard").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getCreditCard() {
+    Span span = tracer.spanBuilder("Domain: getCreditCard").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return creditCard;
   }
 
-  public void setCreditCard(String creditCard, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setCreditCard").setParent(Context.current().with(parentSpan)).startSpan();
-    this.creditCard = creditCard;
-    span.end();
+  public void setCreditCard(String creditCard) {
+    Span span = tracer.spanBuilder("Domain: setCreditCard").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.creditCard = creditCard;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getExpiryDate(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getExpiryDate").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getExpiryDate() {
+    Span span = tracer.spanBuilder("Domain: getExpiryDate").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return expiryDate;
   }
 
-  public void setExpiryDate(String expiryDate, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setExpiryDate").setParent(Context.current().with(parentSpan)).startSpan();
-    this.expiryDate = expiryDate;
-    span.end();
+  public void setExpiryDate(String expiryDate) {
+    Span span = tracer.spanBuilder("Domain: setExpiryDate").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.expiryDate = expiryDate;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getCardType(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getCardType").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getCardType() {
+    Span span = tracer.spanBuilder("Domain: getCardType").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return cardType;
   }
 
-  public void setCardType(String cardType, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setCardType").setParent(Context.current().with(parentSpan)).startSpan();
-    this.cardType = cardType;
-    span.end();
+  public void setCardType(String cardType) {
+    Span span = tracer.spanBuilder("Domain: setCardType").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.cardType = cardType;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getLocale(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getLocale").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getLocale() {
+    Span span = tracer.spanBuilder("Domain: getLocale").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return locale;
   }
 
-  public void setLocale(String locale, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setLocale").setParent(Context.current().with(parentSpan)).startSpan();
-    this.locale = locale;
-    span.end();
+  public void setLocale(String locale) {
+    Span span = tracer.spanBuilder("Domain: setLocale").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.locale = locale;
+    } finally {
+      span.end();
+    }
   }
 
-  public String getStatus(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getStatus").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public String getStatus() {
+    Span span = tracer.spanBuilder("Domain: getStatus").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return status;
   }
 
-  public void setStatus(String status, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setStatus").setParent(Context.current().with(parentSpan)).startSpan();
-    this.status = status;
-    span.end();
+  public void setStatus(String status) {
+    Span span = tracer.spanBuilder("Domain: setStatus").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.status = status;
+    } finally {
+      span.end();
+    }
   }
 
-  public void setLineItems(List<LineItem> lineItems, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: setLineItems").setParent(Context.current().with(parentSpan)).startSpan();
-    this.lineItems = lineItems;
-    span.end();
+  public void setLineItems(List<LineItem> lineItems) {
+    Span span = tracer.spanBuilder("Domain: setLineItems").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.lineItems = lineItems;
+    } finally {
+      span.end();
+    }
   }
 
-  public List<LineItem> getLineItems(Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: getLineItems").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public List<LineItem> getLineItems() {
+    Span span = tracer.spanBuilder("Domain: getLineItems").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return lineItems;
   }
 
@@ -404,60 +558,67 @@ public class Order implements Serializable {
    * @param cart
    *          the cart
    */
-  public void initOrder(Account account, Cart cart, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: initOrder").setParent(Context.current().with(parentSpan)).startSpan();
+  public void initOrder(Account account, Cart cart) {
+    Span span = tracer.spanBuilder("Domain: initOrder").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      username = account.getUsername();
+      orderDate = new Date();
 
-    username = account.getUsername(span);
-    orderDate = new Date();
+      shipToFirstName = account.getFirstName();
+      shipToLastName = account.getLastName();
+      shipAddress1 = account.getAddress1();
+      shipAddress2 = account.getAddress2();
+      shipCity = account.getCity();
+      shipState = account.getState();
+      shipZip = account.getZip();
+      shipCountry = account.getCountry();
 
-    shipToFirstName = account.getFirstName(span);
-    shipToLastName = account.getLastName(span);
-    shipAddress1 = account.getAddress1(span);
-    shipAddress2 = account.getAddress2(span);
-    shipCity = account.getCity(span);
-    shipState = account.getState(span);
-    shipZip = account.getZip(span);
-    shipCountry = account.getCountry(span);
+      billToFirstName = account.getFirstName();
+      billToLastName = account.getLastName();
+      billAddress1 = account.getAddress1();
+      billAddress2 = account.getAddress2();
+      billCity = account.getCity();
+      billState = account.getState();
+      billZip = account.getZip();
+      billCountry = account.getCountry();
 
-    billToFirstName = account.getFirstName(span);
-    billToLastName = account.getLastName(span);
-    billAddress1 = account.getAddress1(span);
-    billAddress2 = account.getAddress2(span);
-    billCity = account.getCity(span);
-    billState = account.getState(span);
-    billZip = account.getZip(span);
-    billCountry = account.getCountry(span);
+      totalPrice = cart.getSubTotal();
 
-    totalPrice = cart.getSubTotal(span);
+      creditCard = "999 9999 9999 9999";
+      expiryDate = "12/03";
+      cardType = "Visa";
+      courier = "UPS";
+      locale = "CA";
+      status = "P";
 
-    creditCard = "999 9999 9999 9999";
-    expiryDate = "12/03";
-    cardType = "Visa";
-    courier = "UPS";
-    locale = "CA";
-    status = "P";
+      Iterator<CartItem> i = cart.getAllCartItems();
+      while (i.hasNext()) {
+        CartItem cartItem = i.next();
+        addLineItem(cartItem);
+      }
 
-    Iterator<CartItem> i = cart.getAllCartItems(span);
-    while (i.hasNext()) {
-      CartItem cartItem = i.next();
-      addLineItem(cartItem, span);
+    } finally {
+      span.end();
     }
-
   }
 
-  public void addLineItem(CartItem cartItem, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: addLineItem (CartItem)").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
-    addLineItem(lineItem, span);
-    span.end();
+  public void addLineItem(CartItem cartItem) {
+    Span span = tracer.spanBuilder("Domain: addLineItem (CartItem)").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
+      addLineItem(lineItem);
+    } finally {
+      span.end();
+    }
   }
 
-  public void addLineItem(LineItem lineItem, Span parentSpan) {
-    Span span = tracer.spanBuilder("Domain: addLineItem (LineItem)").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    lineItems.add(lineItem);
-    span.end();
+  public void addLineItem(LineItem lineItem) {
+    Span span = tracer.spanBuilder("Domain: addLineItem (LineItem)").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      lineItems.add(lineItem);
+    } finally {
+      span.end();
+    }
   }
 
 }

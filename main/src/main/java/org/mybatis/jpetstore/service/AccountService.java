@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.service;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.Optional;
 
@@ -43,12 +43,20 @@ public class AccountService {
   }
 
   public Account getAccount(String username) {
+    Span span = tracer.spanBuilder("Service: getAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return accountMapper.getAccountByUsername(username);
   }
 
-  public Account getAccount(String username, String password, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getAccount").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Account getAccount(String username, String password) {
+    Span span = tracer.spanBuilder("Service: getAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return accountMapper.getAccountByUsernameAndPassword(username, password);
   }
 
@@ -59,12 +67,15 @@ public class AccountService {
    *          the account
    */
   @Transactional
-  public void insertAccount(Account account, Span parentSpan) {
-    Span span = tracer.spanBuilder("service: insertAccount").setParent(Context.current().with(parentSpan)).startSpan();
-    accountMapper.insertAccount(account);
-    accountMapper.insertProfile(account);
-    accountMapper.insertSignon(account);
-    span.end();
+  public void insertAccount(Account account) {
+    Span span = tracer.spanBuilder("service: insertAccount").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      accountMapper.insertAccount(account);
+      accountMapper.insertProfile(account);
+      accountMapper.insertSignon(account);
+    } finally {
+      span.end();
+    }
   }
 
   /**
@@ -76,12 +87,15 @@ public class AccountService {
   @Transactional
   public void updateAccount(Account account) {
     Span span = tracer.spanBuilder("service: updateAccount").startSpan();
-    accountMapper.updateAccount(account);
-    accountMapper.updateProfile(account);
+    try (Scope ss = span.makeCurrent()) {
+      accountMapper.updateAccount(account);
+      accountMapper.updateProfile(account);
 
-    Optional.ofNullable(account.getPassword(span)).filter(password -> password.length() > 0)
-        .ifPresent(password -> accountMapper.updateSignon(account));
-    span.end();
+      Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
+          .ifPresent(password -> accountMapper.updateSignon(account));
+    } finally {
+      span.end();
+    }
   }
 
 }

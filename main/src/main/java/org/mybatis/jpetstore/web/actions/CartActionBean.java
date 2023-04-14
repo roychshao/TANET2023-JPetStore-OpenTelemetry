@@ -18,6 +18,7 @@ package org.mybatis.jpetstore.web.actions;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.Iterator;
 
@@ -56,21 +57,31 @@ public class CartActionBean extends AbstractActionBean {
   private String workingItemId;
 
   public Cart getCart() {
-    Span span = tracer.spanBuilder("ActionBean: getCart").setParent(rootContext).startSpan();
+    Span span = tracer.spanBuilder("ActionBean: getCart").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     span.end();
     return cart;
   }
 
   public void setCart(Cart cart) {
-    Span span = tracer.spanBuilder("ActionBean: setCart").setParent(rootContext).startSpan();
-    this.cart = cart;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setCart").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.cart = cart;
+    } finally {
+      span.end();
+    }
   }
 
   public void setWorkingItemId(String workingItemId) {
-    Span span = tracer.spanBuilder("ActionBean: setWorkingItemId").setParent(rootContext).startSpan();
-    this.workingItemId = workingItemId;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: setWorkingItemId").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      this.workingItemId = workingItemId;
+    } finally {
+      span.end();
+    }
   }
 
   /**
@@ -79,18 +90,21 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution addItemToCart() {
-    Span span = tracer.spanBuilder("ActionBean: addItemToCart").setParent(rootContext).startSpan();
-    if (cart.containsItemId(workingItemId, span)) {
-      cart.incrementQuantityByItemId(workingItemId, span);
-    } else {
-      // isInStock is a "real-time" property that must be updated
-      // every time an item is added to the cart, even if other
-      // item details are cached.
-      boolean isInStock = catalogService.isItemInStock(workingItemId, span);
-      Item item = catalogService.getItem(workingItemId, span);
-      cart.addItem(item, isInStock, span);
+    Span span = tracer.spanBuilder("ActionBean: addItemToCart").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      if (cart.containsItemId(workingItemId)) {
+        cart.incrementQuantityByItemId(workingItemId);
+      } else {
+        // isInStock is a "real-time" property that must be updated
+        // every time an item is added to the cart, even if other
+        // item details are cached.
+        boolean isInStock = catalogService.isItemInStock(workingItemId);
+        Item item = catalogService.getItem(workingItemId);
+        cart.addItem(item, isInStock);
+      }
+    } finally {
+      span.end();
     }
-    span.end();
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -100,16 +114,18 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution removeItemFromCart() {
-    Span span = tracer.spanBuilder("ActionBean: removeItemFromCart").setParent(rootContext).startSpan();
-    Item item = cart.removeItemById(workingItemId, span);
+    Span span = tracer.spanBuilder("ActionBean: removeItemFromCart").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      Item item = cart.removeItemById(workingItemId);
 
-    if (item == null) {
-      setMessage("Attempted to remove null CartItem from Cart.");
-      span.end();
-      return new ForwardResolution(ERROR);
-    } else {
-      span.end();
-      return new ForwardResolution(VIEW_CART);
+      if (item == null) {
+        setMessage("Attempted to remove null CartItem from Cart.");
+        span.end();
+        return new ForwardResolution(ERROR);
+      } else {
+        span.end();
+        return new ForwardResolution(VIEW_CART);
+      }
     }
   }
 
@@ -119,44 +135,56 @@ public class CartActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution updateCartQuantities() {
-    Span span = tracer.spanBuilder("ActionBean: updateCartQuantities").setParent(rootContext).startSpan();
-    HttpServletRequest request = context.getRequest();
+    Span span = tracer.spanBuilder("ActionBean: updateCartQuantities").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      HttpServletRequest request = context.getRequest();
 
-    Iterator<CartItem> cartItems = getCart().getAllCartItems(span);
-    while (cartItems.hasNext()) {
-      CartItem cartItem = cartItems.next();
-      String itemId = cartItem.getItem(span).getItemId(span);
-      try {
-        int quantity = Integer.parseInt(request.getParameter(itemId));
-        getCart().setQuantityByItemId(itemId, quantity, span);
-        if (quantity < 1) {
-          cartItems.remove();
+      Iterator<CartItem> cartItems = getCart().getAllCartItems();
+      while (cartItems.hasNext()) {
+        CartItem cartItem = cartItems.next();
+        String itemId = cartItem.getItem().getItemId();
+        try {
+          int quantity = Integer.parseInt(request.getParameter(itemId));
+          getCart().setQuantityByItemId(itemId, quantity);
+          if (quantity < 1) {
+            cartItems.remove();
+          }
+        } catch (Exception e) {
+          // ignore parse exceptions on purpose
         }
-      } catch (Exception e) {
-        // ignore parse exceptions on purpose
       }
+    } finally {
+      span.end();
     }
-    span.end();
     return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution viewCart() {
-    Span span = tracer.spanBuilder("ActionBean: viewCart").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: viewCart").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution checkOut() {
-    Span span = tracer.spanBuilder("ActionBean: checkOut").setParent(rootContext).startSpan();
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: checkOut").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return new ForwardResolution(CHECK_OUT);
   }
 
   public void clear() {
-    Span span = tracer.spanBuilder("ActionBean: clear").setParent(rootContext).startSpan();
-    cart = new Cart();
-    workingItemId = null;
-    span.end();
+    Span span = tracer.spanBuilder("ActionBean: clear").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      cart = new Cart();
+      workingItemId = null;
+    } finally {
+      span.end();
+    }
   }
 
 }

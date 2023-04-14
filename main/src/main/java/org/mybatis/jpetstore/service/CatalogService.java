@@ -17,7 +17,7 @@ package org.mybatis.jpetstore.service;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,30 +52,40 @@ public class CatalogService {
   }
 
   public List<Category> getCategoryList() {
+    Span span = tracer.spanBuilder("Service: getCategoryList").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return categoryMapper.getCategoryList();
   }
 
-  public Category getCategory(String categoryId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getCategory").setParent(Context.current().with(parentSpan)).startSpan();
-
+  public Category getCategory(String categoryId) {
+    Span span = tracer.spanBuilder("Service: getCategory").startSpan();
     Category result = categoryMapper.getCategory(categoryId);
-    span.end();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return result;
   }
 
-  public Product getProduct(String productId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getProduct").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Product getProduct(String productId) {
+    Span span = tracer.spanBuilder("Service: getProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return productMapper.getProduct(productId);
   }
 
-  public List<Product> getProductListByCategory(String categoryId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getProductListByCategory").setParent(Context.current().with(parentSpan))
-        .startSpan();
-
-    List<Product> result = productMapper.getProductListByCategory(categoryId);
-    span.end();
-    return result;
+  public List<Product> getProductListByCategory(String categoryId) {
+    Span span = tracer.spanBuilder("Service: getProductListByCategory").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      List<Product> result = productMapper.getProductListByCategory(categoryId);
+      span.end();
+      return result;
+    }
   }
 
   /**
@@ -87,29 +97,42 @@ public class CatalogService {
    * @return the list
    */
   public List<Product> searchProductList(String keywords) {
+    Span span = tracer.spanBuilder("Service: searchProductList").startSpan();
     List<Product> products = new ArrayList<>();
-    for (String keyword : keywords.split("\\s+")) {
-      products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));
+    try (Scope ss = span.makeCurrent()) {
+      for (String keyword : keywords.split("\\s+")) {
+        products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));
+      }
+    } finally {
+      span.end();
     }
     return products;
   }
 
-  public List<Item> getItemListByProduct(String productId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getItemListByProduct").setParent(Context.current().with(parentSpan))
-        .startSpan();
-    span.end();
+  public List<Item> getItemListByProduct(String productId) {
+    Span span = tracer.spanBuilder("Service: getItemListByProduct").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemMapper.getItemListByProduct(productId);
   }
 
-  public Item getItem(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: getItem").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public Item getItem(String itemId) {
+    Span span = tracer.spanBuilder("Service: getItem").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemMapper.getItem(itemId);
   }
 
-  public boolean isItemInStock(String itemId, Span parentSpan) {
-    Span span = tracer.spanBuilder("Service: isItemInStock").setParent(Context.current().with(parentSpan)).startSpan();
-    span.end();
+  public boolean isItemInStock(String itemId) {
+    Span span = tracer.spanBuilder("Service: isItemInStock").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+    } finally {
+      span.end();
+    }
     return itemMapper.getInventoryQuantity(itemId) > 0;
   }
 }
