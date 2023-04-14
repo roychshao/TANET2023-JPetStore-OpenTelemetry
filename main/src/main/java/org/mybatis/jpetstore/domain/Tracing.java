@@ -35,15 +35,16 @@ import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
 import java.util.concurrent.TimeUnit;
 
 public class Tracing {
-  public static Resource resource;
-  public static SdkTracerProvider sdkTracerProvider;
-  public static OpenTelemetry openTelemetry;
-  public static Tracer tracer;
-  public static Context rootContext;
-  private static JaegerGrpcSpanExporter jaegerExporter;
-  private static final ContextKey<String> KEY = ContextKey.named("Test");
+  private Resource resource;
+  private SdkTracerProvider sdkTracerProvider;
+  private OpenTelemetry openTelemetry;
+  private static Tracer tracer;
+  private static Context rootContext;
+  private JaegerGrpcSpanExporter jaegerExporter;
+  private final ContextKey<String> KEY = ContextKey.named("Test");
+  private static Tracing instance;
 
-  static {
+  private Tracing() {
     // Jaeger
     ManagedChannel jaegerChannel = ManagedChannelBuilder.forAddress("localhost", 14250).usePlaintext().build();
 
@@ -73,12 +74,18 @@ public class Tracing {
     rootContext = Context.root().with(KEY, "true");
   }
 
-  public static Tracer getTracer() {
-    return tracer;
+  public static synchronized Tracer getTracer() {
+    if (instance == null) {
+      instance = new Tracing();
+    }
+    return instance.tracer;
   }
 
-  public static Context getRootContext() {
-    return rootContext;
+  public static synchronized Context getRootContext() {
+    if (instance == null) {
+      instance = new Tracing();
+    }
+    return instance.rootContext;
   }
 
 }
