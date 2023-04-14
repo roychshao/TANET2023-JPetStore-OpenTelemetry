@@ -18,7 +18,6 @@ package org.mybatis.jpetstore.domain;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -195,12 +194,9 @@ public class Item implements Serializable {
   public String toString() {
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
-    try (Scope ss = span.makeCurrent()) {
-      result = "(" + getItemId(span) + "-" + getProduct(span).getProductId(span) + ")";
-    } finally {
-      span.end();
-      return result;
-    }
+    result = "(" + getItemId(span) + "-" + getProduct(span).getProductId(span) + ")";
+    span.end();
+    return result;
   }
 
 }

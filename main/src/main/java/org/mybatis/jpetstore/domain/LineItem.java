@@ -18,7 +18,6 @@ package org.mybatis.jpetstore.domain;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -55,16 +54,13 @@ public class LineItem implements Serializable {
    */
   public LineItem(int lineNumber, CartItem cartItem) {
     Span span = tracer.spanBuilder("Domain: LineItem Contructor").startSpan();
-    try (Scope ss = span.makeCurrent()) {
-      this.lineNumber = lineNumber;
-      this.quantity = cartItem.getQuantity(span);
-      this.itemId = cartItem.getItem(span).getItemId(span);
-      this.unitPrice = cartItem.getItem(span).getListPrice(span);
-      this.item = cartItem.getItem(span);
-      calculateTotal(span);
-    } finally {
-      span.end();
-    }
+    this.lineNumber = lineNumber;
+    this.quantity = cartItem.getQuantity(span);
+    this.itemId = cartItem.getItem(span).getItemId(span);
+    this.unitPrice = cartItem.getItem(span).getListPrice(span);
+    this.item = cartItem.getItem(span);
+    calculateTotal(span);
+    span.end();
   }
 
   public int getOrderId(Span parentSpan) {

@@ -81,6 +81,8 @@ public class AccountActionBean extends AbstractActionBean {
   public String getUsername() {
     Span span = tracer.spanBuilder("ActionBean: getUsername").setParent(rootContext).startSpan();
     String result = account.getUsername(span);
+    System.out.println("from getUsername: " + result);
+    System.out.println(rootContext);
     span.end();
     return result;
   }
@@ -89,6 +91,11 @@ public class AccountActionBean extends AbstractActionBean {
   public void setUsername(String username) {
     Span span = tracer.spanBuilder("ActionBean: setUsername").setParent(rootContext).startSpan();
     account.setUsername(username, span);
+
+    String result = account.getUsername(span);
+    System.out.println("from setUsername: " + result);
+    System.out.println(rootContext);
+
     span.end();
   }
 

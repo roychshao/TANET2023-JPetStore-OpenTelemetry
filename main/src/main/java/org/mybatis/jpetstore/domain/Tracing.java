@@ -68,7 +68,7 @@ public class Tracing {
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
     System.out.println(tracer);
 
-    rootContext = Context.root();
+    rootContext = Context.root().withValue("Test", "true");
   }
 
   public static Tracer getTracer() {
