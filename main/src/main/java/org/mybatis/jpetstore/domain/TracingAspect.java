@@ -24,22 +24,24 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-
 @Aspect
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
 
-  // @Around("execution(* org.mybatis.jpetstore..*.*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")  
+  // @Around("execution(* org.mybatis.jpetstore..*.*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) &&
+  // !within(org.mybatis.jpetstore.domain.Tracing)")
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
-    Span span = tracer.spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
+    Span span = tracer
+        .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
         .startSpan();
+    Object result = null;
     try (Scope ss = span.makeCurrent()) {
-      Object result = joinPoint.proceed();
-      return result;
+      result = joinPoint.proceed();
     } finally {
       span.end();
+      return result;
     }
   }
 }

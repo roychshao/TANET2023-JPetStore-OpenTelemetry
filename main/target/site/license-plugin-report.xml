@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1681563799710">
+<licensePluginReport goal="FORMAT" timestamp="1681566177664">
     <module artifactId="jpetstore" groupId="org.mybatis" version="6.1.1-SNAPSHOT"/>
     <files>
         <file path=".mvn/extensions.xml" result="NOOP"/>
@@ -8,7 +8,6 @@
         <file path="exec.sh" result="NOOP"/>
         <file path="format.xml" result="NOOP"/>
         <file path="pom.xml" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/domain/.TracingAspect.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Account.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Cart.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/CartItem.java" result="NOOP"/>
@@ -30,7 +29,6 @@
         <file path="src/main/java/org/mybatis/jpetstore/service/AccountService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/CatalogService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/OrderService.java" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/web/actions/.AccountActionBean.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AbstractActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AccountActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/CartActionBean.java" result="NOOP"/>
