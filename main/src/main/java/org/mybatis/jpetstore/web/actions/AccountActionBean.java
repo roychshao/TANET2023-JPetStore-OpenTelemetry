@@ -17,7 +17,6 @@ package org.mybatis.jpetstore.web.actions;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.Arrays;
@@ -57,7 +56,6 @@ public class AccountActionBean extends AbstractActionBean {
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
   private transient final Tracer tracer = Tracing.getTracer();
-  private transient final Context rootContext = Tracing.getRootContext();
 
   @SpringBean
   private transient AccountService accountService;
@@ -87,8 +85,6 @@ public class AccountActionBean extends AbstractActionBean {
     String result = "";
     try (Scope ss = span.makeCurrent()) {
       result = account.getUsername();
-      // System.out.println("from getUsername: " + result);
-      // System.out.println(rootContext);
     } finally {
       span.end();
     }
@@ -100,10 +96,6 @@ public class AccountActionBean extends AbstractActionBean {
     Span span = tracer.spanBuilder("ActionBean: setUsername").startSpan();
     try (Scope ss = span.makeCurrent()) {
       account.setUsername(username);
-
-      // String result = account.getUsername(span);
-      // System.out.println("from setUsername: " + result);
-      // System.out.println(rootContext);
     } finally {
       span.end();
     }

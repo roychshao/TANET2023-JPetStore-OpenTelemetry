@@ -17,7 +17,6 @@ package org.mybatis.jpetstore.web.actions;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.List;
@@ -49,7 +48,6 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
   private transient final Tracer tracer = Tracing.getTracer();
-  private transient final Context rootContext = Tracing.getRootContext();
 
   @SpringBean
   private transient CatalogService catalogService;

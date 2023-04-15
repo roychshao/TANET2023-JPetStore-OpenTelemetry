@@ -1,37 +1,7 @@
-/*
- *    Copyright 2010-2023 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       https://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-package org.mybatis.jpetstore.domain;
-
-// Jaeger
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
-import io.opentelemetry.context.propagation.ContextPropagators;
-import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
-import io.opentelemetry.sdk.OpenTelemetrySdk;
-import io.opentelemetry.sdk.resources.Resource;
-import io.opentelemetry.sdk.trace.SdkTracerProvider;
-import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
-import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
-
-import java.util.concurrent.TimeUnit;
-
+# OpenTelemetry on Jpetstore
+---
+### 建立Tracing.java來管理OTL
+```java
 public class Tracing {
   private Resource resource;
   private SdkTracerProvider sdkTracerProvider;
@@ -73,3 +43,33 @@ public class Tracing {
     return instance.tracer;
   }
 }
+```
+<ul>
+<li>設定Jaeger: 14250port作為gprc的接口</li>
+<li>設定Resource</li>
+<li>設定spanProcessor並將jaegerExporter放入</li>
+<li>W3CTraceContextPropagatorg使用http做Context Propagation,這裡沒有使用到</li>
+<li>設定openTelemetry並註冊在global上(其中有個GlobalOpentelemetry.set()只能被呼叫一次)</li>
+<li>使用SingleTon方法來獲得tracer, 但由於使用synchronized造成有可能在操作的時候返回的tracer為null使得網頁error 500</li>
+
+### Trace設計
+
+***jsp呼叫哪層的function就從哪裡開始***
+> 大部分都是從ActionBean層開始, 但也有直接呼叫Domain層的
+
+### Context Propagation
+
+所有的函式全部由以下格式的程式碼包住
+```java
+public void foo() {
+    Span span = tracer.spanBuilder("domain: foo").startSpan();
+    try (Scope ss = span.makeCurrent()) {
+        // do something
+    } finally {
+        span.end();
+    }
+    // return here
+}
+```
+> **Scope: 被try包含住的區域中,span會被設定為當前活躍的span  
+因此在這之中被呼叫的inner function會成為outer function的childSpan**

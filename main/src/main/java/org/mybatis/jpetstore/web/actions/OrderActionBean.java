@@ -17,7 +17,6 @@ package org.mybatis.jpetstore.web.actions;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import java.util.Arrays;
@@ -61,7 +60,6 @@ public class OrderActionBean extends AbstractActionBean {
   private boolean confirmed;
   private List<Order> orderList;
   private transient final Tracer tracer = Tracing.getTracer();
-  private transient final Context rootContext = Tracing.getRootContext();
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));
