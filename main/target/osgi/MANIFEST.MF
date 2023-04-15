@@ -13,11 +13,16 @@ Export-Package: org.mybatis.jpetstore.domain;version="6.1.1.SNAPSHOT",or
  g.mybatis.jpetstore.mapper;version="6.1.1.SNAPSHOT",org.mybatis.jpetsto
  re.service;version="6.1.1.SNAPSHOT",org.mybatis.jpetstore.web.actions;v
  ersion="6.1.1.SNAPSHOT"
-Git-Revision: 452f433c8a0831db274c62d06776ebb730c7f45d
-Import-Package: javax.servlet.http,net.sourceforge.stripes.action,net.so
- urceforge.stripes.integration.spring,net.sourceforge.stripes.validation
- ,org.springframework.stereotype,org.springframework.transaction.annotat
- ion
+Git-Revision: dc12012913eb4ebe343e1ae7d94478724494e26f
+Import-Package: io.grpc,io.opentelemetry.api,io.opentelemetry.api.common
+ ,io.opentelemetry.api.trace,io.opentelemetry.api.trace.propagation,io.o
+ pentelemetry.context,io.opentelemetry.context.propagation,io.openteleme
+ try.exporter.jaeger,io.opentelemetry.sdk,io.opentelemetry.sdk.resources
+ ,io.opentelemetry.sdk.trace,io.opentelemetry.sdk.trace.export,io.opente
+ lemetry.semconv.resource.attributes,javax.servlet.http,net.sourceforge.
+ stripes.action,net.sourceforge.stripes.integration.spring,net.sourcefor
+ ge.stripes.validation,org.aspectj.lang,org.aspectj.lang.annotation,org.
+ springframework.stereotype,org.springframework.transaction.annotation
 Include-Resource: {org/mybatis/jpetstore/mapper/LineItemMapper.xml=src/m
  ain/resources/org/mybatis/jpetstore/mapper/LineItemMapper.xml},{org/myb
  atis/jpetstore/mapper/SequenceMapper.xml=src/main/resources/org/mybatis
