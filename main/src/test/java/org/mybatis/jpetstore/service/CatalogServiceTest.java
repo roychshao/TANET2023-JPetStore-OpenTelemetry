@@ -32,8 +32,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
-import org.mybatis.jpetstore.domain.Tracing;
-import org.mybatis.jpetstore.domain.TracingTest;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
@@ -42,7 +40,7 @@ import org.mybatis.jpetstore.mapper.ProductMapper;
  * @author Eduardo Macarron
  */
 @ExtendWith(MockitoExtension.class)
-class CatalogServiceTest extends TracingTest {
+class CatalogServiceTest {
 
   @Mock(lenient = true)
   private ProductMapper productMapper;
@@ -50,8 +48,6 @@ class CatalogServiceTest extends TracingTest {
   private CategoryMapper categoryMapper;
   @Mock
   private ItemMapper itemMapper;
-  @Mock
-  private Tracer tracer = Tracing.getTracer();
 
   @InjectMocks
   private CatalogService catalogService;

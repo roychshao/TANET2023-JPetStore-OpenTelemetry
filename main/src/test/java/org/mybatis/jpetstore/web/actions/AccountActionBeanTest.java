@@ -19,9 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.TracingTest;
 
-class AccountActionBeanTest extends TracingTest {
+class AccountActionBeanTest {
 
   // Test written by Diffblue Cover.
   @Test

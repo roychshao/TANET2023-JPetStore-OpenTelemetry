@@ -18,9 +18,8 @@ package org.mybatis.jpetstore.web.actions;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.jpetstore.domain.TracingTest;
 
-class OrderActionBeanTest extends TracingTest {
+class OrderActionBeanTest {
 
   // Test written by Diffblue Cover.
   @Test

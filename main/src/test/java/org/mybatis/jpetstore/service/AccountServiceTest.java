@@ -26,14 +26,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.TracingTest;
 import org.mybatis.jpetstore.mapper.AccountMapper;
 
 /**
  * @author Eduardo Macarron
  */
 @ExtendWith(MockitoExtension.class)
-class AccountServiceTest extends TracingTest {
+class AccountServiceTest {
 
   @Mock
   private AccountMapper accountMapper;
