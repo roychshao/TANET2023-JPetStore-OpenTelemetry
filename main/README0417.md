@@ -111,8 +111,9 @@ public class TracingAspect {
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
     Span span = tracer.spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
         .startSpan();
+    Object result = null;
     try (Scope ss = span.makeCurrent()) {
-      Object result = joinPoint.proceed();
+      result = joinPoint.proceed();
     } finally {
       span.end();
       return result;
