@@ -82,4 +82,51 @@ public void foo() {
 
 **作法: 先創建javaagent後在原本的code中使用@WithSpan選擇要trace的method**
 > ***問題: 創建javaagent使用java -javaagent:path/to/opentelemetry-javaagent.jar -Dotel.service.name=your-service-name -jar myapp.jar來達成  
-但jpetstore package出來的是war包,不支援***
+但jpetstore package出來的是war包,不支援***  
+https://opentelemetry.io/docs/instrumentation/java/automatic/
+
+### AOP
+> 建立新branch: otlp_aspect
+
+創建TracingAspect.java來實現
+```java
+package org.mybatis.jpetstore.domain;
+
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
+
+@Aspect
+public class TracingAspect {
+
+  private transient final Tracer tracer = Tracing.getTracer();
+
+  // @Around("execution(* org.mybatis.jpetstore..*.*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")  
+  @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")
+  public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
+    Span span = tracer.spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
+        .startSpan();
+    try (Scope ss = span.makeCurrent()) {
+      Object result = joinPoint.proceed();
+    } finally {
+      span.end();
+      return result;
+    }
+  }
+}
+```
+
+* joinPoint表示被截斷的method
+* 使用Around在method前start span, method後span.end()
+* 使用Object result接住joinPoint的回傳值後回傳result
+* @Around()中的部份是Aspectj用來判斷用在哪些方法上的表達式
+<br/>
+<br/>
+
+**沒有使用在ActionBean上!**
+> 原因: Aspectj和Stripe的共用,原因還不清楚
