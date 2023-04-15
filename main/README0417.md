@@ -45,7 +45,7 @@ public class Tracing {
 }
 ```
 <ul>
-<li>設定Jaeger: 14250port作為gprc的接口</li>
+<li>設定Jaeger: 14250port, 14250port接受model.proto資料類型作為gprc的接口</li>
 <li>設定Resource</li>
 <li>設定spanProcessor並將jaegerExporter放入</li>
 <li>W3CTraceContextPropagatorg使用http做Context Propagation,這裡沒有使用到</li>
@@ -73,3 +73,13 @@ public void foo() {
 ```
 > **Scope: 被try包含住的區域中,span會被設定為當前活躍的span  
 因此在這之中被呼叫的inner function會成為outer function的childSpan**
+
+### Mapper層
+
+缺乏技術力
+
+### Auto
+
+**作法: 先創建javaagent後在原本的code中使用@WithSpan選擇要trace的method**
+> ***問題: 創建javaagent使用java -javaagent:path/to/opentelemetry-javaagent.jar -Dotel.service.name=your-service-name -jar myapp.jar來達成  
+但jpetstore package出來的是war包,不支援***
