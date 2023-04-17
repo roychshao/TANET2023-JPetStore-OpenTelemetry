@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1681547172398">
+<licensePluginReport goal="FORMAT" timestamp="1681697538001">
     <module artifactId="jpetstore" groupId="org.mybatis" version="6.1.1-SNAPSHOT"/>
     <files>
+        <file path=".README0417.md.swp" result="UNKNOWN"/>
         <file path=".mvn/extensions.xml" result="NOOP"/>
         <file path=".mvn/settings.xml" result="NOOP"/>
         <file path="dockerfile" result="NOOP"/>
@@ -9,7 +10,6 @@
         <file path="format.xml" result="NOOP"/>
         <file path="logs.txt" result="NOOP"/>
         <file path="pom.xml" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/domain/.Product.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Account.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/Cart.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/domain/CartItem.java" result="NOOP"/>
@@ -30,7 +30,6 @@
         <file path="src/main/java/org/mybatis/jpetstore/service/AccountService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/CatalogService.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/service/OrderService.java" result="NOOP"/>
-        <file path="src/main/java/org/mybatis/jpetstore/web/actions/.CatalogActionBean.java.swp" result="UNKNOWN"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AbstractActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/AccountActionBean.java" result="NOOP"/>
         <file path="src/main/java/org/mybatis/jpetstore/web/actions/CartActionBean.java" result="NOOP"/>
@@ -84,7 +83,6 @@
         <file path="src/test/java/org/mybatis/jpetstore/ScreenTransitionIT.java" result="NOOP"/>
         <file path="src/test/java/org/mybatis/jpetstore/domain/CartTest.java" result="NOOP"/>
         <file path="src/test/java/org/mybatis/jpetstore/domain/OrderTest.java" result="NOOP"/>
-        <file path="src/test/java/org/mybatis/jpetstore/domain/TracingTest.java" result="NOOP"/>
         <file path="src/test/java/org/mybatis/jpetstore/mapper/AccountMapperTest.java" result="NOOP"/>
         <file path="src/test/java/org/mybatis/jpetstore/mapper/CategoryMapperTest.java" result="NOOP"/>
         <file path="src/test/java/org/mybatis/jpetstore/mapper/ItemMapperTest.java" result="NOOP"/>

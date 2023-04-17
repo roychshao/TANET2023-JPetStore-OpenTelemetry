@@ -18,8 +18,6 @@ package org.mybatis.jpetstore.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import io.opentelemetry.api.trace.Tracer;
-
 import java.util.ArrayList;
 import java.util.List;
 
