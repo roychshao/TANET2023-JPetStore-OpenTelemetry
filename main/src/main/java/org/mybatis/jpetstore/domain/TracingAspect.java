@@ -18,6 +18,7 @@ package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,11 +34,22 @@ public class TracingAspect {
   // !within(org.mybatis.jpetstore.domain.Tracing)")
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
-    Span span = tracer
-        .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
-        .startSpan();
+
+    Span span = TracingInterceptor.getCurrentSpan();
+
+    if (span == null) {
+      span = tracer
+          .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
+          .startSpan();
+    } else {
+      span = tracer
+          .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
+          .setParent(Context.current().with(span)).startSpan();
+    }
+
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
+      System.out.println(Context.current());
       result = joinPoint.proceed();
     } finally {
       span.end();
