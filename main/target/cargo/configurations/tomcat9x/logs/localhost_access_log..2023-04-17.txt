@@ -1,3 +1,0 @@
-127.0.0.1 - - [17/Apr/2023:18:19:57 +0800] "GET /cargocpc/index.html HTTP/1.1" 200 119
-0:0:0:0:0:0:0:1 - - [17/Apr/2023:18:21:57 +0800] "GET /jpetstore/actions/Catalog.action HTTP/1.1" 200 4643
-0:0:0:0:0:0:0:1 - - [17/Apr/2023:18:22:02 +0800] "GET /jpetstore/actions/Catalog.action?viewCategory=&categoryId=FISH HTTP/1.1" 200 3597

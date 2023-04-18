@@ -24,11 +24,6 @@ import javax.servlet.http.*;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.*;
 
-// @Intercepts({ org.mybatis.jpetstore.web.actions.AccountActionBean,
-//               org.mybatis.jpetstore.web.actions.CartActionBean,
-//               org.mybatis.jpetstore.web.actions.CatalogActionBean,
-//               org.mybatis.jpetstore.web.actions.OrderActionBean })
-
 @Intercepts(LifecycleStage.BindingAndValidation)
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
@@ -44,7 +39,7 @@ public class TracingInterceptor implements Interceptor {
     Resolution resolution = null;
     ActionBean actionBean = context.getActionBean();
     if (actionBean == null) {
-      System.out.println("actionBean is null");
+      System.out.println("Interceptor: actionBean is null");
       return null;
     } else {
       String actionBeanClassName = actionBean.getClass().getName();
@@ -54,19 +49,21 @@ public class TracingInterceptor implements Interceptor {
       Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
       spanLocal.set(span);
       try (Scope ss = span.makeCurrent()) {
-        System.out.println(actionBeanMethodName);
         // 執行ActionBean方法
         resolution = context.proceed();
       } finally {
         // 執行ActionBean方法後的處理邏輯
         span.end();
-        spanLocal.remove();
-        return resolution;
       }
+      return resolution;
     }
   }
 
   public static Span getCurrentSpan() {
-    return spanLocal.get();
+    Span currentSpan = spanLocal.get();
+    // 讓thread結束時自動把變數清除
+    // 如果直接remove會導致其它service的aspect拿不到這個span
+    // spanLocal.remove();
+    return currentSpan;
   }
 }

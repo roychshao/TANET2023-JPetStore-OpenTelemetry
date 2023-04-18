@@ -30,9 +30,9 @@ public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
 
-  // @Around("execution(* org.mybatis.jpetstore..*.*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) &&
-  // !within(org.mybatis.jpetstore.domain.Tracing)")
-  @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..)) && !within(org.mybatis.jpetstore.domain.TracingAspect) && !within(org.mybatis.jpetstore.domain.Tracing)")
+  // mapper, service由spring管理,可使用Aspectj實做切面
+  // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
+  @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     Span span = TracingInterceptor.getCurrentSpan();
@@ -49,7 +49,6 @@ public class TracingAspect {
 
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
-      System.out.println(Context.current());
       result = joinPoint.proceed();
     } finally {
       span.end();
