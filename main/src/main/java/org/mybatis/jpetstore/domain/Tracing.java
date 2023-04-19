@@ -66,7 +66,7 @@ public class Tracing {
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
   }
 
-  public static synchronized Tracer getTracer() {
+  public static Tracer getTracer() {
     if (instance == null) {
       instance = new Tracing();
     }

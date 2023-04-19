@@ -108,3 +108,5 @@ public class TracingInterceptor implements Interceptor {
 已經嘗試過但spring還是沒有管理domain
 
 ### tracer的Singleton問題
+
+***把synchronized拿掉就沒有問題了***
