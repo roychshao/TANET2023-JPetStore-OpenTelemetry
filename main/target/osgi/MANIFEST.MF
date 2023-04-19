@@ -13,7 +13,7 @@ Export-Package: org.mybatis.jpetstore.domain;version="6.1.1.SNAPSHOT",or
  g.mybatis.jpetstore.mapper;version="6.1.1.SNAPSHOT",org.mybatis.jpetsto
  re.service;version="6.1.1.SNAPSHOT",org.mybatis.jpetstore.web.actions;v
  ersion="6.1.1.SNAPSHOT"
-Git-Revision: 56b68867ba243c5f285fe6ef896472f03060d4cd
+Git-Revision: b49758c70b589029b68d59d7d16b55a15c682a96
 Import-Package: io.grpc,io.opentelemetry.api,io.opentelemetry.api.common
  ,io.opentelemetry.api.trace,io.opentelemetry.api.trace.propagation,io.o
  pentelemetry.context,io.opentelemetry.context.propagation,io.openteleme
