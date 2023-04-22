@@ -22,11 +22,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Order.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 6321792448424424931L;

@@ -110,3 +110,19 @@ public class TracingInterceptor implements Interceptor {
 ### tracer的Singleton問題
 
 ***把synchronized拿掉就沒有問題了***
+
+### OTLP + Jaeger的Exception
+
+Opentelemetry有支持在span上紀錄error:
+```java
+import io.opentelemetry.api.trace.StatusCode;
+
+span.setStatus(StatusCode.ERROR, e.getMessage());
+span.recordException(e);
+```
+即可在span上紀錄error  
+並且在Jaeger上也會成功顯示
+<br/>
+但在切面上使用會失敗  
+並且需要在每個function中都使用try-catch語句  
+***原因: catch不到原程式碼throw出的error***

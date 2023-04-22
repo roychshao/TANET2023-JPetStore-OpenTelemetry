@@ -17,11 +17,14 @@ package org.mybatis.jpetstore.domain;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Sequence.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Sequence implements Serializable {
 
   private static final long serialVersionUID = 8278780133180137281L;

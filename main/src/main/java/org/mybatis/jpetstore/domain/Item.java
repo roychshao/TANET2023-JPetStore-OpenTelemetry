@@ -18,11 +18,14 @@ package org.mybatis.jpetstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Item.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Item implements Serializable {
 
   private static final long serialVersionUID = -2159121673445254631L;

@@ -19,11 +19,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class CartItem.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class CartItem implements Serializable {
 
   private static final long serialVersionUID = 6620528781626504362L;

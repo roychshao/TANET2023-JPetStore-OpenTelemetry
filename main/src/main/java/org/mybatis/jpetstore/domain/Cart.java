@@ -24,11 +24,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Cart.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Cart implements Serializable {
 
   private static final long serialVersionUID = 8329559983943337176L;

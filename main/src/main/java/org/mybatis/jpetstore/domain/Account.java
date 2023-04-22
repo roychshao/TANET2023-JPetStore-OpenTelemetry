@@ -19,11 +19,14 @@ import java.io.Serializable;
 
 import net.sourceforge.stripes.validation.Validate;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Account.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Account implements Serializable {
 
   private static final long serialVersionUID = 8751282105532159742L;

@@ -19,11 +19,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class LineItem.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class LineItem implements Serializable {
 
   private static final long serialVersionUID = 6804536240033522156L;

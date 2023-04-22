@@ -24,8 +24,10 @@ import io.opentelemetry.context.Scope;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
@@ -36,6 +38,8 @@ public class TracingAspect {
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     Span span = TracingInterceptor.getCurrentSpan();
+
+    System.out.println(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName());
 
     if (span == null) {
       span = tracer

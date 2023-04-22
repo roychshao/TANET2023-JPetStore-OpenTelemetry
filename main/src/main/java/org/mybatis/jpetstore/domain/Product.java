@@ -17,11 +17,14 @@ package org.mybatis.jpetstore.domain;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class Product.
  *
  * @author Eduardo Macarron
  */
+@Component
 public class Product implements Serializable {
 
   private static final long serialVersionUID = -7492639752670189553L;
