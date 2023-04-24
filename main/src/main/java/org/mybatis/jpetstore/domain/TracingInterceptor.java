@@ -16,7 +16,10 @@
 package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
 import javax.servlet.http.*;
@@ -24,10 +27,11 @@ import javax.servlet.http.*;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.*;
 
-@Intercepts(LifecycleStage.BindingAndValidation)
+@Intercepts(LifecycleStage.EventHandling)
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
   private static final ThreadLocal<Span> spanLocal = new ThreadLocal<>();
+  private static final ContextKey<String> SESSION_ID_KEY = ContextKey.named("sessionId");
 
   public void init() {
   }
@@ -45,25 +49,36 @@ public class TracingInterceptor implements Interceptor {
       String actionBeanClassName = actionBean.getClass().getName();
       String actionBeanMethodName = context.getHandler().getName();
 
+      // 將sessionId作為key,添加到Context中
+      HttpServletRequest request = context.getActionBeanContext().getRequest();
+      HttpSession session = request.getSession();
+      Context newContext = Context.current().with(SESSION_ID_KEY, session.getId());
+      newContext.makeCurrent();
+
       // 執行ActionBean方法前的處理邏輯
       Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
-      spanLocal.set(span);
+
+      // 以sessionId為key將span寫入map中
+      SpanMapping.set(session.getId(), span);
+
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法
         resolution = context.proceed();
+        span.setStatus(StatusCode.OK);
+      } catch (Throwable t) {
+        span.setStatus(StatusCode.ERROR, t.getMessage());
+        span.recordException(t);
       } finally {
         // 執行ActionBean方法後的處理邏輯
         span.end();
+        // 從map中移除
+        SpanMapping.remove(session.getId());
       }
       return resolution;
     }
   }
 
-  public static Span getCurrentSpan() {
-    Span currentSpan = spanLocal.get();
-    // 讓thread結束時自動把變數清除
-    // 如果直接remove會導致其它service的aspect拿不到這個span
-    // spanLocal.remove();
-    return currentSpan;
+  public static ContextKey getSessionIdKey() {
+    return SESSION_ID_KEY;
   }
 }

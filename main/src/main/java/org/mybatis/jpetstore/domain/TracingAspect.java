@@ -17,9 +17,13 @@
 package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
+import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
+
+import javax.servlet.http.*;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,15 +35,19 @@ import org.springframework.stereotype.Component;
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
+  private static final ContextKey<String> SESSION_ID_KEY = TracingInterceptor.getSessionIdKey();
 
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
-    Span span = TracingInterceptor.getCurrentSpan();
+    String sessionId = Context.current().get(SESSION_ID_KEY);
+    // System.out.println(Context.current());
+    // System.out.println(sessionId);
 
-    System.out.println(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName());
+    // 從map中取得parentSpan
+    Span span = SpanMapping.get(sessionId);
 
     if (span == null) {
       span = tracer
@@ -54,6 +62,10 @@ public class TracingAspect {
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
       result = joinPoint.proceed();
+      span.setStatus(StatusCode.OK);
+    } catch (Throwable t) {
+      span.setStatus(StatusCode.ERROR, t.getMessage());
+      span.recordException(t);
     } finally {
       span.end();
       return result;

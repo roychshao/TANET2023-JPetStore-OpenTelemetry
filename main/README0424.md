@@ -77,7 +77,9 @@ public class TracingInterceptor implements Interceptor {
 * 因為Interceptor創建的Scope在Aspectj中拿不到(原因未知),因此透過傳遞span手動設置父子span  
 將span設置到thread中,在AspectJ切面中再透過getCurrentSpan()將parentSpan取出
 > 不手動將span從thread中移除,因為一個actionbean的span會被多個service的span繼承,無法確認最後使用的service  
-因此等待thread結束後自動刪除span
+因此等待thread結束後自動刪除span  
+
+***在多個session時可能thread亂掉會出現問題***
 
 <br/>
 
@@ -120,9 +122,41 @@ import io.opentelemetry.api.trace.StatusCode;
 span.setStatus(StatusCode.ERROR, e.getMessage());
 span.recordException(e);
 ```
-即可在span上紀錄error  
+即可在span上紀錄exception  
 並且在Jaeger上也會成功顯示
 <br/>
 但在切面上使用會失敗  
+雖然會發生exception但catch不到  
 並且需要在每個function中都使用try-catch語句  
-***原因: catch不到原程式碼throw出的error***
+***原因: catch不到原程式碼throw出的error***  
+例子:
+```java
+// CatalogActionbean.java
+
+  public ForwardResolution viewCategory() throws Exception {
+    throw new Exception("test Exception");
+    // if (categoryId != null) {
+    //   productList = catalogService.getProductListByCategory(categoryId);
+    //   category = catalogService.getCategory(categoryId);
+    // }
+    // return new ForwardResolution(VIEW_CATEGORY);
+  }
+```
+
+```java
+// TracingInterceptor.java
+
+  try (Scope ss = span.makeCurrent()) {
+    // 執行ActionBean方法
+    resolution = context.proceed();
+  } catch (Exception e) {
+    span.setStatus(StatusCode.ERROR, e.getMessage());
+    span.recordException(e);
+  } finally {
+    // 執行ActionBean方法後的處理邏輯
+    span.end();
+  }
+```
+解決: 
+> 發現catch不到的原因只是因為設定的LifeCycle是BindingAndValidation  
+才導致throw沒有被catch到, 改成EventHanding時攔截就可以catch到了
