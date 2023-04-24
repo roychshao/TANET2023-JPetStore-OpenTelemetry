@@ -35,19 +35,15 @@ import org.springframework.stereotype.Component;
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
-  private static final ContextKey<String> SESSION_ID_KEY = TracingInterceptor.getSessionIdKey();
+  private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
 
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
-    String sessionId = Context.current().get(SESSION_ID_KEY);
-    // System.out.println(Context.current());
-    // System.out.println(sessionId);
-
-    // 從map中取得parentSpan
-    Span span = SpanMapping.get(sessionId);
+    // 從Context中取得parentSpan
+    Span span = Context.current().get(PARENTSPAN_KEY);
 
     if (span == null) {
       span = tracer

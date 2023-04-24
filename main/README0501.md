@@ -13,7 +13,64 @@
 之後再透過Context拿出sessionId後map出parentSpan**
 
 > 延伸: 那是不是直接使用Context來傳遞Span即可？
+於是... 
 
+// TracingInterceptor.java
+```java
+@Intercepts(LifecycleStage.EventHandling)
+public class TracingInterceptor implements Interceptor {
+  private transient final Tracer tracer = Tracing.getTracer();
+  private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
+
+  public void init() {
+  }
+
+  public void destroy() {
+  }
+
+  public Resolution intercept(ExecutionContext context) throws Exception {
+    Resolution resolution = null;
+    ActionBean actionBean = context.getActionBean();
+    if (actionBean == null) {
+      System.out.println("Interceptor: actionBean is null");
+      return null;
+    } else {
+      String actionBeanClassName = actionBean.getClass().getName();
+      String actionBeanMethodName = context.getHandler().getName();
+
+      // 執行ActionBean方法前的處理邏輯
+      Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
+      Context newContext = Context.current().with(PARENTSPAN_KEY, span);
+      newContext.makeCurrent();
+
+      try (Scope ss = span.makeCurrent()) {
+        // 執行ActionBean方法
+        resolution = context.proceed();
+        span.setStatus(StatusCode.OK);
+      } catch (Throwable t) {
+        span.setStatus(StatusCode.ERROR, t.getMessage());
+        span.recordException(t);
+      } finally {
+        // 執行ActionBean方法後的處理邏輯
+        span.end();
+      }
+      return resolution;
+    }
+  }
+
+  public static ContextKey getParentSpanKey() {
+    return PARENTSPAN_KEY;
+  }
+}
+```
+
+// TracingAspect.java
+```java
+private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
+
+Span span = Context.current().get(PARENTSPAN_KEY);
+```
+***注意: Opentelemetry的ContextKey必須要是同一個,而不是name一樣即可***
 <br/>
 
 ### Error處理
@@ -23,3 +80,6 @@
 ##### 解決:
 **將LifeCycle改成EventHandling,是更大的範圍,即可成功捕獲Exception**  
 並且發現不加throws Exception,不加try-catch 只要有Exception都可以成功catch到
+```java
+@Intercepts(LifecycleStage.EventHandling)
+```

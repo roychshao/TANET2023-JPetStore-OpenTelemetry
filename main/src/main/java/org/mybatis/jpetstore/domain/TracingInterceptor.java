@@ -30,8 +30,7 @@ import net.sourceforge.stripes.controller.*;
 @Intercepts(LifecycleStage.EventHandling)
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
-  private static final ThreadLocal<Span> spanLocal = new ThreadLocal<>();
-  private static final ContextKey<String> SESSION_ID_KEY = ContextKey.named("sessionId");
+  private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
 
   public void init() {
   }
@@ -49,17 +48,10 @@ public class TracingInterceptor implements Interceptor {
       String actionBeanClassName = actionBean.getClass().getName();
       String actionBeanMethodName = context.getHandler().getName();
 
-      // 將sessionId作為key,添加到Context中
-      HttpServletRequest request = context.getActionBeanContext().getRequest();
-      HttpSession session = request.getSession();
-      Context newContext = Context.current().with(SESSION_ID_KEY, session.getId());
-      newContext.makeCurrent();
-
       // 執行ActionBean方法前的處理邏輯
       Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
-
-      // 以sessionId為key將span寫入map中
-      SpanMapping.set(session.getId(), span);
+      Context newContext = Context.current().with(PARENTSPAN_KEY, span);
+      newContext.makeCurrent();
 
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法
@@ -71,14 +63,12 @@ public class TracingInterceptor implements Interceptor {
       } finally {
         // 執行ActionBean方法後的處理邏輯
         span.end();
-        // 從map中移除
-        SpanMapping.remove(session.getId());
       }
       return resolution;
     }
   }
 
-  public static ContextKey getSessionIdKey() {
-    return SESSION_ID_KEY;
+  public static ContextKey getParentSpanKey() {
+    return PARENTSPAN_KEY;
   }
 }
