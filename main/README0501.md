@@ -83,3 +83,16 @@ Span span = Context.current().get(PARENTSPAN_KEY);
 ```java
 @Intercepts(LifecycleStage.EventHandling)
 ```
+
+### 還原使用者旅程
+**在每個span中將sessionId添加進去即可在jaeger中透過尋找tag的方式得到某特定session的旅程**  
+
+> 但sessionId對於辨識使用者沒有任何作用
+
+**在span中添加使用者資訊: 例如使用者名稱...**  
+
+> TracingInterceptor中獲取當時Account.java中的username變數  
+如果非空值就寫入span中
+
+問題: 目前沒有找到方法能夠獲得服務中唯一的Account實例,除非將有關的變數或方法設為static  
+=> 要改動原本程式碼
