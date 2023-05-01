@@ -26,13 +26,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.*;
 
 import javax.servlet.http.*;
 
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.*;
 
-// import org.mybatis.jpetstore.web.actions.AccountActionBean;
+import org.mybatis.jpetstore.web.actions.AccountActionBean;
 
 @Intercepts(LifecycleStage.EventHandling)
 public class TracingInterceptor implements Interceptor {
@@ -47,7 +48,6 @@ public class TracingInterceptor implements Interceptor {
 
   public Resolution intercept(ExecutionContext context) throws Exception {
     Resolution resolution = null;
-    // AccountActionBean accountActionBean = StripesFilter.getConfiguration().getActionBeanContext().getActionBean(AccountActionBean.class);
     ActionBean actionBean = context.getActionBean();
     if (actionBean == null) {
       System.out.println("Interceptor: actionBean is null");
@@ -65,16 +65,18 @@ public class TracingInterceptor implements Interceptor {
       HttpServletRequest request = context.getActionBeanContext().getRequest();
       HttpSession session = request.getSession();
       span.setAttribute("sessionId", session.getId());
-
-      // 將sessionId寫入session.txt中
-      // recordSession(session.getId());
-
-      // 嘗試獲得正在使用的user並將username加入到span中
-      // String username = accountActionBean.getAccount().getUsername();
-      // System.out.println(username);
-      // if(username != null) {
-      //   span.setAttribute("username", username);
-      // }
+     
+      // 若session中有username則將username寫進span中
+      Enumeration<String> attributes = session.getAttributeNames();
+      while (attributes.hasMoreElements()) {
+          String attribute = (String) attributes.nextElement();
+          System.out.println(attribute + " : " + session.getAttribute(attribute));
+          if(attribute == "accountBean") {
+              AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
+              System.out.println("username: " + accountBean.getUsername());
+              span.setAttribute("username", accountBean.getUsername());
+          }
+      }
 
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法
@@ -94,18 +96,4 @@ public class TracingInterceptor implements Interceptor {
   public static ContextKey getParentSpanKey() {
     return PARENTSPAN_KEY;
   }
-
-  // private void recordSession(String sessionId) {
-  //   LocalDateTime time = LocalDateTime.now();
-  //   String data = time.toString() + " : " + sessionId + "\n";
-  //   String filename = "session.txt";
-
-  //   try {
-  //     BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
-  //     writer.write(data);
-  //     writer.close();
-  //   } catch (IOException e) {
-  //     System.err.println("write into session.txt error: " + e.getMessage());
-  //   }
-  // }
 }

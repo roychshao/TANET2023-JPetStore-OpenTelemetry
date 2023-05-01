@@ -96,3 +96,6 @@ Span span = Context.current().get(PARENTSPAN_KEY);
 
 問題: 目前沒有找到方法能夠獲得服務中唯一的Account實例,除非將有關的變數或方法設為static  
 => 要改動原本程式碼
+
+> jsp中是拿sessionScope.accountBean...  
+所以我想從session中拿到有關user的資訊
