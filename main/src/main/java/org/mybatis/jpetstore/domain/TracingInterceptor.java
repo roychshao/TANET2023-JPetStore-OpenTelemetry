@@ -22,10 +22,6 @@ import io.opentelemetry.context.Context;
 import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.servlet.http.*;
@@ -65,17 +61,17 @@ public class TracingInterceptor implements Interceptor {
       HttpServletRequest request = context.getActionBeanContext().getRequest();
       HttpSession session = request.getSession();
       span.setAttribute("sessionId", session.getId());
-     
+
       // 若session中有username則將username寫進span中
       Enumeration<String> attributes = session.getAttributeNames();
       while (attributes.hasMoreElements()) {
-          String attribute = (String) attributes.nextElement();
-          System.out.println(attribute + " : " + session.getAttribute(attribute));
-          if(attribute == "accountBean") {
-              AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
-              System.out.println("username: " + accountBean.getUsername());
-              span.setAttribute("username", accountBean.getUsername());
-          }
+        String attribute = (String) attributes.nextElement();
+        System.out.println(attribute + " : " + session.getAttribute(attribute));
+        if (attribute == "accountBean") {
+          AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
+          System.out.println("username: " + accountBean.getUsername());
+          span.setAttribute("username", accountBean.getUsername());
+        }
       }
 
       try (Scope ss = span.makeCurrent()) {
