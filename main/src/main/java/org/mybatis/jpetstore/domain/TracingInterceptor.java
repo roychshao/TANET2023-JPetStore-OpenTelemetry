@@ -67,7 +67,7 @@ public class TracingInterceptor implements Interceptor {
       while (attributes.hasMoreElements()) {
         String attribute = (String) attributes.nextElement();
         System.out.println(attribute + " : " + session.getAttribute(attribute));
-        if (attribute == "accountBean") {
+        if ("accountBean".equals(attribute)) {
           AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
           System.out.println("username: " + accountBean.getUsername());
           span.setAttribute("username", accountBean.getUsername());
