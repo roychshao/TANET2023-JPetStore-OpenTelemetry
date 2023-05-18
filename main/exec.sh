@@ -14,5 +14,6 @@
 #    limitations under the License.
 #
 
+# ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
 ./mvnw clean package -Dmaven.test.skip=true
 ./mvnw cargo:run -P tomcat90

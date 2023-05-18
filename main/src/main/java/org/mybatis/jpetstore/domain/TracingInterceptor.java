@@ -22,6 +22,7 @@ import io.opentelemetry.context.Context;
 import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import javax.servlet.http.*;
@@ -47,7 +48,7 @@ public class TracingInterceptor implements Interceptor {
     ActionBean actionBean = context.getActionBean();
     if (actionBean == null) {
       System.out.println("Interceptor: actionBean is null");
-      return null;
+      throw new Exception("actionBean is null in Interceptor");
     } else {
       String actionBeanClassName = actionBean.getClass().getName();
       String actionBeanMethodName = context.getHandler().getName();
@@ -83,13 +84,41 @@ public class TracingInterceptor implements Interceptor {
         span.recordException(t);
       } finally {
         // 執行ActionBean方法後的處理邏輯
+
+        // 若TracingVar不為空,則將varNames中的變數取出寫入到span中
+        TracingVar tracingVar = context.getHandler().getAnnotation(TracingVar.class);
+        if (tracingVar != null) {
+          String[] varNames = tracingVar.varNames();
+          if (varNames.length != 0) {
+            Object[] varValues = new Object[varNames.length];
+
+            for (int i = 0; i < varNames.length; ++i) {
+              String varName = varNames[i];
+
+              // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
+              try {
+                Field field = actionBean.getClass().getDeclaredField(varName);
+
+                field.setAccessible(true);
+                Object varValue = field.get(actionBean);
+                varValues[i] = varValue;
+                System.out.println("after method, " + varName + ": " + varValue);
+              } catch (Throwable t) {
+                span.setStatus(StatusCode.ERROR, t.getMessage());
+                span.recordException(t);
+              }
+            }
+          }
+        } else {
+          System.out.println("tracingVar is: " + tracingVar);
+        }
         span.end();
       }
       return resolution;
     }
   }
 
-  public static ContextKey getParentSpanKey() {
+  public static ContextKey<Span> getParentSpanKey() {
     return PARENTSPAN_KEY;
   }
 }

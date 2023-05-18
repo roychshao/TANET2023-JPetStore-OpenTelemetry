@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 package org.mybatis.jpetstore.domain;
 
 import io.opentelemetry.api.trace.Span;
@@ -40,7 +39,7 @@ public class TracingAspect {
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
-  public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
+  public Object trace(ProceedingJoinPoint joinPoint/* , TracingVar tracingVar */) throws Throwable {
 
     // 從Context中取得parentSpan
     Span span = Context.current().get(PARENTSPAN_KEY);
@@ -63,8 +62,33 @@ public class TracingAspect {
       span.setStatus(StatusCode.ERROR, t.getMessage());
       span.recordException(t);
     } finally {
+      // // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
+      // if (tracingVar != null) {
+      // String[] varNames = tracingVar.varNames();
+      // if (varNames.length != 0) {
+      // Object[] varValues = new Object[varNames.length];
+
+      // for (int i = 0; i < varNames.length; ++i) {
+      // String varName = varNames[i];
+
+      // try {
+      // // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
+      // Field field = joinPoint.getTarget().getClass().getDeclaredField(varName);
+      // field.setAccessible(true);
+      // Object varValue = field.get(joinPoint.getTarget());
+      // varValues[i] = varValue;
+      // System.out.println("aspect after method, " + varName + ": " + varValue);
+      // } catch(Throwable t) {
+      // span.setStatus(StatusCode.ERROR, t.getMessage());
+      // span.recordException(t);
+      // }
+      // }
+      // }
+      // } else {
+      // System.out.println("tracingVar is: " + tracingVar);
+      // }
       span.end();
-      return result;
     }
+    return result;
   }
 }

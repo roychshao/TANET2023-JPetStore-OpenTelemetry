@@ -252,6 +252,22 @@
                         </archive>
                     </configuration>
                 </plugin>
+                <!-- <plugin> -->
+                <!--     <groupId>org.springframework.boot</groupId> -->
+                <!--     <artifactId>spring-boot-maven-plugin</artifactId> -->
+                <!--     <version>2.5.0</version> -->
+                <!--     <configuration> -->
+                <!--         <mainClass>org.mybatis.jpetstore.web.actions</mainClass> -->
+                <!--         <layout>ZIP</layout> -->
+                <!--     </configuration> -->
+                <!--     <executions> -->
+                <!--         <execution> -->
+                <!--             <goals> -->
+                <!--                 <goal>repackage</goal> -->
+                <!--             </goals> -->
+                <!--         </execution> -->
+                <!--     </executions> -->
+                <!-- </plugin> -->
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.0.0-M8</version>
