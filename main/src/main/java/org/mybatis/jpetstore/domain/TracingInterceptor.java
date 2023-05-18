@@ -70,8 +70,8 @@ public class TracingInterceptor implements Interceptor {
         System.out.println(attribute + " : " + session.getAttribute(attribute));
         if ("accountBean".equals(attribute)) {
           AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
-          System.out.println("username: " + accountBean.getUsername());
-          span.setAttribute("username", accountBean.getUsername());
+          // System.out.println("username: " + accountBean.getUsername());
+          // span.setAttribute("username", accountBean.getUsername());
         }
       }
 
@@ -102,7 +102,8 @@ public class TracingInterceptor implements Interceptor {
                 field.setAccessible(true);
                 Object varValue = field.get(actionBean);
                 varValues[i] = varValue;
-                System.out.println("after method, " + varName + ": " + varValue);
+                // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
+                span.setAttribute(varName, String.valueOf(varValue));
               } catch (Throwable t) {
                 span.setStatus(StatusCode.ERROR, t.getMessage());
                 span.recordException(t);
@@ -110,7 +111,7 @@ public class TracingInterceptor implements Interceptor {
             }
           }
         } else {
-          System.out.println("tracingVar is: " + tracingVar);
+          System.out.println("The method do not use TracingVar annotation");
         }
         span.end();
       }

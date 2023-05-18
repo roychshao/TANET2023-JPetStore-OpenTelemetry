@@ -22,11 +22,15 @@ import io.opentelemetry.context.Context;
 import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import javax.servlet.http.*;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -39,7 +43,7 @@ public class TracingAspect {
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
   @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
-  public Object trace(ProceedingJoinPoint joinPoint/* , TracingVar tracingVar */) throws Throwable {
+  public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 從Context中取得parentSpan
     Span span = Context.current().get(PARENTSPAN_KEY);
@@ -62,31 +66,47 @@ public class TracingAspect {
       span.setStatus(StatusCode.ERROR, t.getMessage());
       span.recordException(t);
     } finally {
-      // // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
-      // if (tracingVar != null) {
-      // String[] varNames = tracingVar.varNames();
-      // if (varNames.length != 0) {
-      // Object[] varValues = new Object[varNames.length];
+      // TODO: signature.getMethod的注意事項:
+      // 1.只能獲取public方法
+      // 2.需要另外獲得方法參數
+      // 3.遇到override時會回傳匹配到該方法的第一個方法
+      // 因此盡可能改使用其他方法getMethod
+      // ex:
+      // String methodName = joinPoint.getSignature().getName();
+      // Class<?> declaringType = joinPoint.getSignature().getDeclaringType();
+      // Method method = declaringType.getMethod(methodName, String.class);
+      // 缺點: getMethod需要明確定義參數的類型
+      // => 找到解決方法
+      MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+      Method method = signature.getMethod();
 
-      // for (int i = 0; i < varNames.length; ++i) {
-      // String varName = varNames[i];
+      TracingVar tracingVar = method.getAnnotation(TracingVar.class);
+      // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
+      if (tracingVar != null) {
+        String[] varNames = tracingVar.varNames();
+        if (varNames.length != 0) {
+          Object[] varValues = new Object[varNames.length];
 
-      // try {
-      // // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
-      // Field field = joinPoint.getTarget().getClass().getDeclaredField(varName);
-      // field.setAccessible(true);
-      // Object varValue = field.get(joinPoint.getTarget());
-      // varValues[i] = varValue;
-      // System.out.println("aspect after method, " + varName + ": " + varValue);
-      // } catch(Throwable t) {
-      // span.setStatus(StatusCode.ERROR, t.getMessage());
-      // span.recordException(t);
-      // }
-      // }
-      // }
-      // } else {
-      // System.out.println("tracingVar is: " + tracingVar);
-      // }
+          for (int i = 0; i < varNames.length; ++i) {
+            String varName = varNames[i];
+
+            try {
+              // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
+              Field field = joinPoint.getTarget().getClass().getDeclaredField(varName);
+              field.setAccessible(true);
+              Object varValue = field.get(joinPoint.getTarget());
+              varValues[i] = varValue;
+              // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
+              span.setAttribute(varName, String.valueOf(varValue));
+            } catch (Throwable t) {
+              span.setStatus(StatusCode.ERROR, t.getMessage());
+              span.recordException(t);
+            }
+          }
+        }
+      } else {
+        System.out.println("The method do not use TracingVar annotation");
+      }
       span.end();
     }
     return result;
