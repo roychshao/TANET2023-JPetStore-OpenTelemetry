@@ -78,7 +78,9 @@ public class TracingAspect {
       // 缺點: getMethod需要明確定義參數的類型
       // => 找到解決方法
       MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-      Method method = signature.getMethod();
+      // Method method = signature.getMethod();
+      Class<?> targetClass = joinPoint.getTarget().getClass();
+      Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
 
       TracingVar tracingVar = method.getAnnotation(TracingVar.class);
       // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
