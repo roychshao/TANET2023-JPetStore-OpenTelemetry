@@ -13,11 +13,12 @@ Export-Package: org.mybatis.jpetstore.domain;version="6.1.1.SNAPSHOT",or
  g.mybatis.jpetstore.mapper;version="6.1.1.SNAPSHOT",org.mybatis.jpetsto
  re.service;version="6.1.1.SNAPSHOT",org.mybatis.jpetstore.web.actions;v
  ersion="6.1.1.SNAPSHOT"
-Git-Revision: 452f433c8a0831db274c62d06776ebb730c7f45d
-Import-Package: javax.servlet.http,net.sourceforge.stripes.action,net.so
- urceforge.stripes.integration.spring,net.sourceforge.stripes.validation
- ,org.springframework.stereotype,org.springframework.transaction.annotat
- ion
+Git-Revision: dc12012913eb4ebe343e1ae7d94478724494e26f
+Import-Package: java.io,java.lang,java.lang.invoke,java.math,java.util,j
+ ava.util.function,java.util.stream,javax.servlet.http,net.sourceforge.s
+ tripes.action,net.sourceforge.stripes.integration.spring,net.sourceforg
+ e.stripes.validation,org.springframework.stereotype,org.springframework
+ .transaction.annotation
 Include-Resource: {org/mybatis/jpetstore/mapper/LineItemMapper.xml=src/m
  ain/resources/org/mybatis/jpetstore/mapper/LineItemMapper.xml},{org/myb
  atis/jpetstore/mapper/SequenceMapper.xml=src/main/resources/org/mybatis
@@ -36,5 +37,5 @@ Include-Resource: {org/mybatis/jpetstore/mapper/LineItemMapper.xml=src/m
  -dataload.sql=src/main/resources/database/jpetstore-hsqldb-dataload.sql
  },META-INF/NOTICE=NOTICE,META-INF/LICENSE=LICENSE
 Private-Package: database
-Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
 Tool: Bnd-6.4.0.202211291949
