@@ -1,10 +1,5 @@
-25-May-2023 16:23:39.223 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
-25-May-2023 16:23:39.223 INFO [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
-25-May-2023 16:23:39.237 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@2e1291a4')
-25-May-2023 16:27:37.246 INFO [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
-25-May-2023 16:27:37.246 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
-25-May-2023 16:27:55.249 INFO [main] org.apache.catalina.core.ApplicationContext.log No Spring WebApplicationInitializer types detected on classpath
-25-May-2023 16:27:55.271 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring root WebApplicationContext
-25-May-2023 16:27:59.911 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
-25-May-2023 16:27:59.911 INFO [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
-25-May-2023 16:27:59.916 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@73852c7c')
+25-May-2023 17:08:36.786 INFO [main] org.apache.catalina.core.ApplicationContext.log No Spring WebApplicationInitializer types detected on classpath
+25-May-2023 17:08:36.804 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring root WebApplicationContext
+25-May-2023 17:08:41.117 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+25-May-2023 17:08:41.118 INFO [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+25-May-2023 17:08:41.147 INFO [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@693d797e')

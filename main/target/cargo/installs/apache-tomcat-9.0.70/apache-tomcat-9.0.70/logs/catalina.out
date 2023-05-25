@@ -1,109 +1,57 @@
 NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
 OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-[otel.javaagent 2023-05-25 16:23:29:253 +0800] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 1.26.0
-25-May-2023 16:23:36.026 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.70
-25-May-2023 16:23:36.039 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 1 2022 14:05:47 UTC
-25-May-2023 16:23:36.040 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.70.0
-25-May-2023 16:23:36.040 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
-25-May-2023 16:23:36.040 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            5.19.0-41-generic
-25-May-2023 16:23:36.040 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
-25-May-2023 16:23:36.040 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-19-openjdk-amd64
-25-May-2023 16:23:36.041 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           19.0.2+7-Ubuntu-0ubuntu322.04
-25-May-2023 16:23:36.041 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Private Build
-25-May-2023 16:23:36.041 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:23:36.041 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:23:36.042 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
-25-May-2023 16:23:36.042 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
-25-May-2023 16:23:36.042 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
-25-May-2023 16:23:36.042 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
-25-May-2023 16:23:36.042 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/conf/logging.properties
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
-25-May-2023 16:23:36.044 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:./opentelemetry-javaagent.jar
-25-May-2023 16:23:36.045 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
-25-May-2023 16:23:36.045 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:23:36.045 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:23:36.045 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/temp
-25-May-2023 16:23:36.047 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
-25-May-2023 16:23:36.989 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:23:37.068 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [2173] milliseconds
-25-May-2023 16:23:37.257 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
-25-May-2023 16:23:37.257 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.70]
-25-May-2023 16:23:37.291 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager]
-25-May-2023 16:23:38.826 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager] has finished in [1,535] ms
-25-May-2023 16:23:38.827 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager]
-25-May-2023 16:23:38.858 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager] has finished in [30] ms
-25-May-2023 16:23:38.858 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT]
-25-May-2023 16:23:38.887 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT] has finished in [29] ms
-25-May-2023 16:23:38.888 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs]
-25-May-2023 16:23:38.907 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs] has finished in [20] ms
-25-May-2023 16:23:38.907 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples]
-25-May-2023 16:23:39.309 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples] has finished in [402] ms
-25-May-2023 16:23:39.345 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:23:39.537 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2461] milliseconds
-[otel.javaagent 2023-05-25 16:24:29:941 +0800] [OkHttp http://localhost:4317/...] ERROR io.opentelemetry.exporter.internal.grpc.OkHttpGrpcExporter - Failed to export metrics. Server responded with UNIMPLEMENTED. This usually means that your collector is not configured with an otlp receiver in the "pipelines" section of the configuration. If export is not desired and you are using OpenTelemetry autoconfiguration or the javaagent, disable export by setting OTEL_METRICS_EXPORTER=none. Full error message: unknown service opentelemetry.proto.collector.metrics.v1.MetricsService
-25-May-2023 16:27:37.110 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
-25-May-2023 16:27:37.111 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:27:37.112 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
-25-May-2023 16:27:37.524 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:27:37.534 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
-NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
-OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-[otel.javaagent 2023-05-25 16:27:43:777 +0800] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 1.26.0
-25-May-2023 16:27:50.347 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.70
-25-May-2023 16:27:50.355 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 1 2022 14:05:47 UTC
-25-May-2023 16:27:50.355 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.70.0
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            5.19.0-41-generic
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-19-openjdk-amd64
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           19.0.2+7-Ubuntu-0ubuntu322.04
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Private Build
-25-May-2023 16:27:50.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
-25-May-2023 16:27:50.357 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/conf/logging.properties
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:./opentelemetry-javaagent.jar
-25-May-2023 16:27:50.358 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
-25-May-2023 16:27:50.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:27:50.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
-25-May-2023 16:27:50.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/temp
-25-May-2023 16:27:50.361 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
-25-May-2023 16:27:51.116 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:27:51.228 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1740] milliseconds
-25-May-2023 16:27:51.352 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
-25-May-2023 16:27:51.354 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.70]
-25-May-2023 16:27:51.412 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/jpetstore.war]
-25-May-2023 16:27:55.232 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+[otel.javaagent 2023-05-25 17:08:21:072 +0800] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 1.26.0
+25-May-2023 17:08:27.253 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.70
+25-May-2023 17:08:27.261 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 1 2022 14:05:47 UTC
+25-May-2023 17:08:27.262 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.70.0
+25-May-2023 17:08:27.262 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            5.19.0-41-generic
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-19-openjdk-amd64
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           19.0.2+7-Ubuntu-0ubuntu322.04
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Private Build
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+25-May-2023 17:08:27.263 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/conf/logging.properties
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+25-May-2023 17:08:27.264 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:./opentelemetry-javaagent.jar
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70
+25-May-2023 17:08:27.265 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/temp
+25-May-2023 17:08:27.267 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
+25-May-2023 17:08:28.865 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+25-May-2023 17:08:29.183 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [3084] milliseconds
+25-May-2023 17:08:29.688 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+25-May-2023 17:08:29.689 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.70]
+25-May-2023 17:08:29.760 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/jpetstore.war]
+25-May-2023 17:08:36.774 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
 [main] INFO org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization started
-[main] INFO org.springframework.web.context.ContextLoader - Root WebApplicationContext initialized in 3479 ms
+[main] INFO org.springframework.web.context.ContextLoader - Root WebApplicationContext initialized in 2882 ms
 [main] INFO net.sourceforge.stripes.vfs.VFS - Using VFS adapter net.sourceforge.stripes.vfs.DefaultVFS
 [main] INFO net.sourceforge.stripes.localization.DefaultLocalePicker - No locale list specified, defaulting to single locale: en_US
 [main] WARN net.sourceforge.stripes.controller.multipart.DefaultMultipartWrapperFactory - No MultipartWrapper implementation could be loaded
 [main] INFO net.sourceforge.stripes.controller.StripesFilter - Stripes Initialization Complete. Version: 1.6.0, Build: 1.6.0
-25-May-2023 16:27:59.360 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/jpetstore.war] has finished in [7,948] ms
-25-May-2023 16:27:59.364 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager]
-25-May-2023 16:27:59.432 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager] has finished in [68] ms
-25-May-2023 16:27:59.433 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager]
-25-May-2023 16:27:59.461 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager] has finished in [28] ms
-25-May-2023 16:27:59.461 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT]
-25-May-2023 16:27:59.495 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT] has finished in [33] ms
-25-May-2023 16:27:59.495 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs]
-25-May-2023 16:27:59.551 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs] has finished in [55] ms
-25-May-2023 16:27:59.554 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples]
-25-May-2023 16:27:59.997 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples] has finished in [442] ms
-25-May-2023 16:28:00.043 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
-25-May-2023 16:28:00.164 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [8934] milliseconds
-[http-nio-8080-exec-1] INFO net.sourceforge.stripes.validation.expression.ExpressionValidator - Expression validation will be performed using: net.sourceforge.stripes.validation.expression.Jsp21ExpressionExecutor
-[otel.javaagent 2023-05-25 16:28:44:648 +0800] [OkHttp http://localhost:4317/...] ERROR io.opentelemetry.exporter.internal.grpc.OkHttpGrpcExporter - Failed to export metrics. Server responded with UNIMPLEMENTED. This usually means that your collector is not configured with an otlp receiver in the "pipelines" section of the configuration. If export is not desired and you are using OpenTelemetry autoconfiguration or the javaagent, disable export by setting OTEL_METRICS_EXPORTER=none. Full error message: unknown service opentelemetry.proto.collector.metrics.v1.MetricsService
+25-May-2023 17:08:40.405 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/jpetstore.war] has finished in [10,645] ms
+25-May-2023 17:08:40.419 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager]
+25-May-2023 17:08:40.476 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/host-manager] has finished in [56] ms
+25-May-2023 17:08:40.476 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager]
+25-May-2023 17:08:40.498 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/manager] has finished in [22] ms
+25-May-2023 17:08:40.499 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT]
+25-May-2023 17:08:40.545 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/ROOT] has finished in [46] ms
+25-May-2023 17:08:40.546 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs]
+25-May-2023 17:08:40.569 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/docs] has finished in [22] ms
+25-May-2023 17:08:40.569 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples]
+25-May-2023 17:08:41.261 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/roy/Codes/Monographic/jpetstore-6/main/target/cargo/installs/apache-tomcat-9.0.70/apache-tomcat-9.0.70/webapps/examples] has finished in [692] ms
+25-May-2023 17:08:41.283 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+25-May-2023 17:08:41.374 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [12144] milliseconds
+[http-nio-8080-exec-2] INFO net.sourceforge.stripes.validation.expression.ExpressionValidator - Expression validation will be performed using: net.sourceforge.stripes.validation.expression.Jsp21ExpressionExecutor
+[otel.javaagent 2023-05-25 17:09:21:825 +0800] [OkHttp http://localhost:4317/...] ERROR io.opentelemetry.exporter.internal.grpc.OkHttpGrpcExporter - Failed to export metrics. Server responded with UNIMPLEMENTED. This usually means that your collector is not configured with an otlp receiver in the "pipelines" section of the configuration. If export is not desired and you are using OpenTelemetry autoconfiguration or the javaagent, disable export by setting OTEL_METRICS_EXPORTER=none. Full error message: unknown service opentelemetry.proto.collector.metrics.v1.MetricsService

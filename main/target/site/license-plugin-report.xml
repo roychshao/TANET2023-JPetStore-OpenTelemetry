@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1685002789538">
+<licensePluginReport goal="FORMAT" timestamp="1685005124859">
     <module artifactId="jpetstore" groupId="org.mybatis" version="6.1.1-SNAPSHOT"/>
     <files>
         <file path=".mvn/extensions.xml" result="NOOP"/>
         <file path=".mvn/settings.xml" result="NOOP"/>
-        <file path="autoTracing.sh" result="NOOP"/>
         <file path="dockerfile" result="NOOP"/>
         <file path="format.xml" result="NOOP"/>
         <file path="pom.xml" result="NOOP"/>

@@ -15,6 +15,8 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+
 import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -150,6 +152,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
+  @WithSpan
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
