@@ -71,7 +71,7 @@ public class TracingInterceptor implements Interceptor {
         if ("accountBean".equals(attribute)) {
           AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
           // System.out.println("username: " + accountBean.getUsername());
-          // span.setAttribute("username", accountBean.getUsername());
+          span.setAttribute("username", accountBean.getUsername());
         }
       }
 
@@ -102,8 +102,13 @@ public class TracingInterceptor implements Interceptor {
                 field.setAccessible(true);
                 Object varValue = field.get(actionBean);
                 varValues[i] = varValue;
+
                 // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
                 span.setAttribute(varName, String.valueOf(varValue));
+
+                // 改為寫入span event中
+
+
               } catch (Throwable t) {
                 span.setStatus(StatusCode.ERROR, t.getMessage());
                 span.recordException(t);
