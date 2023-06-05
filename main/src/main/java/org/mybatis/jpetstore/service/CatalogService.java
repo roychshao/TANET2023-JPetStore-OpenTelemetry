@@ -51,7 +51,8 @@ public class CatalogService {
     return categoryMapper.getCategoryList();
   }
 
-  public Category getCategory(String categoryId) {
+  @WithSpan
+  public Category getCategory(@SpanAttribute("categoryId") String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }
 

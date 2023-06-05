@@ -13,7 +13,7 @@ Export-Package: org.mybatis.jpetstore.domain;version="6.1.1.SNAPSHOT",or
  g.mybatis.jpetstore.mapper;version="6.1.1.SNAPSHOT",org.mybatis.jpetsto
  re.service;version="6.1.1.SNAPSHOT",org.mybatis.jpetstore.web.actions;v
  ersion="6.1.1.SNAPSHOT"
-Git-Revision: d9475887ea0964ca9b1252d77f90fc85dc7de01a
+Git-Revision: 35f28fdeb791c044657ca63f97bf45d0cf48cdd6
 Import-Package: io.opentelemetry.instrumentation.annotations,javax.servl
  et.http,net.sourceforge.stripes.action,net.sourceforge.stripes.integrat
  ion.spring,net.sourceforge.stripes.validation,org.springframework.stere
