@@ -86,6 +86,8 @@ public class TracingAspect {
       // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
       if (tracingVar != null) {
         String[] varNames = tracingVar.varNames();
+        String[] comments = tracingVar.comments();
+
         if (varNames.length != 0) {
           Object[] varValues = new Object[varNames.length];
 
@@ -100,6 +102,17 @@ public class TracingAspect {
               varValues[i] = varValue;
               // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
               span.setAttribute(varName, String.valueOf(varValue));
+            } catch (Throwable t) {
+              span.setStatus(StatusCode.ERROR, t.getMessage());
+              span.recordException(t);
+            }
+          }
+        }
+        if (comments.length != 0) {
+          for (int i = 0; i < comments.length; ++i) {
+            // 將comments中的任意字串寫入event中
+            try {
+              span.addEvent(comments[i]);
             } catch (Throwable t) {
               span.setStatus(StatusCode.ERROR, t.getMessage());
               span.recordException(t);

@@ -70,7 +70,7 @@ public class TracingInterceptor implements Interceptor {
         System.out.println(attribute + " : " + session.getAttribute(attribute));
         if ("accountBean".equals(attribute)) {
           AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
-          // System.out.println("username: " + accountBean.getUsername());
+          System.out.println("username: " + accountBean.getUsername());
           span.setAttribute("username", accountBean.getUsername());
         }
       }
@@ -89,6 +89,7 @@ public class TracingInterceptor implements Interceptor {
         TracingVar tracingVar = context.getHandler().getAnnotation(TracingVar.class);
         if (tracingVar != null) {
           String[] varNames = tracingVar.varNames();
+          String[] comments = tracingVar.comments();
           if (varNames.length != 0) {
             Object[] varValues = new Object[varNames.length];
 
@@ -108,7 +109,17 @@ public class TracingInterceptor implements Interceptor {
 
                 // 改為寫入span event中
 
-
+              } catch (Throwable t) {
+                span.setStatus(StatusCode.ERROR, t.getMessage());
+                span.recordException(t);
+              }
+            }
+          }
+          if (comments.length != 0) {
+            for (int i = 0; i < comments.length; ++i) {
+              // 將comments中的任意字串寫入event中
+              try {
+                span.addEvent(comments[i]);
               } catch (Throwable t) {
                 span.setStatus(StatusCode.ERROR, t.getMessage());
                 span.recordException(t);

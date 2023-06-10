@@ -80,6 +80,7 @@ public class CatalogService {
     return products;
   }
 
+  @TracingVar(varNames = {"itemMapper"}, comments = {"check method with parameter"})
   public List<Item> getItemListByProduct(String productId) {
     return itemMapper.getItemListByProduct(productId);
   }

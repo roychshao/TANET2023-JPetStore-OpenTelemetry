@@ -151,7 +151,8 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingVar(varNames = { "categoryId", "productList", "category" })
+  @TracingVar(varNames = { "categoryId", "productList", "category" }, comments = {
+      "annotation argument should overloading" })
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
