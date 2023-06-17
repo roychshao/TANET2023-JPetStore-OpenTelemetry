@@ -42,7 +42,9 @@ public class TracingAspect {
 
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
-  @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* || org.mybatis.jpetstore.mapper..*).*(..))")
+  // @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* ||
+  // org.mybatis.jpetstore.mapper..*).*(..))")
+  @Around("@annotation(org.mybatis.jpetstore.domain.TracingAOP) || @within(org.mybatis.jpetstore.domain.TracingAOP)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 從Context中取得parentSpan
@@ -82,48 +84,58 @@ public class TracingAspect {
       Class<?> targetClass = joinPoint.getTarget().getClass();
       Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
 
-      TracingVar tracingVar = method.getAnnotation(TracingVar.class);
+      TracingAOP tracingAOP = method.getAnnotation(TracingAOP.class);
       // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
-      if (tracingVar != null) {
-        String[] varNames = tracingVar.varNames();
-        String[] comments = tracingVar.comments();
-
-        if (varNames.length != 0) {
-          Object[] varValues = new Object[varNames.length];
-
-          for (int i = 0; i < varNames.length; ++i) {
-            String varName = varNames[i];
-
-            try {
-              // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
-              Field field = joinPoint.getTarget().getClass().getDeclaredField(varName);
-              field.setAccessible(true);
-              Object varValue = field.get(joinPoint.getTarget());
-              varValues[i] = varValue;
-              // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
-              span.setAttribute(varName, String.valueOf(varValue));
-            } catch (Throwable t) {
-              span.setStatus(StatusCode.ERROR, t.getMessage());
-              span.recordException(t);
-            }
-          }
-        }
-        if (comments.length != 0) {
-          for (int i = 0; i < comments.length; ++i) {
-            // 將comments中的任意字串寫入event中
-            try {
-              span.addEvent(comments[i]);
-            } catch (Throwable t) {
-              span.setStatus(StatusCode.ERROR, t.getMessage());
-              span.recordException(t);
-            }
-          }
-        }
-      } else {
-        System.out.println("The method do not use TracingVar annotation");
+      if (tracingAOP != null) {
+        setVarNames(span, tracingAOP, joinPoint);
+        setComments(span, tracingAOP);
       }
       span.end();
     }
     return result;
   }
+
+  public void setVarNames(Span span, TracingAOP tracingAOP, ProceedingJoinPoint joinPoint) {
+
+    String[] varNames = tracingAOP.varNames();
+
+    if (varNames.length != 0) {
+      Object[] varValues = new Object[varNames.length];
+
+      for (int i = 0; i < varNames.length; ++i) {
+        String varName = varNames[i];
+
+        try {
+          // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
+          Field field = joinPoint.getTarget().getClass().getDeclaredField(varName);
+          field.setAccessible(true);
+          Object varValue = field.get(joinPoint.getTarget());
+          varValues[i] = varValue;
+          // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
+          span.setAttribute(varName, String.valueOf(varValue));
+        } catch (Throwable t) {
+          span.setStatus(StatusCode.ERROR, t.getMessage());
+          span.recordException(t);
+        }
+      }
+    }
+  }
+
+  public void setComments(Span span, TracingAOP tracingAOP) {
+
+    String[] comments = tracingAOP.comments();
+
+    if (comments.length != 0) {
+      for (int i = 0; i < comments.length; ++i) {
+        // 將comments中的任意字串寫入event中
+        try {
+          span.addEvent(comments[i]);
+        } catch (Throwable t) {
+          span.setStatus(StatusCode.ERROR, t.getMessage());
+          span.recordException(t);
+        }
+      }
+    }
+  }
+
 }

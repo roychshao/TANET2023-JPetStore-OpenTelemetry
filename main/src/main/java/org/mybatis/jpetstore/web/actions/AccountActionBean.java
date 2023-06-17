@@ -31,6 +31,7 @@ import net.sourceforge.stripes.validation.Validate;
 
 import org.mybatis.jpetstore.domain.Account;
 import org.mybatis.jpetstore.domain.Product;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
 
@@ -147,6 +148,7 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   @DefaultHandler
+  @TracingAOP
   public Resolution signonForm() {
     return new ForwardResolution(SIGNON);
   }

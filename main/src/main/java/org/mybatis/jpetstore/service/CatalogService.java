@@ -21,7 +21,7 @@ import java.util.List;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
-import org.mybatis.jpetstore.domain.TracingVar;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
@@ -59,7 +59,7 @@ public class CatalogService {
     return productMapper.getProduct(productId);
   }
 
-  @TracingVar(varNames = { "tmp" })
+  @TracingAOP(varNames = { "tmp" })
   public List<Product> getProductListByCategory(String categoryId) {
     return productMapper.getProductListByCategory(categoryId);
   }
@@ -80,7 +80,7 @@ public class CatalogService {
     return products;
   }
 
-  @TracingVar(varNames = {"itemMapper"}, comments = {"check method with parameter"})
+  @TracingAOP(varNames = { "itemMapper" }, comments = { "check method with parameter" })
   public List<Item> getItemListByProduct(String productId) {
     return itemMapper.getItemListByProduct(productId);
   }

@@ -25,7 +25,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
-import org.mybatis.jpetstore.domain.TracingVar;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.service.CatalogService;
 
 /**
@@ -34,6 +34,7 @@ import org.mybatis.jpetstore.service.CatalogService;
  * @author Eduardo Macarron
  */
 @SessionScope
+@TracingAOP
 public class CatalogActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = 5849523372175050635L;
@@ -151,7 +152,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingVar(varNames = { "categoryId", "productList", "category" }, comments = {
+  @TracingAOP(varNames = { "categoryId", "productList", "category" }, comments = {
       "annotation argument should overloading" })
   public ForwardResolution viewCategory() {
     if (categoryId != null) {

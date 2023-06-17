@@ -46,9 +46,13 @@ public class TracingInterceptor implements Interceptor {
   public Resolution intercept(ExecutionContext context) throws Exception {
     Resolution resolution = null;
     ActionBean actionBean = context.getActionBean();
-    if (actionBean == null) {
-      System.out.println("Interceptor: actionBean is null");
-      throw new Exception("actionBean is null in Interceptor");
+
+    // 若actionBean不存在或是不帶有TracingAOP註解,直接執行原方法
+    if (actionBean == null || (!actionBean.getClass().isAnnotationPresent(TracingAOP.class)
+        && context.getHandler().getAnnotation(TracingAOP.class) == null)) {
+      System.out.println("Interceptor: null");
+      return context.proceed();
+      // throw new Exception("actionBean is null in Interceptor");
     } else {
       String actionBeanClassName = actionBean.getClass().getName();
       String actionBeanMethodName = context.getHandler().getName();
@@ -85,49 +89,11 @@ public class TracingInterceptor implements Interceptor {
       } finally {
         // 執行ActionBean方法後的處理邏輯
 
-        // 若TracingVar不為空,則將varNames中的變數取出寫入到span中
-        TracingVar tracingVar = context.getHandler().getAnnotation(TracingVar.class);
-        if (tracingVar != null) {
-          String[] varNames = tracingVar.varNames();
-          String[] comments = tracingVar.comments();
-          if (varNames.length != 0) {
-            Object[] varValues = new Object[varNames.length];
-
-            for (int i = 0; i < varNames.length; ++i) {
-              String varName = varNames[i];
-
-              // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
-              try {
-                Field field = actionBean.getClass().getDeclaredField(varName);
-
-                field.setAccessible(true);
-                Object varValue = field.get(actionBean);
-                varValues[i] = varValue;
-
-                // 將TracingVar annotation指定的變數轉為String並將名稱及值寫入span中
-                span.setAttribute(varName, String.valueOf(varValue));
-
-                // 改為寫入span event中
-
-              } catch (Throwable t) {
-                span.setStatus(StatusCode.ERROR, t.getMessage());
-                span.recordException(t);
-              }
-            }
-          }
-          if (comments.length != 0) {
-            for (int i = 0; i < comments.length; ++i) {
-              // 將comments中的任意字串寫入event中
-              try {
-                span.addEvent(comments[i]);
-              } catch (Throwable t) {
-                span.setStatus(StatusCode.ERROR, t.getMessage());
-                span.recordException(t);
-              }
-            }
-          }
-        } else {
-          System.out.println("The method do not use TracingVar annotation");
+        // 若TracingAOP不為空,則將varNames中的變數取出寫入到span中
+        TracingAOP tracingAOP = context.getHandler().getAnnotation(TracingAOP.class);
+        if (tracingAOP != null) {
+          setVarNames(span, tracingAOP, actionBean);
+          setComments(span, tracingAOP);
         }
         span.end();
       }
@@ -137,5 +103,51 @@ public class TracingInterceptor implements Interceptor {
 
   public static ContextKey<Span> getParentSpanKey() {
     return PARENTSPAN_KEY;
+  }
+
+  public void setVarNames(Span span, TracingAOP tracingAOP, ActionBean actionBean) {
+
+    String[] varNames = tracingAOP.varNames();
+    if (varNames.length != 0) {
+      Object[] varValues = new Object[varNames.length];
+
+      for (int i = 0; i < varNames.length; ++i) {
+        String varName = varNames[i];
+
+        // 嘗試獲取varName變數值,如果獲取不到就將Exception寫入span中
+        try {
+          Field field = actionBean.getClass().getDeclaredField(varName);
+
+          field.setAccessible(true);
+          Object varValue = field.get(actionBean);
+          varValues[i] = varValue;
+
+          // 將TracingAOP annotation指定的變數轉為String並將名稱及值寫入span中
+          span.setAttribute(varName, String.valueOf(varValue));
+
+          // 改為寫入span event中
+
+        } catch (Throwable t) {
+          span.setStatus(StatusCode.ERROR, t.getMessage());
+          span.recordException(t);
+        }
+      }
+    }
+  }
+
+  public void setComments(Span span, TracingAOP tracingAOP) {
+    String[] comments = tracingAOP.comments();
+
+    if (comments.length != 0) {
+      for (int i = 0; i < comments.length; ++i) {
+        // 將comments中的任意字串寫入event中
+        try {
+          span.addEvent(comments[i]);
+        } catch (Throwable t) {
+          span.setStatus(StatusCode.ERROR, t.getMessage());
+          span.recordException(t);
+        }
+      }
+    }
   }
 }
