@@ -1,0 +1,46 @@
+[Root] 
+GET http://localhost:8080/jpetstore
+
+[Category(FISH)]
+GET http://localhost:8080/jpetstore/actions/Catalog.action;jsessionid=E68F50F7D1751F30A877A3FA2E710D11?viewCategory=&categoryId=FISH
+
+[Product(Koi)]
+GET http://localhost:8080/jpetstore/actions/Catalog.action?viewProduct=&productId=FI-FW-01
+
+[Item(Spotted Koi)]
+GET http://localhost:8080/jpetstore/actions/Catalog.action?viewItem=&itemId=EST-4
+
+[Add to Cart(Spotted Koi)]
+GET http://localhost:8080/jpetstore/actions/Cart.action?addItemToCart=&workingItemId=EST-4
+
+[SignIn(ACID)]
+POST http://localhost:8080/jpetstore/actions/Account.action
+req.body: {
+    username	"ACID"
+    password	"ACID"
+    signon	"Login"
+    _sourcePage	"pMm6fhhRzr0zHOPf7OpnD5FrvSa0gfkxworKRFpcKI2GB3Dg7dKlag4fSzyU9prYemx0El0K5EBMtrKx1QgwtwiLkZ8-n45JrHwYRNoeBvE="
+    __fp	"h3vPdhit5RhC9BDaBp4fPO6k20MB9_XLOezYVeFuVKk8a8kE8rTAXgE2fmbWgWph"
+}
+
+[Generate newOrder(ACID: Spotted Koi)]
+POST http://localhost:8080/jpetstore/actions/Order.action
+req.body: {
+    order.cardType	"Visa"
+    order.creditCard	"999+9999+9999+9999"
+    order.expiryDate	"12/03"
+    order.billToFirstName	"ABC"
+    order.billToLastName	"XYX"
+    order.billAddress1	"901+San+Antonio+Road"
+    order.billAddress2	"MS+UCUP02-206"
+    order.billCity	"Palo+Alto"
+    order.billState	"CA"
+    order.billZip	"94303"
+    order.billCountry	"USA"
+    newOrder	"Continue"
+    _sourcePage	"PUolIedGg5OafeR1uTkoUZddRDHw4nPBd0FOPTLyXSgsPhUPGTp0KeMuiCG8Gz8x_sAu0Bxi61t-SQX__PZwIcI9gsej5OVl95CbAat7-4c="
+    __fp	"qfprwnhzR4DyxcyQQOUjNg8lZKYJKzcsDMo_g10-k6tZUd57PPEFO5UsToxRSetGhmpSEB3H0l8Ob8mvoBws_Egfj8dUAR4s85OmR9LESV1fHPV8pD27ww=="
+}
+
+[Confirm Order]
+GET http://localhost:8080/jpetstore/actions/Order.action?newOrder=&confirmed=true
