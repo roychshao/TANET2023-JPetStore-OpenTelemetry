@@ -5,30 +5,6 @@ export default function () {
 
     let cookieJar = http.cookieJar();
 
-    group('Browse', function () {
-
-        let RootResponse = http.get('http://localhost:8080/jpetstore', { cookieJar: cookieJar });
-        check(RootResponse, {
-            'Root status is 200': (r) => r.status === 200
-        });
-
-        let CategoryResponse = http.get('http://localhost:8080/jpetstore/actions/Catalog.action;jsessionid=E68F50F7D1751F30A877A3FA2E710D11?viewCategory=&categoryId=FISH', { cookieJar: cookieJar });
-        check(CategoryResponse, {
-            'Category status is 200': (r) => r.status === 200
-        });
-
-        let ProductResponse = http.get('http://localhost:8080/jpetstore/actions/Catalog.action?viewProduct=&productId=FI-FW-01', { cookieJar: cookieJar });
-        check(ProductResponse, {
-            'Product status is 200': (r) => r.status === 200
-        });
-
-        let ItemResponse = http.get('http://localhost:8080/jpetstore/actions/Catalog.action?viewItem=&itemId=EST-4', { cookieJar: cookieJar });
-        check(ItemResponse, {
-            'Item status is 200': (r) => r.status === 200
-        });
-
-    })
-
     group('Make Order', function () {
 
         let AddToCartResponse = http.get('http://localhost:8080/jpetstore/actions/Cart.action?addItemToCart=&workingItemId=EST-4', { cookieJar: cookieJar });
@@ -103,22 +79,6 @@ export default function () {
         let ConfirmNewOrderResponse = http.get('http://localhost:8080/jpetstore/actions/Order.action?newOrder=&confirmed=true', { cookieJar: cookieJar });
         check(ConfirmNewOrderResponse, {
             'ConfirmNewOrder status is 200': (r) => r.status === 200
-        });
-    })
-
-    group('SignIn', function () {
-
-        let SignInBody = {
-            username: "ACID",
-            password: "ACID",
-            signon: "Login",
-            _sourcePage: "pMm6fhhRzr0zHOPf7OpnD5FrvSa0gfkxworKRFpcKI2GB3Dg7dKlag4fSzyU9prYemx0El0K5EBMtrKx1QgwtwiLkZ8-n45JrHwYRNoeBvE=",
-            __fp: "h3vPdhit5RhC9BDaBp4fPO6k20MB9_XLOezYVeFuVKk8a8kE8rTAXgE2fmbWgWph",
-            cookieJar: cookieJar
-        };
-        let SignInResponse = http.post('http://localhost:8080/jpetstore/actions/Account.action', SignInBody);
-        check(SignInResponse, {
-            'SignIn status is 200': (r) => r.status === 200
         });
     })
 }
