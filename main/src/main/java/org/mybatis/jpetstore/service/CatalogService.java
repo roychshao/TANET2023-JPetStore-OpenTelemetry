@@ -15,9 +15,6 @@
  */
 package org.mybatis.jpetstore.service;
 
-import io.opentelemetry.instrumentation.annotations.SpanAttribute;
-import io.opentelemetry.instrumentation.annotations.WithSpan;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +48,7 @@ public class CatalogService {
     return categoryMapper.getCategoryList();
   }
 
-  @WithSpan
-  public Category getCategory(@SpanAttribute("categoryId") String categoryId) {
+  public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }
 
@@ -60,8 +56,7 @@ public class CatalogService {
     return productMapper.getProduct(productId);
   }
 
-  @WithSpan
-  public List<Product> getProductListByCategory(@SpanAttribute("categoryId") String categoryId) {
+  public List<Product> getProductListByCategory(String categoryId) {
     return productMapper.getProductListByCategory(categoryId);
   }
 
