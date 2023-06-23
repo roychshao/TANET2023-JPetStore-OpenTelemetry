@@ -18,12 +18,14 @@ package org.mybatis.jpetstore.mapper;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.Category;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface CategoryMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface CategoryMapper {
 
   List<Category> getCategoryList();

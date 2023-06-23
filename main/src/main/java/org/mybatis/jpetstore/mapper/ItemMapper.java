@@ -19,12 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.jpetstore.domain.Item;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface ItemMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface ItemMapper {
 
   void updateInventoryQuantity(Map<String, Object> param);

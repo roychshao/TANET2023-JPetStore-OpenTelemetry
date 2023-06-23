@@ -22,6 +22,7 @@ import java.util.Map;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.Sequence;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.LineItemMapper;
 import org.mybatis.jpetstore.mapper.OrderMapper;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Eduardo Macarron
  */
 @Service
+@TracingAOP
 public class OrderService {
 
   private final ItemMapper itemMapper;

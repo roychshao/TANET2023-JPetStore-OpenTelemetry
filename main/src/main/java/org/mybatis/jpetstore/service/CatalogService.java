@@ -33,18 +33,17 @@ import org.springframework.stereotype.Service;
  * @author Eduardo Macarron
  */
 @Service
+@TracingAOP
 public class CatalogService {
 
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
-  private int tmp;
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;
     this.itemMapper = itemMapper;
     this.productMapper = productMapper;
-    this.tmp = 123;
   }
 
   public List<Category> getCategoryList() {
@@ -59,7 +58,6 @@ public class CatalogService {
     return productMapper.getProduct(productId);
   }
 
-  @TracingAOP(varNames = { "tmp" })
   public List<Product> getProductListByCategory(String categoryId) {
     return productMapper.getProductListByCategory(categoryId);
   }
@@ -80,7 +78,6 @@ public class CatalogService {
     return products;
   }
 
-  @TracingAOP(varNames = { "itemMapper" }, comments = { "check method with parameter" })
   public List<Item> getItemListByProduct(String productId) {
     return itemMapper.getItemListByProduct(productId);
   }

@@ -18,12 +18,14 @@ package org.mybatis.jpetstore.mapper;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.Order;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface OrderMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface OrderMapper {
 
   List<Order> getOrdersByUsername(String username);

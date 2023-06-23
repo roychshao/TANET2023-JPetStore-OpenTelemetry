@@ -152,8 +152,8 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingAOP(varNames = { "categoryId", "productList", "category" }, comments = {
-      "annotation argument should overloading" })
+  @TracingAOP(varNames = { "categoryId", "categoryList", "category" }, comments = {
+      "Hello this is TracingAOP in viewCategory" })
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
@@ -167,6 +167,8 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
+  @TracingAOP(varNames = { "productId", "productList", "product" }, comments = {
+      " Hello this is TracingAOP in viewProduct" })
   public ForwardResolution viewProduct() {
     if (productId != null) {
       itemList = catalogService.getItemListByProduct(productId);
@@ -180,6 +182,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
+  @TracingAOP(varNames = { "itemId", "itemList", "item" }, comments = { "Hello this is TracingAOP in viewItem" })
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();

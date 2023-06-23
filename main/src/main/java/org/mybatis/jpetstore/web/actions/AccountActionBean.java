@@ -41,6 +41,7 @@ import org.mybatis.jpetstore.service.CatalogService;
  * @author Eduardo Macarron
  */
 @SessionScope
+@TracingAOP
 public class AccountActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = 5499663666155758178L;
@@ -148,7 +149,6 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   @DefaultHandler
-  @TracingAOP
   public Resolution signonForm() {
     return new ForwardResolution(SIGNON);
   }

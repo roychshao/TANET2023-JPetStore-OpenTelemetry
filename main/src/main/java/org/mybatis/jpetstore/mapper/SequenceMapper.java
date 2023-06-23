@@ -16,12 +16,14 @@
 package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Sequence;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface SequenceMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface SequenceMapper {
 
   Sequence getSequence(Sequence sequence);

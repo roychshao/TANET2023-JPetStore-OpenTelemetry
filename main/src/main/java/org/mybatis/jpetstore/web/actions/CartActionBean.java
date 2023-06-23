@@ -27,6 +27,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Cart;
 import org.mybatis.jpetstore.domain.CartItem;
 import org.mybatis.jpetstore.domain.Item;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.service.CatalogService;
 
 /**
@@ -35,6 +36,7 @@ import org.mybatis.jpetstore.service.CatalogService;
  * @author Eduardo Macarron
  */
 @SessionScope
+@TracingAOP
 public class CartActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = -4038684592582714235L;

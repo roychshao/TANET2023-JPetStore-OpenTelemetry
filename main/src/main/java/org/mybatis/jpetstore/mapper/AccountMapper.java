@@ -16,12 +16,14 @@
 package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Account;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface AccountMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface AccountMapper {
 
   Account getAccountByUsername(String username);

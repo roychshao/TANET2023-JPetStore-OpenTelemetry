@@ -27,6 +27,7 @@ import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import org.mybatis.jpetstore.domain.Order;
+import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.service.OrderService;
 
 /**
@@ -35,6 +36,7 @@ import org.mybatis.jpetstore.service.OrderService;
  * @author Eduardo Macarron
  */
 @SessionScope
+@TracingAOP
 public class OrderActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = -6171288227470176272L;

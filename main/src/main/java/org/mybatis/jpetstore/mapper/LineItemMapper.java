@@ -18,12 +18,14 @@ package org.mybatis.jpetstore.mapper;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.LineItem;
+import org.mybatis.jpetstore.domain.TracingAOP;
 
 /**
  * The Interface LineItemMapper.
  *
  * @author Eduardo Macarron
  */
+@TracingAOP
 public interface LineItemMapper {
 
   List<LineItem> getLineItemsByOrderId(int orderId);

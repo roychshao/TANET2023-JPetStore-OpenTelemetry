@@ -42,8 +42,49 @@ export default function () {
     check(SignInResponse, {
         'SignIn status is 200': (r) => r.status === 200
     });
-
+    /*
+      private String username;
+      private Date orderDate;
+      private String shipAddress1;
+      private String shipAddress2;
+      private String shipCity;
+      private String shipState;
+      private String shipZip;
+      private String shipCountry;
+      private String billAddress1;
+      private String billAddress2;
+      private String billCity;
+      private String billState;
+      private String billZip;
+      private String billCountry;
+      private String courier;
+      private BigDecimal totalPrice;
+      private String billToFirstName;
+      private String billToLastName;
+      private String shipToFirstName;
+      private String shipToLastName;
+      private String creditCard;
+      private String expiryDate;
+      private String cardType;
+      private String locale;
+      private String status;
+    */
     let GenerateNewOrderBody = {
+        'order.username': "ACID",
+        'order.orderDate': "2023-06-23",
+        'order.shipAddress1': '901 San Antonio Road',
+        'order.shipAddress2': 'MS UCUP02-206',
+        'order.shipCity': 'Palo Alto',
+        'order.shipState': 'CA',
+        'order.shipZip': 94303,
+        'order.shipCountry': 'USA',
+        'order.courier': 'UPS',
+        'order.totalPrice': '18.50',
+        'order.shipToFirstName': 'ABC',
+        'order.shipToLastName': 'XYX',
+        'order.locale': 'CA',
+        'order.status': 'P',
+
         'order.cardType': "Visa",
         'order.creditCard': "999+9999+9999+9999",
         'order.expiryDate': "12/03",
