@@ -15,4 +15,4 @@
 #
 
 ./mvnw clean package -Dmaven.test.skip=true
-./mvnw cargo:run -P tomcat90
+./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=jaeger
