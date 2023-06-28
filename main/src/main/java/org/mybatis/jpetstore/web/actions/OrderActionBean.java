@@ -59,7 +59,7 @@ public class OrderActionBean extends AbstractActionBean {
   private boolean shippingAddressRequired;
   private boolean confirmed;
   private List<Order> orderList;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));

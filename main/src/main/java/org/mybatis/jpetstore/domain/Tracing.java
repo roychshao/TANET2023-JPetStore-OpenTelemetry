@@ -36,7 +36,7 @@ public class Tracing {
   private Resource resource;
   private SdkTracerProvider sdkTracerProvider;
   private OpenTelemetry openTelemetry;
-  private static Tracer tracer;
+  private Tracer tracer;
   private JaegerGrpcSpanExporter jaegerExporter;
   private static Tracing instance;
 
@@ -66,10 +66,15 @@ public class Tracing {
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
   }
 
-  public static synchronized Tracer getTracer() {
+  public static Tracer getTracer() {
     if (instance == null) {
-      instance = new Tracing();
+      synchronized (Tracing.class) {
+        if (instance == null) {
+          instance = new Tracing();
+        }
+      }
     }
+
     return instance.tracer;
   }
 }

@@ -44,7 +44,7 @@ public class Item implements Serializable {
   private String attribute5;
   private Product product;
   private int quantity;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public String getItemId() {
     Span span = tracer.spanBuilder("Domain: getItemId").startSpan();

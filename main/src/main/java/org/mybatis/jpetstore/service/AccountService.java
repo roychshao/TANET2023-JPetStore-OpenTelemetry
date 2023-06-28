@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
   private final AccountMapper accountMapper;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public AccountService(AccountMapper accountMapper) {
     this.accountMapper = accountMapper;

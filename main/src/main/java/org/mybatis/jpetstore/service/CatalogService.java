@@ -42,7 +42,7 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
-  private final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;

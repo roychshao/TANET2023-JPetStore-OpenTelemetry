@@ -46,7 +46,7 @@ public class OrderService {
   private final OrderMapper orderMapper;
   private final SequenceMapper sequenceMapper;
   private final LineItemMapper lineItemMapper;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public OrderService(ItemMapper itemMapper, OrderMapper orderMapper, SequenceMapper sequenceMapper,
       LineItemMapper lineItemMapper) {

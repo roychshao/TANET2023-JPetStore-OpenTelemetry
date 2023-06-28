@@ -62,7 +62,7 @@ public class Order implements Serializable {
   private String locale;
   private String status;
   private List<LineItem> lineItems = new ArrayList<>();
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public int getOrderId() {
     Span span = tracer.spanBuilder("Domain: getOrderId").startSpan();

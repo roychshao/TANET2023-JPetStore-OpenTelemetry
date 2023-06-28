@@ -32,7 +32,7 @@ public class Sequence implements Serializable {
 
   private String name;
   private int nextId;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public Sequence() {
   }

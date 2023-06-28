@@ -50,7 +50,7 @@ public class Account implements Serializable {
   private boolean listOption;
   private boolean bannerOption;
   private String bannerName;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public String getUsername() {
     Span span = tracer.spanBuilder("Domain: getUsername").startSpan();

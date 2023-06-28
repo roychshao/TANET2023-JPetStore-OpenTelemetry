@@ -46,7 +46,7 @@ public class CartActionBean extends AbstractActionBean {
 
   private static final String VIEW_CART = "/WEB-INF/jsp/cart/Cart.jsp";
   private static final String CHECK_OUT = "/WEB-INF/jsp/cart/Checkout.jsp";
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   @SpringBean
   private transient CatalogService catalogService;

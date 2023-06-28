@@ -55,7 +55,7 @@ public class AccountActionBean extends AbstractActionBean {
 
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   @SpringBean
   private transient AccountService accountService;

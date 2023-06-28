@@ -33,7 +33,7 @@ public class Category implements Serializable {
   private String categoryId;
   private String name;
   private String description;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public String getCategoryId() {
     Span span = tracer.spanBuilder("Domain: getCategoryId").startSpan();

@@ -36,7 +36,7 @@ public class CartItem implements Serializable {
   private int quantity;
   private boolean inStock;
   private BigDecimal total;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public boolean isInStock() {
     Span span = tracer.spanBuilder("Domain: isInStock").startSpan();

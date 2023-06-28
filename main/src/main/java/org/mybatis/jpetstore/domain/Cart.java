@@ -39,7 +39,7 @@ public class Cart implements Serializable {
 
   private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<>());
   private final List<CartItem> itemList = new ArrayList<>();
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public Iterator<CartItem> getCartItems() {
     Span span = tracer.spanBuilder("Domain: getCartItems").startSpan();

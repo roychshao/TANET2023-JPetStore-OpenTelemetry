@@ -39,7 +39,7 @@ public class LineItem implements Serializable {
   private BigDecimal unitPrice;
   private Item item;
   private BigDecimal total;
-  private transient final Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.getTracer();
 
   public LineItem() {
   }
