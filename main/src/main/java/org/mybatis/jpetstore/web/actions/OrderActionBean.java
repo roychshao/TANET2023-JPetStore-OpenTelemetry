@@ -59,7 +59,7 @@ public class OrderActionBean extends AbstractActionBean {
   private boolean shippingAddressRequired;
   private boolean confirmed;
   private List<Order> orderList;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));

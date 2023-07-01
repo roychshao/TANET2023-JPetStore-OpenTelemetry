@@ -32,7 +32,7 @@ public class Sequence implements Serializable {
 
   private String name;
   private int nextId;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public Sequence() {
   }
@@ -43,6 +43,7 @@ public class Sequence implements Serializable {
   }
 
   public String getName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Sequence Domain: getName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -52,6 +53,7 @@ public class Sequence implements Serializable {
   }
 
   public void setName(String name) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Sequence Domain: setName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.name = name;
@@ -61,6 +63,7 @@ public class Sequence implements Serializable {
   }
 
   public int getNextId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Sequence Domain: getNextId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -70,6 +73,7 @@ public class Sequence implements Serializable {
   }
 
   public void setNextId(int nextId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Sequence Domain: setNextId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.nextId = nextId;

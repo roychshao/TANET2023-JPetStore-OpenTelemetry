@@ -39,9 +39,10 @@ public class Cart implements Serializable {
 
   private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<>());
   private final List<CartItem> itemList = new ArrayList<>();
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public Iterator<CartItem> getCartItems() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCartItems").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -51,6 +52,7 @@ public class Cart implements Serializable {
   }
 
   public List<CartItem> getCartItemList() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCartItemList").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -60,6 +62,7 @@ public class Cart implements Serializable {
   }
 
   public int getNumberOfItems() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getNumberOfItems").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -69,6 +72,7 @@ public class Cart implements Serializable {
   }
 
   public Iterator<CartItem> getAllCartItems() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAllCartItems").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -78,6 +82,7 @@ public class Cart implements Serializable {
   }
 
   public boolean containsItemId(String itemId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: containsItemId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -95,6 +100,7 @@ public class Cart implements Serializable {
    *          the is in stock
    */
   public void addItem(Item item, boolean isInStock) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: addItem").startSpan();
     try (Scope ss = span.makeCurrent()) {
       CartItem cartItem = itemMap.get(item.getItemId());
@@ -121,6 +127,7 @@ public class Cart implements Serializable {
    * @return the item
    */
   public Item removeItemById(String itemId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: removeItemById").startSpan();
     try (Scope ss = span.makeCurrent()) {
       CartItem cartItem = itemMap.remove(itemId);
@@ -143,6 +150,7 @@ public class Cart implements Serializable {
    *          the item id
    */
   public void incrementQuantityByItemId(String itemId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: incrementQuantityByItemId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       CartItem cartItem = itemMap.get(itemId);
@@ -153,6 +161,7 @@ public class Cart implements Serializable {
   }
 
   public void setQuantityByItemId(String itemId, int quantity) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setQuantityByItemId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       CartItem cartItem = itemMap.get(itemId);
@@ -168,6 +177,7 @@ public class Cart implements Serializable {
    * @return the sub total
    */
   public BigDecimal getSubTotal() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getSubTotal").startSpan();
     try (Scope ss = span.makeCurrent()) {
       BigDecimal result = itemList.stream()

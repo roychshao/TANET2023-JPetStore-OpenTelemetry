@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
   private final AccountMapper accountMapper;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public AccountService(AccountMapper accountMapper) {
     this.accountMapper = accountMapper;

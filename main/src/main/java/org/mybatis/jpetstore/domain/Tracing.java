@@ -24,18 +24,25 @@ public class Tracing {
       .getOpenTelemetrySdk();
   private static Tracer tracer = opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
-  public Tracing() {
-    // OpenTelemetrySdk opentelemetry = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
+  // public Tracing() {
+  // OpenTelemetrySdk opentelemetry = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
 
-    // AutoConfiguredOpenTelemetrySdk.builder()
-    // .addTracerProviderCustomizer(
-    // (sdkTracerProviderBuilder, configProperties) ->
-    // sdkTracerProviderBuilder.addSpanProcessor(
-    // new SpanProcessor() { /* implementation omitted for brevity */ }))
-    // .build();
-  }
+  // AutoConfiguredOpenTelemetrySdk.builder()
+  // .addTracerProviderCustomizer(
+  // (sdkTracerProviderBuilder, configProperties) ->
+  // sdkTracerProviderBuilder.addSpanProcessor(
+  // new SpanProcessor() { /* implementation omitted for brevity */ }))
+  // .build();
+  // }
 
-  public static synchronized Tracer getTracer() {
+  // public static synchronized Tracer getTracer() {
+  // return tracer;
+  // }
+
+  // public static void main(String[] args) {
+  // opentelemetry = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
+  // }
+  public static Tracer getTracer() {
     return tracer;
   }
 }

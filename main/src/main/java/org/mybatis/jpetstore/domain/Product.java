@@ -34,9 +34,10 @@ public class Product implements Serializable {
   private String categoryId;
   private String name;
   private String description;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public String getProductId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getProductId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -46,6 +47,7 @@ public class Product implements Serializable {
   }
 
   public void setProductId(String productId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setProductId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.productId = productId.trim();
@@ -55,6 +57,7 @@ public class Product implements Serializable {
   }
 
   public String getCategoryId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -64,6 +67,7 @@ public class Product implements Serializable {
   }
 
   public void setCategoryId(String categoryId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.categoryId = categoryId;
@@ -73,6 +77,7 @@ public class Product implements Serializable {
   }
 
   public String getName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -82,6 +87,7 @@ public class Product implements Serializable {
   }
 
   public void setName(String name) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.name = name;
@@ -91,6 +97,7 @@ public class Product implements Serializable {
   }
 
   public String getDescription() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getDescription").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -100,6 +107,7 @@ public class Product implements Serializable {
   }
 
   public void setDescription(String description) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setDescription").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.description = description;
@@ -110,6 +118,7 @@ public class Product implements Serializable {
 
   @Override
   public String toString() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
     try (Scope ss = span.makeCurrent()) {

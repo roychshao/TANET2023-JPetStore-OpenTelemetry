@@ -42,7 +42,7 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;

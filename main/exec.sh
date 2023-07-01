@@ -15,4 +15,4 @@
 #
 
 ./mvnw clean package -Dmaven.test.skip=true
-./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=jaeger
+./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=jaeger -Dotel.resource.attributes=service.name=jpetstore-autoconfig

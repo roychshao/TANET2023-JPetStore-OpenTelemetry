@@ -50,9 +50,10 @@ public class Account implements Serializable {
   private boolean listOption;
   private boolean bannerOption;
   private String bannerName;
-  private transient Tracer tracer = Tracing.getTracer();
+  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
 
   public String getUsername() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getUsername").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -62,6 +63,7 @@ public class Account implements Serializable {
   }
 
   public void setUsername(String username) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setUsername").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.username = username;
@@ -71,6 +73,7 @@ public class Account implements Serializable {
   }
 
   public String getPassword() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getPassword").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -80,6 +83,7 @@ public class Account implements Serializable {
   }
 
   public void setPassword(String password) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setPassword").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.password = password;
@@ -89,6 +93,7 @@ public class Account implements Serializable {
   }
 
   public String getEmail() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getEmail").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -98,6 +103,7 @@ public class Account implements Serializable {
   }
 
   public void setEmail(String email) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setEmail").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.email = email;
@@ -107,6 +113,7 @@ public class Account implements Serializable {
   }
 
   public String getFirstName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getFirstName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -117,6 +124,7 @@ public class Account implements Serializable {
 
   @Validate(required = true, on = { "newAccount", "editAccount" })
   public void setFirstName(String firstName) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setFirstName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.firstName = firstName;
@@ -126,6 +134,7 @@ public class Account implements Serializable {
   }
 
   public String getLastName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getLastName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -136,6 +145,7 @@ public class Account implements Serializable {
 
   @Validate(required = true, on = { "newAccount", "editAccount" })
   public void setLastName(String lastName) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setLastName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.lastName = lastName;
@@ -145,6 +155,7 @@ public class Account implements Serializable {
   }
 
   public String getStatus() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getStatus").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -154,6 +165,7 @@ public class Account implements Serializable {
   }
 
   public void setStatus(String status) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setStatus").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.status = status;
@@ -163,6 +175,7 @@ public class Account implements Serializable {
   }
 
   public String getAddress1() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAddress1").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -172,6 +185,7 @@ public class Account implements Serializable {
   }
 
   public void setAddress1(String address1) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAddress1").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.address1 = address1;
@@ -181,6 +195,7 @@ public class Account implements Serializable {
   }
 
   public String getAddress2() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAddress2").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -190,6 +205,7 @@ public class Account implements Serializable {
   }
 
   public void setAddress2(String address2) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAddress2").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.address2 = address2;
@@ -199,6 +215,7 @@ public class Account implements Serializable {
   }
 
   public String getCity() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCity").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -208,6 +225,7 @@ public class Account implements Serializable {
   }
 
   public void setCity(String city) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setCity").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.city = city;
@@ -217,6 +235,7 @@ public class Account implements Serializable {
   }
 
   public String getState() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getState").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -226,6 +245,7 @@ public class Account implements Serializable {
   }
 
   public void setState(String state) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setState").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.state = state;
@@ -235,6 +255,7 @@ public class Account implements Serializable {
   }
 
   public String getZip() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getZip").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -244,6 +265,7 @@ public class Account implements Serializable {
   }
 
   public void setZip(String zip) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setZip").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.zip = zip;
@@ -253,6 +275,7 @@ public class Account implements Serializable {
   }
 
   public String getCountry() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCountry").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -262,6 +285,7 @@ public class Account implements Serializable {
   }
 
   public void setCountry(String country) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setCountry").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.country = country;
@@ -271,6 +295,7 @@ public class Account implements Serializable {
   }
 
   public String getPhone() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getPhone").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -280,6 +305,7 @@ public class Account implements Serializable {
   }
 
   public void setPhone(String phone) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setPhone").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.phone = phone;
@@ -289,6 +315,7 @@ public class Account implements Serializable {
   }
 
   public String getFavouriteCategoryId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getFavouriteCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -298,6 +325,7 @@ public class Account implements Serializable {
   }
 
   public void setFavouriteCategoryId(String favouriteCategoryId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setFavouriteCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.favouriteCategoryId = favouriteCategoryId;
@@ -307,6 +335,7 @@ public class Account implements Serializable {
   }
 
   public String getLanguagePreference() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getLanguagePreference").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -316,6 +345,7 @@ public class Account implements Serializable {
   }
 
   public void setLanguagePreference(String languagePreference) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setLanguagePreference").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.languagePreference = languagePreference;
@@ -325,6 +355,7 @@ public class Account implements Serializable {
   }
 
   public boolean isListOption() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: isListOption").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -334,6 +365,7 @@ public class Account implements Serializable {
   }
 
   public void setListOption(boolean listOption) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setListOption").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.listOption = listOption;
@@ -343,6 +375,7 @@ public class Account implements Serializable {
   }
 
   public boolean isBannerOption() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: isBannerOption").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -352,6 +385,7 @@ public class Account implements Serializable {
   }
 
   public void setBannerOption(boolean bannerOption) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setBannerOption").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.bannerOption = bannerOption;
@@ -361,6 +395,7 @@ public class Account implements Serializable {
   }
 
   public String getBannerName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getBannerName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -370,6 +405,7 @@ public class Account implements Serializable {
   }
 
   public void setBannerName(String bannerName) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setBannerName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.bannerName = bannerName;
