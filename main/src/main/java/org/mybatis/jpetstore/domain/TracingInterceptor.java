@@ -71,7 +71,6 @@ public class TracingInterceptor implements Interceptor {
       Enumeration<String> attributes = session.getAttributeNames();
       while (attributes.hasMoreElements()) {
         String attribute = (String) attributes.nextElement();
-        System.out.println(attribute + " : " + session.getAttribute(attribute));
         if ("accountBean".equals(attribute)) {
           AccountActionBean accountBean = (AccountActionBean) session.getAttribute(attribute);
           System.out.println("username: " + accountBean.getUsername());

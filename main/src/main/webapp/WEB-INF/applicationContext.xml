@@ -52,16 +52,16 @@
 
     <!-- 使用Aspectj AOP的autoproxy -->
     <aop:aspectj-autoproxy />
-    <bean id="tracingAspect" class="org.mybatis.jpetstore.domain.TracingAspect" />
-    <bean id="accountDomain" class="org.mybatis.jpetstore.domain.Account" />
-    <bean id="cartDomain" class="org.mybatis.jpetstore.domain.Cart" />
-    <bean id="cartItemDomain" class="org.mybatis.jpetstore.domain.CartItem" />
-    <bean id="categoryDomain" class="org.mybatis.jpetstore.domain.Category" />
-    <bean id="itemDomain" class="org.mybatis.jpetstore.domain.Item" />
-    <bean id="lineItemDomain" class="org.mybatis.jpetstore.domain.LineItem" />
-    <bean id="orderDomain" class="org.mybatis.jpetstore.domain.Order" />
-    <bean id="productDomain" class="org.mybatis.jpetstore.domain.Product" />
-    <bean id="sequenceDomain" class="org.mybatis.jpetstore.domain.Sequence" />
+    <!-- <bean id="tracingAspect" class="org.mybatis.jpetstore.domain.TracingAspect" /> -->
+    <!-- <bean id="accountDomain" class="org.mybatis.jpetstore.domain.Account" /> -->
+    <!-- <bean id="cartDomain" class="org.mybatis.jpetstore.domain.Cart" /> -->
+    <!-- <bean id="cartItemDomain" class="org.mybatis.jpetstore.domain.CartItem" /> -->
+    <!-- <bean id="categoryDomain" class="org.mybatis.jpetstore.domain.Category" /> -->
+    <!-- <bean id="itemDomain" class="org.mybatis.jpetstore.domain.Item" /> -->
+    <!-- <bean id="lineItemDomain" class="org.mybatis.jpetstore.domain.LineItem" /> -->
+    <!-- <bean id="orderDomain" class="org.mybatis.jpetstore.domain.Order" /> -->
+    <!-- <bean id="productDomain" class="org.mybatis.jpetstore.domain.Product" /> -->
+    <!-- <bean id="sequenceDomain" class="org.mybatis.jpetstore.domain.Sequence" /> -->
 
     <!-- transaction manager, use DataSourceTransactionManager" for JDBC local tx -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -70,6 +70,7 @@
 
     <!-- enable component scanning and autowire (beware that this does not enable mapper scanning!) -->
     <context:component-scan base-package="org.mybatis.jpetstore.service" />
+    <context:component-scan base-package="org.mybatis.jpetstore.domain" />
 
     <!-- enable transaction demarcation with annotations -->
     <tx:annotation-driven />

@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
  * @author Eduardo Macarron
  */
 @Component
+@TracingAOP
 public class LineItem implements Serializable {
 
   private static final long serialVersionUID = 6804536240033522156L;
