@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { group, check } from 'k6';
+import { group, check, sleep } from 'k6';
 
 export default function () {
 
