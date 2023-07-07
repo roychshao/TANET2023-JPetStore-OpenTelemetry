@@ -76,6 +76,7 @@ public class Tracing {
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
 
     meter = openTelemetry.getMeter("jpetstore-main");
+
     meter.gaugeBuilder("jvm.memory.total").setDescription("Reports JVM memory usage.").setUnit("byte")
         .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
   }
@@ -85,5 +86,12 @@ public class Tracing {
       instance = new Tracing();
     }
     return instance.tracer;
+  }
+
+  public static Meter getMeter() {
+    if (instance == null) {
+      instance = new Tracing();
+    }
+    return instance.meter;
   }
 }

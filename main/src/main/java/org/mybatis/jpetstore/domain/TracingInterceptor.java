@@ -15,6 +15,7 @@
  */
 package org.mybatis.jpetstore.domain;
 
+import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
@@ -35,6 +36,7 @@ import org.mybatis.jpetstore.web.actions.AccountActionBean;
 @Intercepts(LifecycleStage.EventHandling)
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
+  private transient final Meter meter = Tracing.getMeter();
   private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
 
   public void init() {
