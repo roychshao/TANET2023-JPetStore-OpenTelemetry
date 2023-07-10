@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.springframework.stereotype.Component;
 
 /**

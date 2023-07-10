@@ -17,6 +17,7 @@ package org.mybatis.jpetstore.domain;
 
 import java.io.Serializable;
 
+import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.springframework.stereotype.Component;
 
 /**

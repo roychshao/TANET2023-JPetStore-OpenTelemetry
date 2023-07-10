@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.jpetstore.domain.Item;
-import org.mybatis.jpetstore.domain.TracingAOP;
+import org.mybatis.jpetstore.tracing.TracingAOP;
 
 /**
  * The Interface ItemMapper.

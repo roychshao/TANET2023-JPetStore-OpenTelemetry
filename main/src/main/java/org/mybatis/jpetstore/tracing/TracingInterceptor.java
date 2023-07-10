@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.jpetstore.domain;
+package org.mybatis.jpetstore.tracing;
 
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;

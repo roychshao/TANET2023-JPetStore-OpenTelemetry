@@ -18,8 +18,8 @@ package org.mybatis.jpetstore.service;
 import java.util.Optional;
 
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.mapper.AccountMapper;
+import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

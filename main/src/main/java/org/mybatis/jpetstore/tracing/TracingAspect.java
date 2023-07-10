@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.jpetstore.domain;
+package org.mybatis.jpetstore.tracing;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -44,7 +44,7 @@ public class TracingAspect {
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
   // @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* ||
   // org.mybatis.jpetstore.mapper..*).*(..))")
-  @Around("@annotation(org.mybatis.jpetstore.domain.TracingAOP) || @within(org.mybatis.jpetstore.domain.TracingAOP)")
+  @Around("@annotation(org.mybatis.jpetstore.tracing.TracingAOP) || @within(org.mybatis.jpetstore.tracing.TracingAOP)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 從Context中取得parentSpan

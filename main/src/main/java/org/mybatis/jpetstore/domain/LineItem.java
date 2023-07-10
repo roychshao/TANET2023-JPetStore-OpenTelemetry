@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.springframework.stereotype.Component;
 
 /**

@@ -31,9 +31,9 @@ import net.sourceforge.stripes.validation.Validate;
 
 import org.mybatis.jpetstore.domain.Account;
 import org.mybatis.jpetstore.domain.Product;
-import org.mybatis.jpetstore.domain.TracingAOP;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
+import org.mybatis.jpetstore.tracing.TracingAOP;
 
 /**
  * The Class AccountActionBean.

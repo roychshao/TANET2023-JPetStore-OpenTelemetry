@@ -45,7 +45,7 @@
 		</init-param>
         <init-param>
             <param-name>Interceptor.Classes</param-name>
-            <param-value>org.mybatis.jpetstore.domain.TracingInterceptor</param-value>
+            <param-value>org.mybatis.jpetstore.tracing.TracingInterceptor</param-value>
         </init-param>
 		<init-param>
 			<param-name>Extension.Packages</param-name>

@@ -16,7 +16,7 @@
 package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Sequence;
-import org.mybatis.jpetstore.domain.TracingAOP;
+import org.mybatis.jpetstore.tracing.TracingAOP;
 
 /**
  * The Interface SequenceMapper.

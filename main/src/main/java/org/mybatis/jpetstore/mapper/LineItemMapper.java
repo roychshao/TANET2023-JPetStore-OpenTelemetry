@@ -18,7 +18,7 @@ package org.mybatis.jpetstore.mapper;
 import java.util.List;
 
 import org.mybatis.jpetstore.domain.LineItem;
-import org.mybatis.jpetstore.domain.TracingAOP;
+import org.mybatis.jpetstore.tracing.TracingAOP;
 
 /**
  * The Interface LineItemMapper.

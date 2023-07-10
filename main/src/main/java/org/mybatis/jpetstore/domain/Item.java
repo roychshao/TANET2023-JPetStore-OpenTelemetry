@@ -18,6 +18,7 @@ package org.mybatis.jpetstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.springframework.stereotype.Component;
 
 /**
