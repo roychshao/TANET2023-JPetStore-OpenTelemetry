@@ -16,4 +16,4 @@
 
 # ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
 ./mvnw clean package -Dmaven.test.skip=true
-./mvnw cargo:run -P tomcat90
+./mvnw cargo:run -P tomcat90 -Dlog4j.configurationFile=~/Codes/Monographic/jpetstore-6/main/src/main/resources/log4j2.xml

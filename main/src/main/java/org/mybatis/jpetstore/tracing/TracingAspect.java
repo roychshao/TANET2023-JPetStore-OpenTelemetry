@@ -27,6 +27,8 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,6 +41,7 @@ public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
   private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
+  private final Logger logger = LogManager.getLogger(TracingAspect.class);
 
   // mapper, service由spring管理,可使用Aspectj實做切面
   // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
@@ -62,6 +65,7 @@ public class TracingAspect {
 
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
+      logger.info("log into spans");
       result = joinPoint.proceed();
       span.setStatus(StatusCode.OK);
     } catch (Throwable t) {

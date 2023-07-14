@@ -15,6 +15,8 @@
  */
 package org.mybatis.jpetstore.tracing;
 
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -37,6 +39,8 @@ import org.mybatis.jpetstore.web.actions.AccountActionBean;
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
   private transient final Meter meter = Tracing.getMeter();
+  private transient final Attributes optl_attributes = Tracing.getAttributes();
+  private transient final LongCounter counter = Tracing.getCounter();
   private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
 
   public void init() {
@@ -81,6 +85,8 @@ public class TracingInterceptor implements Interceptor {
       }
 
       try (Scope ss = span.makeCurrent()) {
+        // counter++
+        counter.add(1, optl_attributes);
         // 執行ActionBean方法
         resolution = context.proceed();
         span.setStatus(StatusCode.OK);

@@ -15,17 +15,23 @@
  */
 package org.mybatis.jpetstore.tracing;
 
+import static io.opentelemetry.api.common.AttributeKey.stringKey;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
 import io.opentelemetry.exporter.logging.LoggingMetricExporter;
+import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
+import io.opentelemetry.sdk.logs.SdkLoggerProvider;
+import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
 import io.opentelemetry.sdk.metrics.InstrumentSelector;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.View;
@@ -38,36 +44,43 @@ import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
 import java.util.concurrent.TimeUnit;
 
 public class Tracing {
+  private static Tracing instance;
+  private JaegerGrpcSpanExporter jaegerExporter;
+  private ManagedChannel jaegerChannel;
+  private OpenTelemetry openTelemetry;
   private Resource resource;
   private SdkTracerProvider sdkTracerProvider;
-  private OpenTelemetry openTelemetry;
+  private SdkMeterProvider meterProvider;
+  private SdkLoggerProvider loggerProvider;
   private static Tracer tracer;
   private static Meter meter;
-  private JaegerGrpcSpanExporter jaegerExporter;
-  private static Tracing instance;
-  private ManagedChannel jaegerChannel;
-  private SdkMeterProvider meterProvider;
+  private LongCounter counter;
+  private Attributes attributes;
 
   private Tracing() {
-    // Jaeger
+
+    /*
+     * Jaeger
+     */
     jaegerChannel = ManagedChannelBuilder.forAddress("localhost", 14250).usePlaintext().build();
 
     jaegerExporter = JaegerGrpcSpanExporter.builder().setEndpoint("http://localhost:14250")
         .setTimeout(30, TimeUnit.SECONDS).build();
 
+    /*
+     * Resource
+     */
     // Create a default resource with a service name attribute
     Resource defaultResource = Resource.getDefault();
     Resource serviceNameResource = Resource.create(Attributes.of(ResourceAttributes.SERVICE_NAME, "jpetstore-main"));
     resource = defaultResource.merge(serviceNameResource);
 
+    /*
+     * Traces
+     */
     // Create a tracer provider with a batch span processor and the given resource
     BatchSpanProcessor spanProcessor = BatchSpanProcessor.builder(jaegerExporter).build();
     sdkTracerProvider = SdkTracerProvider.builder().addSpanProcessor(spanProcessor).setResource(resource).build();
-
-    meterProvider = SdkMeterProvider.builder()
-        .registerView(InstrumentSelector.builder().setName("my-counter").build(),
-            View.builder().setName("new-counter-name").build())
-        .registerMetricReader(PeriodicMetricReader.builder(LoggingMetricExporter.create()).build()).build();
 
     // Create an OpenTelemetry instance with the given tracer provider and propagator
     W3CTraceContextPropagator propagator = W3CTraceContextPropagator.getInstance();
@@ -78,10 +91,29 @@ public class Tracing {
 
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
 
+    /*
+     * Metrics
+     */
+    meterProvider = SdkMeterProvider.builder()
+        .registerView(InstrumentSelector.builder().setName("my-counter").build(),
+            View.builder().setName("new-counter-name").build())
+        .registerMetricReader(PeriodicMetricReader.builder(LoggingMetricExporter.create()).build()).build();
+
     meter = openTelemetry.getMeter("jpetstore-main");
+
+    counter = meter.counterBuilder("counter_test").setDescription("counter_test").setUnit("1").build();
+
+    // It is recommended that the API user keep a reference to Attributes they will record against
+    attributes = Attributes.of(stringKey("Key"), "Test");
 
     meter.gaugeBuilder("jvm.memory.total").setDescription("Reports JVM memory usage.").setUnit("byte")
         .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+
+    /*
+     * Logs
+     */
+    loggerProvider = SdkLoggerProvider.builder().addLogRecordProcessor(BatchLogRecordProcessor
+        .builder(OtlpGrpcLogRecordExporter.builder().setEndpoint("http://localhost:4317").build()).build()).build();
   }
 
   public static Tracer getTracer() {
@@ -96,5 +128,19 @@ public class Tracing {
       instance = new Tracing();
     }
     return instance.meter;
+  }
+
+  public static Attributes getAttributes() {
+    if (instance == null) {
+      instance = new Tracing();
+    }
+    return instance.attributes;
+  }
+
+  public static LongCounter getCounter() {
+    if (instance == null) {
+      instance = new Tracing();
+    }
+    return instance.counter;
   }
 }
