@@ -25,7 +25,7 @@
         <OpenTelemetry name="OpenTelemetryAppender" captureMapMessageAttributes="true" captureExperimentalAttributes="true"/>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="OpenTelemetryAppender" />
             <AppenderRef ref="ConsoleAppender" />
         </Root>

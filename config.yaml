@@ -13,6 +13,10 @@ receivers:
 exporters:
   logging:
     loglevel: debug
+  jaeger:
+    endpoint: localhost:14250
+    tls:
+      insecure: true
 
 processors:
   batch:
@@ -21,6 +25,10 @@ extensions:
 
 service:
   pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger]
     metrics:
       receivers: [otlp]
       processors: [batch]
