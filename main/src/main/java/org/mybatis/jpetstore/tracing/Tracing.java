@@ -27,8 +27,8 @@ import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
-import io.opentelemetry.exporter.logging.LoggingMetricExporter;
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter;
+import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.logs.SdkLoggerProvider;
 import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
@@ -86,34 +86,44 @@ public class Tracing {
     W3CTraceContextPropagator propagator = W3CTraceContextPropagator.getInstance();
     ContextPropagators propagators = ContextPropagators.create(propagator);
 
-    openTelemetry = OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).setPropagators(propagators)
-        .buildAndRegisterGlobal();
-
-    tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
-
     /*
      * Metrics
      */
+    // meterProvider = SdkMeterProvider.builder()
+    // .registerView(InstrumentSelector.builder().setName("my-counter").build(),
+    // View.builder().setName("new-counter-name").build())
+    // .registerMetricReader(PeriodicMetricReader.builder(LoggingMetricExporter.create()).build()).build();
+
     meterProvider = SdkMeterProvider.builder()
         .registerView(InstrumentSelector.builder().setName("my-counter").build(),
             View.builder().setName("new-counter-name").build())
-        .registerMetricReader(PeriodicMetricReader.builder(LoggingMetricExporter.create()).build()).build();
-
-    meter = openTelemetry.getMeter("jpetstore-main");
-
-    counter = meter.counterBuilder("counter_test").setDescription("counter_test").setUnit("1").build();
+        .registerMetricReader(PeriodicMetricReader
+            .builder(OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build()).build())
+        .build();
 
     // It is recommended that the API user keep a reference to Attributes they will record against
     attributes = Attributes.of(stringKey("Key"), "Test");
-
-    meter.gaugeBuilder("jvm.memory.total").setDescription("Reports JVM memory usage.").setUnit("byte")
-        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
 
     /*
      * Logs
      */
     loggerProvider = SdkLoggerProvider.builder().addLogRecordProcessor(BatchLogRecordProcessor
         .builder(OtlpGrpcLogRecordExporter.builder().setEndpoint("http://localhost:4317").build()).build()).build();
+
+    /*
+     * Build OpenTelemetry instance
+     */
+    openTelemetry = OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).setMeterProvider(meterProvider)
+        .setLoggerProvider(loggerProvider).setPropagators(propagators).buildAndRegisterGlobal();
+
+    /*
+     * get from OpenTelemetry instance
+     */
+    tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
+    meter = openTelemetry.getMeter("jpetstore-main");
+    meter.gaugeBuilder("jvm.memory.total").setDescription("Reports JVM memory usage.").setUnit("byte")
+        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+    counter = meter.counterBuilder("counter_test").setDescription("counter_test").setUnit("1").build();
   }
 
   public static Tracer getTracer() {

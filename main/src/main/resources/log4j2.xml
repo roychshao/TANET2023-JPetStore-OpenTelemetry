@@ -16,6 +16,7 @@
        limitations under the License.
 
 -->
+<!DOCTYPE xml>
 <Configuration status="WARN" packages="io.opentelemetry.instrumentation.log4j.appender.v2_17">
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
