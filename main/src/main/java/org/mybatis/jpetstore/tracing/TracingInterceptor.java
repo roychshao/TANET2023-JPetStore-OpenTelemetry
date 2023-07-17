@@ -112,6 +112,11 @@ public class TracingInterceptor implements Interceptor {
     return PARENTSPAN_KEY;
   }
 
+  public static void setParentSpanKey(Span newParentSpan) {
+    Context newContext = Context.current().with(PARENTSPAN_KEY, newParentSpan);
+    newContext.makeCurrent();
+  }
+
   public void setVarNames(Span span, TracingAOP tracingAOP, ActionBean actionBean) {
 
     String[] varNames = tracingAOP.varNames();

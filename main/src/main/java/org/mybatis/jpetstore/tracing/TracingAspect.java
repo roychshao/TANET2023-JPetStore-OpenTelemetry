@@ -51,16 +51,19 @@ public class TracingAspect {
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 從Context中取得parentSpan
-    Span span = Context.current().get(PARENTSPAN_KEY);
+    Span parentSpan = Context.current().get(PARENTSPAN_KEY);
+    Span span = null;
 
-    if (span == null) {
+    if (parentSpan == null) {
       span = tracer
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
           .startSpan();
     } else {
       span = tracer
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
-          .setParent(Context.current().with(span)).startSpan();
+          .setParent(Context.current().with(parentSpan)).startSpan();
+      // 將原parentSpan改為現方法的span
+      TracingInterceptor.setParentSpanKey(span);
     }
 
     Object result = null;
@@ -72,19 +75,7 @@ public class TracingAspect {
       span.setStatus(StatusCode.ERROR, t.getMessage());
       span.recordException(t);
     } finally {
-      // TODO: signature.getMethod的注意事項:
-      // 1.只能獲取public方法
-      // 2.需要另外獲得方法參數
-      // 3.遇到override時會回傳匹配到該方法的第一個方法
-      // 因此盡可能改使用其他方法getMethod
-      // ex:
-      // String methodName = joinPoint.getSignature().getName();
-      // Class<?> declaringType = joinPoint.getSignature().getDeclaringType();
-      // Method method = declaringType.getMethod(methodName, String.class);
-      // 缺點: getMethod需要明確定義參數的類型
-      // => 找到解決方法
       MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-      // Method method = signature.getMethod();
       Class<?> targetClass = joinPoint.getTarget().getClass();
       Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
 
@@ -94,6 +85,7 @@ public class TracingAspect {
         setVarNames(span, tracingAOP, joinPoint);
         setComments(span, tracingAOP);
       }
+      TracingInterceptor.setParentSpanKey(parentSpan);
       span.end();
     }
     return result;
