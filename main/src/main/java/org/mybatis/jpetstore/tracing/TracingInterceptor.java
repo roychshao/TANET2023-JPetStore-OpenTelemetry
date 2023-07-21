@@ -21,8 +21,6 @@ import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
-import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
 import java.lang.reflect.Field;
@@ -41,7 +39,12 @@ public class TracingInterceptor implements Interceptor {
   private transient final Meter meter = Tracing.getMeter();
   private transient final Attributes optl_attributes = Tracing.getAttributes();
   private transient final LongCounter counter = Tracing.getCounter();
-  private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
+
+  // 使用ContextKey
+  // private static final ContextKey<Span> PARENTSPAN_KEY = ContextKey.named("parentSpan-key");
+
+  // 使用ThreadLocal
+  private static ThreadLocal<Span> threadLocal = new ThreadLocal<>();
 
   public void init() {
   }
@@ -65,8 +68,13 @@ public class TracingInterceptor implements Interceptor {
 
       // 執行ActionBean方法前的處理邏輯
       Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
-      Context newContext = Context.current().with(PARENTSPAN_KEY, span);
-      newContext.makeCurrent();
+
+      // 使用ThreadLocal
+      threadLocal.set(span);
+
+      // 使用ContextKey
+      // Context newContext = Context.current().with(PARENTSPAN_KEY, span);
+      // newContext.makeCurrent();
 
       // 將sessionId寫入span中
       HttpServletRequest request = context.getActionBeanContext().getRequest();
@@ -103,19 +111,36 @@ public class TracingInterceptor implements Interceptor {
           setComments(span, tracingAOP);
         }
         span.end();
+
+        // 從threadLocal中取出span
+        threadLocal.remove();
       }
       return resolution;
     }
   }
 
-  public static ContextKey<Span> getParentSpanKey() {
-    return PARENTSPAN_KEY;
+  /*
+   * 使用ThreadLocal
+   */
+  public static Span getParentSpan() {
+    return threadLocal.get();
   }
 
-  public static void setParentSpanKey(Span newParentSpan) {
-    Context newContext = Context.current().with(PARENTSPAN_KEY, newParentSpan);
-    newContext.makeCurrent();
+  public static void setParentSpan(Span parentSpan) {
+    threadLocal.set(parentSpan);
   }
+
+  /*
+   * 使用ContextKey
+   */
+  // public static ContextKey<Span> getParentSpanKey() {
+  // return PARENTSPAN_KEY;
+  // }
+
+  // public static void setParentSpanKey(Span newParentSpan) {
+  // Context newContext = Context.current().with(PARENTSPAN_KEY, newParentSpan);
+  // newContext.makeCurrent();
+  // }
 
   public void setVarNames(Span span, TracingAOP tracingAOP, ActionBean actionBean) {
 

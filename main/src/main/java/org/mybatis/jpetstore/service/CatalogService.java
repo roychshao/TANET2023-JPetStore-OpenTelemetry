@@ -25,6 +25,7 @@ import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
 import org.mybatis.jpetstore.tracing.TracingAOP;
+import org.mybatis.jpetstore.tracing.annotation.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -50,6 +51,8 @@ public class CatalogService {
     return categoryMapper.getCategoryList();
   }
 
+  @SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
+      @SpanConfig.KeyValue(key = "testNewAnno", value = "methodSuccessOnString") })
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }

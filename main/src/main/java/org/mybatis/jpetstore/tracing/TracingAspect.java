@@ -16,10 +16,10 @@
 package org.mybatis.jpetstore.tracing;
 
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.ContextKey;
 import io.opentelemetry.context.Scope;
 
 import java.lang.reflect.Field;
@@ -33,6 +33,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.mybatis.jpetstore.tracing.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -40,52 +41,91 @@ import org.springframework.stereotype.Component;
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
-  private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
+  // private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
   private final Logger logger = LogManager.getLogger(TracingAspect.class);
 
-  // mapper, service由spring管理,可使用Aspectj實做切面
-  // actionBean由stripes管理,因此使用stripes的Interceptor來攔截
-  // @Around("execution(* (org.mybatis.jpetstore.domain..* || org.mybatis.jpetstore.service..* ||
-  // org.mybatis.jpetstore.mapper..*).*(..))")
   @Around("@annotation(org.mybatis.jpetstore.tracing.TracingAOP) || @within(org.mybatis.jpetstore.tracing.TracingAOP)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
-    // 從Context中取得parentSpan
-    Span parentSpan = Context.current().get(PARENTSPAN_KEY);
+    // 獲得joinPoint資訊
+    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    Class<?> targetClass = joinPoint.getTarget().getClass();
+    Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
+
+    // 使用ContextKey
+    // Span parentSpan = Context.current().get(PARENTSPAN_KEY);
+    // 使用ThreadLocal
+    Span parentSpan = TracingInterceptor.getParentSpan();
     Span span = null;
+
+    // 獲得SpanConfig註解
+    SpanConfig spanConfig = method.getAnnotation(SpanConfig.class);
+    SpanKind kindValue = SpanKind.INTERNAL;
+    boolean recordStatus = false;
+    boolean recordException = false;
+    if(spanConfig != null) {
+        // 決定span kind(預設INTERNAL)
+        String spanKind = spanConfig.kind();
+        if (spanKind != "") {
+          switch (spanKind) {
+            case "Client":
+              kindValue = SpanKind.CLIENT;
+            case "Server":
+              kindValue = SpanKind.SERVER;
+            case "Interval":
+              kindValue = SpanKind.INTERNAL;
+            case "Consumer":
+              kindValue = SpanKind.CONSUMER;
+            case "Producer":
+              kindValue = SpanKind.PRODUCER;
+            default:
+              kindValue = SpanKind.INTERNAL;
+          }
+        }
+        // 決定status, recordException
+        recordStatus = spanConfig.recordStatus();
+        recordException = spanConfig.recordException();
+    }
+
 
     if (parentSpan == null) {
       span = tracer
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
-          .startSpan();
+          .setSpanKind(kindValue).startSpan();
     } else {
       span = tracer
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
-          .setParent(Context.current().with(parentSpan)).startSpan();
+          .setSpanKind(kindValue).setParent(Context.current().with(parentSpan)).startSpan();
       // 將原parentSpan改為現方法的span
-      TracingInterceptor.setParentSpanKey(span);
+      TracingInterceptor.setParentSpan(span);
     }
 
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
       logger.info("log into spans");
       result = joinPoint.proceed();
-      span.setStatus(StatusCode.OK);
+      if (recordStatus)
+        span.setStatus(StatusCode.OK);
     } catch (Throwable t) {
-      span.setStatus(StatusCode.ERROR, t.getMessage());
-      span.recordException(t);
+      if (recordStatus)
+        span.setStatus(StatusCode.ERROR, t.getMessage());
+      if (recordException)
+        span.recordException(t);
     } finally {
-      MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-      Class<?> targetClass = joinPoint.getTarget().getClass();
-      Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
-
       TracingAOP tracingAOP = method.getAnnotation(TracingAOP.class);
-      // 若tracingVar不為空,則將varNames中的變數取出寫入到span中
       if (tracingAOP != null) {
         setVarNames(span, tracingAOP, joinPoint);
-        setComments(span, tracingAOP);
       }
-      TracingInterceptor.setParentSpanKey(parentSpan);
+      if(spanConfig != null) {
+        SpanConfig.KeyValue[] attributes = spanConfig.attributes();
+        if (attributes.length != 0) {
+          for (SpanConfig.KeyValue keyValue : attributes) {
+            span.setAttribute(keyValue.key(), keyValue.value());
+          }
+        }
+      }
+
+      TracingInterceptor.setParentSpan(parentSpan);
       span.end();
     }
     return result;

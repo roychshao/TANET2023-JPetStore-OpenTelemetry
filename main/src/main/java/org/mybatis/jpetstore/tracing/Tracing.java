@@ -30,7 +30,7 @@ import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter;
 import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
 import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter;
-// import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender;
+import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.logs.SdkLoggerProvider;
 import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
@@ -121,7 +121,7 @@ public class Tracing {
         .setLoggerProvider(loggerProvider).setPropagators(propagators).buildAndRegisterGlobal();
 
     // OpenTelemetry Appender
-    // OpenTelemetryAppender.install(openTelemetry);
+    OpenTelemetryAppender.install(openTelemetry);
 
     /*
      * get from OpenTelemetry instance
