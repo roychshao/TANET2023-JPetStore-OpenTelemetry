@@ -53,6 +53,7 @@ public class CatalogService {
 
   @SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
       @SpanConfig.KeyValue(key = "testNewAnno", value = "methodSuccessOnString") })
+  @CounterConfig(incrementBy = 5)
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }

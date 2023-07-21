@@ -93,11 +93,6 @@ public class Tracing {
     /*
      * Metrics
      */
-    // meterProvider = SdkMeterProvider.builder()
-    // .registerView(InstrumentSelector.builder().setName("my-counter").build(),
-    // View.builder().setName("new-counter-name").build())
-    // .registerMetricReader(PeriodicMetricReader.builder(LoggingMetricExporter.create()).build()).build();
-
     meterProvider = SdkMeterProvider.builder()
         .registerView(InstrumentSelector.builder().setName("Num_Of_Actionbean").build(),
             View.builder().setName("Num_Of_Actionbean").build())

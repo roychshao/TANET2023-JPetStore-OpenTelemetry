@@ -37,7 +37,7 @@ import org.mybatis.jpetstore.web.actions.AccountActionBean;
 public class TracingInterceptor implements Interceptor {
   private transient final Tracer tracer = Tracing.getTracer();
   private transient final Meter meter = Tracing.getMeter();
-  private transient final Attributes optl_attributes = Tracing.getAttributes();
+  private transient final Attributes otel_attributes = Tracing.getAttributes();
   private transient final LongCounter counter = Tracing.getCounter();
 
   // 使用ContextKey
@@ -45,6 +45,8 @@ public class TracingInterceptor implements Interceptor {
 
   // 使用ThreadLocal
   private static ThreadLocal<Span> threadLocal = new ThreadLocal<>();
+
+  // private Map<String, List<Span>> spanMap = new HashMap<>();
 
   public void init() {
   }
@@ -94,7 +96,7 @@ public class TracingInterceptor implements Interceptor {
 
       try (Scope ss = span.makeCurrent()) {
         // counter++
-        counter.add(1, optl_attributes);
+        counter.add(1, otel_attributes);
         // 執行ActionBean方法
         resolution = context.proceed();
         span.setStatus(StatusCode.OK);
@@ -140,6 +142,23 @@ public class TracingInterceptor implements Interceptor {
   // public static void setParentSpanKey(Span newParentSpan) {
   // Context newContext = Context.current().with(PARENTSPAN_KEY, newParentSpan);
   // newContext.makeCurrent();
+  // }
+
+  /* spanMap */
+  // public void insertSpanMap(String keyId, Span span) {
+  // if(!spanMap.containsKey(keyId)) {
+  // List<Span> spanList = new ArrayList<>();
+  // spanList.add(span);
+  // spanMap.put(keyId, spanList);
+  // } else {
+  // List<Span> spanList = spanMap.get(keyId);
+  // spanList.add(span);
+  // spanMap.put(linkId, spanList);
+  // }
+  // }
+
+  // public List<Span> getSpanMap(String keyId) {
+  // return spanMap.get(keyId);
   // }
 
   public void setVarNames(Span span, TracingAOP tracingAOP, ActionBean actionBean) {

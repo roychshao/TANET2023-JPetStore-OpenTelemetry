@@ -19,39 +19,7 @@ import java.lang.annotation.*;
 
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SpanConfig {
+public @interface CounterConfig {
 
-  KeyValue[] attributes() default {};
-
-  String[] nonAttrEvent() default {};
-
-  AttrKeyValue[] mulAttrEvent() default {};
-
-  String kind() default "";
-
-  boolean recordStatus() default false;
-
-  String link() default "";
-
-  boolean recordException() default false;
-
-  @Target({})
-  @Retention(RetentionPolicy.RUNTIME)
-  @interface KeyValue {
-    String key() default "";
-
-    String value() default "";
-  }
-
-  @Target({})
-  @Retention(RetentionPolicy.RUNTIME)
-  @interface AttrKeyValue {
-    String eventName() default "";
-
-    String[] keyType() default "";
-
-    String[] key() default "";
-
-    String[] value() default "";
-  }
+  int incrementBy() default 1;
 }

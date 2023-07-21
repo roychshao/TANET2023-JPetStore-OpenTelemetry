@@ -15,6 +15,8 @@
  */
 package org.mybatis.jpetstore.tracing;
 
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
@@ -43,6 +45,8 @@ public class TracingAspect {
   private transient final Tracer tracer = Tracing.getTracer();
   // private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
   private final Logger logger = LogManager.getLogger(TracingAspect.class);
+  private transient final LongCounter counter = Tracing.getCounter();
+  private transient final Attributes otel_attributes = Tracing.getAttributes();
 
   @Around("@annotation(org.mybatis.jpetstore.tracing.TracingAOP) || @within(org.mybatis.jpetstore.tracing.TracingAOP)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -60,33 +64,37 @@ public class TracingAspect {
 
     // 獲得SpanConfig註解
     SpanConfig spanConfig = method.getAnnotation(SpanConfig.class);
-    SpanKind kindValue = SpanKind.INTERNAL;
+    SpanKind kindValue = SpanKind.INTERNAL; // SpanKind預設為Internal
     boolean recordStatus = false;
     boolean recordException = false;
-    if(spanConfig != null) {
-        // 決定span kind(預設INTERNAL)
-        String spanKind = spanConfig.kind();
-        if (spanKind != "") {
-          switch (spanKind) {
-            case "Client":
-              kindValue = SpanKind.CLIENT;
-            case "Server":
-              kindValue = SpanKind.SERVER;
-            case "Interval":
-              kindValue = SpanKind.INTERNAL;
-            case "Consumer":
-              kindValue = SpanKind.CONSUMER;
-            case "Producer":
-              kindValue = SpanKind.PRODUCER;
-            default:
-              kindValue = SpanKind.INTERNAL;
-          }
+    if (spanConfig != null) {
+      // 決定span kind(預設INTERNAL)
+      String spanKind = spanConfig.kind();
+      if (spanKind != "") {
+        switch (spanKind) {
+          case "Client":
+            kindValue = SpanKind.CLIENT;
+            break;
+          case "Server":
+            kindValue = SpanKind.SERVER;
+            break;
+          case "Interval":
+            kindValue = SpanKind.INTERNAL;
+            break;
+          case "Consumer":
+            kindValue = SpanKind.CONSUMER;
+            break;
+          case "Producer":
+            kindValue = SpanKind.PRODUCER;
+            break;
+          default:
+            kindValue = SpanKind.INTERNAL;
         }
-        // 決定status, recordException
-        recordStatus = spanConfig.recordStatus();
-        recordException = spanConfig.recordException();
+      }
+      // 決定status, recordException
+      recordStatus = spanConfig.recordStatus();
+      recordException = spanConfig.recordException();
     }
-
 
     if (parentSpan == null) {
       span = tracer
@@ -112,17 +120,23 @@ public class TracingAspect {
       if (recordException)
         span.recordException(t);
     } finally {
+      // annotaion添加相關功能
       TracingAOP tracingAOP = method.getAnnotation(TracingAOP.class);
       if (tracingAOP != null) {
         setVarNames(span, tracingAOP, joinPoint);
       }
-      if(spanConfig != null) {
+      if (spanConfig != null) {
+        // for attributes
         SpanConfig.KeyValue[] attributes = spanConfig.attributes();
         if (attributes.length != 0) {
           for (SpanConfig.KeyValue keyValue : attributes) {
             span.setAttribute(keyValue.key(), keyValue.value());
           }
         }
+      }
+      CounterConfig counterConfig = method.getAnnotation(CounterConfig.class);
+      if (counterConfig != null) {
+        counter.add(counterConfig.incrementBy(), otel_attributes);
       }
 
       TracingInterceptor.setParentSpan(parentSpan);
