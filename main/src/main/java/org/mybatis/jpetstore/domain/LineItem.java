@@ -39,7 +39,7 @@ public class LineItem implements Serializable {
   private BigDecimal unitPrice;
   private Item item;
   private BigDecimal total;
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public LineItem() {
   }

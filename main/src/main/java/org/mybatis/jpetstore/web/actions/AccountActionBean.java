@@ -55,7 +55,7 @@ public class AccountActionBean extends AbstractActionBean {
 
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   @SpringBean
   private transient AccountService accountService;

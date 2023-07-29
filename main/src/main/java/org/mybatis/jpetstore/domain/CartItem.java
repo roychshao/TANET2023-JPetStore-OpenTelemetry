@@ -36,7 +36,7 @@ public class CartItem implements Serializable {
   private int quantity;
   private boolean inStock;
   private BigDecimal total;
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public boolean isInStock() {
     tracer = Tracing.getTracer();

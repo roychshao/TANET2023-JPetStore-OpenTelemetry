@@ -39,7 +39,7 @@ public class Cart implements Serializable {
 
   private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<>());
   private final List<CartItem> itemList = new ArrayList<>();
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public Iterator<CartItem> getCartItems() {
     tracer = Tracing.getTracer();

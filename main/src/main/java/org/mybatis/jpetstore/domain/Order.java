@@ -62,7 +62,7 @@ public class Order implements Serializable {
   private String locale;
   private String status;
   private List<LineItem> lineItems = new ArrayList<>();
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public int getOrderId() {
     tracer = Tracing.getTracer();

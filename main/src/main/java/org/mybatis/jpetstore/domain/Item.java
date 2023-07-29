@@ -44,7 +44,7 @@ public class Item implements Serializable {
   private String attribute5;
   private Product product;
   private int quantity;
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public String getItemId() {
     tracer = Tracing.getTracer();

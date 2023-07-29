@@ -32,7 +32,7 @@ public class Sequence implements Serializable {
 
   private String name;
   private int nextId;
-  private transient Tracer tracer = Tracing.opentelemetry.getTracer("jpetstore-autoconfig", "1.0.0");
+  private transient Tracer tracer = Tracing.getTracer();
 
   public Sequence() {
   }

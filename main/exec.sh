@@ -14,5 +14,5 @@
 #    limitations under the License.
 #
 
-./mvnw clean package -Dmaven.test.skip=true
-./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=jaeger -Dotel.resource.attributes=service.name=jpetstore-autoconfig
+./mvnw clean package
+./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=otlp -Dotel.resource.attributes=service.name=jpetstore-manual
