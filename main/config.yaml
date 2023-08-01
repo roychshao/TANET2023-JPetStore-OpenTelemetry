@@ -14,5 +14,43 @@
 #    limitations under the License.
 #
 
-./mvnw clean package
-./mvnw cargo:run -P tomcat90 -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=otlp -Dotel.logs.exporter=otlp -Dotel.exporter.otlp.endpoint="http://localhost:4317" -Dotel.resource.attributes=service.name=jpetstore-manual
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  # Data sources: traces
+  jaeger:
+    protocols:
+      grpc:
+      thrift_binary:
+      thrift_compact:
+      thrift_http:
+  
+
+exporters:
+  logging:
+    loglevel: debug
+  jaeger:
+    endpoint: localhost:14250
+    tls:
+      insecure: true
+
+processors:
+  batch:
+
+extensions:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
