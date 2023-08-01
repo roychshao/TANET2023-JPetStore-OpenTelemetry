@@ -16,7 +16,7 @@
 package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.tracing.TracingAOP;
+import org.mybatis.jpetstore.tracing.annotation.*;
 
 /**
  * The Interface AccountMapper.

@@ -33,7 +33,7 @@ import org.mybatis.jpetstore.domain.Account;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
-import org.mybatis.jpetstore.tracing.TracingAOP;
+import org.mybatis.jpetstore.tracing.annotation.*;
 
 /**
  * The Class AccountActionBean.

@@ -91,7 +91,7 @@ public class TracingAspect {
             kindValue = SpanKind.INTERNAL;
         }
       }
-      // 決定status, recordException
+      // 決定是否紀錄status和exception
       recordStatus = spanConfig.recordStatus();
       recordException = spanConfig.recordException();
     }

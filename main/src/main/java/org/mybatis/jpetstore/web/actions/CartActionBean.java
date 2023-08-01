@@ -28,7 +28,7 @@ import org.mybatis.jpetstore.domain.Cart;
 import org.mybatis.jpetstore.domain.CartItem;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.service.CatalogService;
-import org.mybatis.jpetstore.tracing.TracingAOP;
+import org.mybatis.jpetstore.tracing.annotation.*;
 
 /**
  * The Class CartActionBean.

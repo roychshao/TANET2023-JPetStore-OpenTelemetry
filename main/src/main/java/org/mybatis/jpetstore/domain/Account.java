@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 import net.sourceforge.stripes.validation.Validate;
 
-import org.mybatis.jpetstore.tracing.TracingAOP;
+import org.mybatis.jpetstore.tracing.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**

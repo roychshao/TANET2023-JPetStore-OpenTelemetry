@@ -24,7 +24,6 @@ import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
-import org.mybatis.jpetstore.tracing.TracingAOP;
 import org.mybatis.jpetstore.tracing.annotation.*;
 import org.springframework.stereotype.Service;
 
