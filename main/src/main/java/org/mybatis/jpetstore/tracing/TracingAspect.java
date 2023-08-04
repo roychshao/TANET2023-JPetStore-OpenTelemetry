@@ -48,7 +48,7 @@ public class TracingAspect {
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
 
-  @Around("@annotation(org.mybatis.jpetstore.tracing.TracingAOP) || @within(org.mybatis.jpetstore.tracing.TracingAOP)")
+  @Around("@annotation(org.mybatis.jpetstore.tracing.annotation.TracingAOP) || @within(org.mybatis.jpetstore.tracing.annotation.TracingAOP)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 獲得joinPoint資訊
@@ -56,8 +56,6 @@ public class TracingAspect {
     Class<?> targetClass = joinPoint.getTarget().getClass();
     Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
 
-    // 使用ContextKey
-    // Span parentSpan = Context.current().get(PARENTSPAN_KEY);
     // 使用ThreadLocal
     Span parentSpan = TracingInterceptor.getParentSpan();
     Span span = null;

@@ -17,10 +17,13 @@ package org.mybatis.jpetstore.tracing;
 
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
 
+import com.sun.management.*;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.metrics.*;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Tracer;
@@ -37,12 +40,14 @@ import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
 import io.opentelemetry.sdk.metrics.InstrumentSelector;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.View;
+import io.opentelemetry.sdk.metrics.data.*;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
 import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
 
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.TimeUnit;
 
 public class Tracing {
@@ -123,8 +128,16 @@ public class Tracing {
      */
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
     meter = openTelemetry.getMeter("jpetstore-main");
-    meter.gaugeBuilder("jvm.memory.total").setDescription("Reports JVM memory usage.").setUnit("byte")
+    meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
         .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+
+    // 獲取CPU使用情況
+    OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+    double cpuUsage = (double) osBean.getProcessCpuLoad();
+    meter.gaugeBuilder("jvm.cpu.usage").setDescription("Current CPU Usage.").setUnit("percentage")
+        .buildWithCallback(measurement -> {
+          measurement.record(cpuUsage, Attributes.empty());
+        });
     counter = meter.counterBuilder("counter_test").setDescription("counter_test").setUnit("1").build();
   }
 

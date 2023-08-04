@@ -31,6 +31,7 @@ import javax.servlet.http.*;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.*;
 
+import org.mybatis.jpetstore.tracing.annotation.*;
 import org.mybatis.jpetstore.web.actions.AccountActionBean;
 
 @Intercepts(LifecycleStage.EventHandling)
@@ -95,8 +96,6 @@ public class TracingInterceptor implements Interceptor {
       }
 
       try (Scope ss = span.makeCurrent()) {
-        // counter++
-        counter.add(1, otel_attributes);
         // 執行ActionBean方法
         resolution = context.proceed();
         span.setStatus(StatusCode.OK);

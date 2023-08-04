@@ -17,11 +17,11 @@ exporters:
     endpoint: localhost:14250
     tls:
       insecure: true
+  file:
+    path: "./result.json"
 
 processors:
   batch:
-
-extensions:
 
 service:
   pipelines:
@@ -32,7 +32,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging]
+      exporters: [file]
     logs:
       receivers: [otlp]
       processors: [batch]

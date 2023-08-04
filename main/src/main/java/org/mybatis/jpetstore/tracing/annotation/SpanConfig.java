@@ -23,15 +23,9 @@ public @interface SpanConfig {
 
   KeyValue[] attributes() default {};
 
-  String[] nonAttrEvent() default {};
-
-  AttrKeyValue[] mulAttrEvent() default {};
-
   String kind() default "";
 
   boolean recordStatus() default false;
-
-  String link() default "";
 
   boolean recordException() default false;
 
@@ -41,17 +35,5 @@ public @interface SpanConfig {
     String key() default "";
 
     String value() default "";
-  }
-
-  @Target({})
-  @Retention(RetentionPolicy.RUNTIME)
-  @interface AttrKeyValue {
-    String eventName() default "";
-
-    String[] keyType() default "";
-
-    String[] key() default "";
-
-    String[] value() default "";
   }
 }
