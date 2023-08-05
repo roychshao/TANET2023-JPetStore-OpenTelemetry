@@ -15,8 +15,11 @@
  */
 package org.mybatis.jpetstore.tracing;
 
+import com.sun.management.*;
+
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
+import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
@@ -24,6 +27,7 @@ import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -44,7 +48,8 @@ public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
   // private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
-  private final Logger logger = LogManager.getLogger(TracingAspect.class);
+  private transient final Logger logger = LogManager.getLogger(TracingAspect.class);
+  private transient final Meter meter = Tracing.getMeter();
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
 
@@ -106,9 +111,20 @@ public class TracingAspect {
       TracingInterceptor.setParentSpan(span);
     }
 
+    // 獲取Memory使用情況
+    meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
+        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+
+    // 獲取CPU使用情況
+    OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU time.").setUnit("ms")
+        .buildWithCallback(measurement -> {
+          measurement.record(osBean.getProcessCpuTime() / 1000000.0, Attributes.empty());
+        });
+
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
-      logger.info("log into spans");
+      // logger.info("log into spans");
       result = joinPoint.proceed();
       if (recordStatus)
         span.setStatus(StatusCode.OK);

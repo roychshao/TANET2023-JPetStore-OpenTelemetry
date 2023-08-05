@@ -15,6 +15,8 @@
  */
 package org.mybatis.jpetstore.tracing;
 
+import com.sun.management.*;
+
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
@@ -23,6 +25,7 @@ import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
 
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -94,6 +97,17 @@ public class TracingInterceptor implements Interceptor {
           span.setAttribute("username", accountBean.getUsername());
         }
       }
+
+      // 獲取Memory使用情況
+      meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
+          .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+
+      // 獲取CPU使用情況
+      OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+      meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU time.").setUnit("ms")
+          .buildWithCallback(measurement -> {
+            measurement.record(osBean.getProcessCpuTime() / 1000000.0, Attributes.empty());
+          });
 
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法

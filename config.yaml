@@ -32,7 +32,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [file]
+      exporters: [file, logging]
     logs:
       receivers: [otlp]
       processors: [batch]
