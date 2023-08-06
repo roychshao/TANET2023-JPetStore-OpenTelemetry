@@ -1,0 +1,39 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  # Data sources: traces
+  jaeger:
+    protocols:
+      grpc:
+      thrift_binary:
+      thrift_compact:
+      thrift_http:
+
+exporters:
+  logging:
+    loglevel: debug
+  jaeger:
+    endpoint: localhost:14250
+    tls:
+      insecure: true
+  file:
+    path: "./result.json"
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file, logging]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
