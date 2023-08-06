@@ -17,6 +17,8 @@ package org.mybatis.jpetstore.tracing;
 
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
 
+import com.sun.management.*;
+import java.lang.management.ManagementFactory;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
@@ -124,6 +126,17 @@ public class Tracing {
     tracer = openTelemetry.getTracer("jpetstore-main", "1.0.0");
     meter = openTelemetry.getMeter("jpetstore-main");
     counter = meter.counterBuilder("counter_test").setDescription("counter_test").setUnit("1").build();
+
+    // 獲取Memory使用情況
+    meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
+        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+
+    // 獲取CPU使用情況
+    OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU time.").setUnit("ms")
+        .buildWithCallback(measurement -> {
+          measurement.record(osBean.getProcessCpuTime() / 1000000.0, Attributes.empty());
+        });
   }
 
   public static Tracer getTracer() {
