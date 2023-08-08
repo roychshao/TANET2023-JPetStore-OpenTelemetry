@@ -3,7 +3,6 @@ import { group, check } from 'k6';
 
 export default function () {
 
-    // 在 group 外部定義 cookieJar
     let cookieJar = http.cookieJar();
 
     group('SignIn', function () {
