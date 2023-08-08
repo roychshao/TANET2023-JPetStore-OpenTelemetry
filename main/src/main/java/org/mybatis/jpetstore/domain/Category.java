@@ -36,6 +36,7 @@ public class Category implements Serializable {
   private transient Tracer tracer = Tracing.getTracer();
 
   public String getCategoryId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -45,6 +46,7 @@ public class Category implements Serializable {
   }
 
   public void setCategoryId(String categoryId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setCategoryId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.categoryId = categoryId.trim();
@@ -54,6 +56,7 @@ public class Category implements Serializable {
   }
 
   public String getName() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getName").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -63,6 +66,7 @@ public class Category implements Serializable {
   }
 
   public void setName(String name) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setName").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.name = name;
@@ -72,6 +76,7 @@ public class Category implements Serializable {
   }
 
   public String getDescription() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getDescription").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -81,6 +86,7 @@ public class Category implements Serializable {
   }
 
   public void setDescription(String description) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setDescription").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.description = description;
@@ -91,6 +97,7 @@ public class Category implements Serializable {
 
   @Override
   public String toString() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
     try (Scope ss = span.makeCurrent()) {

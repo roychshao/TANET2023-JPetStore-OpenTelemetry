@@ -47,6 +47,7 @@ public class Item implements Serializable {
   private transient Tracer tracer = Tracing.getTracer();
 
   public String getItemId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getItemId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -56,6 +57,7 @@ public class Item implements Serializable {
   }
 
   public void setItemId(String itemId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setItemId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.itemId = itemId.trim();
@@ -65,6 +67,7 @@ public class Item implements Serializable {
   }
 
   public int getQuantity() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getQuantity").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -74,6 +77,7 @@ public class Item implements Serializable {
   }
 
   public void setQuantity(int quantity) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("setQuantity").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.quantity = quantity;
@@ -83,6 +87,7 @@ public class Item implements Serializable {
   }
 
   public Product getProduct() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getProduct").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -92,6 +97,7 @@ public class Item implements Serializable {
   }
 
   public void setProduct(Product product) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setProduct").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.product = product;
@@ -101,6 +107,7 @@ public class Item implements Serializable {
   }
 
   public int getSupplierId() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getSupplierId").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -110,6 +117,7 @@ public class Item implements Serializable {
   }
 
   public void setSupplierId(int supplierId) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setSupplierId").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.supplierId = supplierId;
@@ -119,6 +127,7 @@ public class Item implements Serializable {
   }
 
   public BigDecimal getListPrice() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getListPrice").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -128,6 +137,7 @@ public class Item implements Serializable {
   }
 
   public void setListPrice(BigDecimal listPrice) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setListPrice").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.listPrice = listPrice;
@@ -137,6 +147,7 @@ public class Item implements Serializable {
   }
 
   public BigDecimal getUnitCost() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getUnitCost").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -146,6 +157,7 @@ public class Item implements Serializable {
   }
 
   public void setUnitCost(BigDecimal unitCost) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setUnitCost").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.unitCost = unitCost;
@@ -155,6 +167,7 @@ public class Item implements Serializable {
   }
 
   public String getStatus() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getStatus").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -164,6 +177,7 @@ public class Item implements Serializable {
   }
 
   public void setStatus(String status) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setStatus").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.status = status;
@@ -173,6 +187,7 @@ public class Item implements Serializable {
   }
 
   public String getAttribute1() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAttribute1").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -182,6 +197,7 @@ public class Item implements Serializable {
   }
 
   public void setAttribute1(String attribute1) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAttribute1").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.attribute1 = attribute1;
@@ -191,6 +207,7 @@ public class Item implements Serializable {
   }
 
   public String getAttribute2() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAttribute2").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -200,6 +217,7 @@ public class Item implements Serializable {
   }
 
   public void setAttribute2(String attribute2) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAttribute2").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.attribute2 = attribute2;
@@ -209,6 +227,7 @@ public class Item implements Serializable {
   }
 
   public String getAttribute3() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAttribute3").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -218,6 +237,7 @@ public class Item implements Serializable {
   }
 
   public void setAttribute3(String attribute3) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAttribute3").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.attribute3 = attribute3;
@@ -227,6 +247,7 @@ public class Item implements Serializable {
   }
 
   public String getAttribute4() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAttribute4").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -236,6 +257,7 @@ public class Item implements Serializable {
   }
 
   public void setAttribute4(String attribute4) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAttribute4").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.attribute4 = attribute4;
@@ -245,6 +267,7 @@ public class Item implements Serializable {
   }
 
   public String getAttribute5() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getAttribute5").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -254,6 +277,7 @@ public class Item implements Serializable {
   }
 
   public void setAttribute5(String attribute5) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setAttribute5").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.attribute5 = attribute5;
@@ -264,6 +288,7 @@ public class Item implements Serializable {
 
   @Override
   public String toString() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: toString").startSpan();
     String result = "";
     try (Scope ss = span.makeCurrent()) {

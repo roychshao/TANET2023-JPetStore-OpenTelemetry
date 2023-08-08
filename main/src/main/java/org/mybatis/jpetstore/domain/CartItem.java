@@ -39,6 +39,7 @@ public class CartItem implements Serializable {
   private transient Tracer tracer = Tracing.getTracer();
 
   public boolean isInStock() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: isInStock").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -48,6 +49,7 @@ public class CartItem implements Serializable {
   }
 
   public void setInStock(boolean inStock) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setInStock").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.inStock = inStock;
@@ -57,6 +59,7 @@ public class CartItem implements Serializable {
   }
 
   public BigDecimal getTotal() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getTotal").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -66,6 +69,7 @@ public class CartItem implements Serializable {
   }
 
   public Item getItem() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getItem").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -75,6 +79,7 @@ public class CartItem implements Serializable {
   }
 
   public void setItem(Item item) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setItem").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.item = item;
@@ -85,6 +90,7 @@ public class CartItem implements Serializable {
   }
 
   public int getQuantity() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: getQuantity").startSpan();
     try (Scope ss = span.makeCurrent()) {
     } finally {
@@ -94,6 +100,7 @@ public class CartItem implements Serializable {
   }
 
   public void setQuantity(int quantity) {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: setQuantity").startSpan();
     try (Scope ss = span.makeCurrent()) {
       this.quantity = quantity;
@@ -104,6 +111,7 @@ public class CartItem implements Serializable {
   }
 
   public void incrementQuantity() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: incrementQuantity").startSpan();
     try (Scope ss = span.makeCurrent()) {
       quantity++;
@@ -114,6 +122,7 @@ public class CartItem implements Serializable {
   }
 
   private void calculateTotal() {
+    tracer = Tracing.getTracer();
     Span span = tracer.spanBuilder("Domain: calculateTotal").startSpan();
     try (Scope ss = span.makeCurrent()) {
       total = Optional.ofNullable(item).map(i -> i.getListPrice()).map(v -> v.multiply(new BigDecimal(quantity)))

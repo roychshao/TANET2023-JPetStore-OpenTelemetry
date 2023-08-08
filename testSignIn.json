@@ -1,0 +1,2249 @@
+[
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492566639335350",
+                                            "asDouble": 69801128
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492566639335350",
+                                            "asDouble": 373317
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492571639051545",
+                                            "asDouble": 71470096
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492571639051545",
+                                            "asDouble": 794117
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492571639051545",
+                                            "asInt": "3623"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492571639051545",
+                                            "asInt": "3623"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492576639112077",
+                                            "asDouble": 65675880
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492576639112077",
+                                            "asDouble": 677345
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492576639112077",
+                                            "asInt": "13351"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492576639112077",
+                                            "asInt": "13351"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492581640657923",
+                                            "asDouble": 105065712
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492581640657923",
+                                            "asDouble": 643105
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492581640657923",
+                                            "asInt": "25639"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492581640657923",
+                                            "asInt": "25639"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492586639648081",
+                                            "asDouble": 44472080
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492586639648081",
+                                            "asDouble": 622576
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492586639648081",
+                                            "asInt": "39463"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492586639648081",
+                                            "asInt": "39463"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492591639974582",
+                                            "asDouble": 78323656
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492591639974582",
+                                            "asDouble": 568155
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492591639974582",
+                                            "asInt": "57895"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492591639974582",
+                                            "asInt": "57895"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492596644254104",
+                                            "asDouble": 50227792
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492596644254104",
+                                            "asDouble": 574370
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492596644254104",
+                                            "asInt": "77863"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492596644254104",
+                                            "asInt": "77863"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492601643177721",
+                                            "asDouble": 89130920
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492601643177721",
+                                            "asDouble": 590389
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492601643177721",
+                                            "asInt": "96807"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492601643177721",
+                                            "asInt": "96807"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492606638705602",
+                                            "asDouble": 74000424
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492606638705602",
+                                            "asDouble": 545957
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492606638705602",
+                                            "asInt": "118823"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492606638705602",
+                                            "asInt": "118823"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492611639009389",
+                                            "asDouble": 83569088
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492611639009389",
+                                            "asDouble": 515508
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492611639009389",
+                                            "asInt": "143911"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492611639009389",
+                                            "asInt": "143911"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492616638752982",
+                                            "asDouble": 87982248
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492616638752982",
+                                            "asDouble": 489192
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492616638752982",
+                                            "asInt": "167975"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492616638752982",
+                                            "asInt": "167975"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492621647383299",
+                                            "asDouble": 74026496
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492621647383299",
+                                            "asDouble": 412107
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492621647383299",
+                                            "asInt": "187431"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492621647383299",
+                                            "asInt": "187431"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492626645082042",
+                                            "asDouble": 84011144
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492626645082042",
+                                            "asDouble": 369186
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492626645082042",
+                                            "asInt": "200231"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492626645082042",
+                                            "asInt": "200231"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492631639605449",
+                                            "asDouble": 105670144
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492631639605449",
+                                            "asDouble": 302910
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492631639605449",
+                                            "asInt": "214567"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492631639605449",
+                                            "asInt": "214567"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492636639337742",
+                                            "asDouble": 85269704
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492636639337742",
+                                            "asDouble": 292978
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492636639337742",
+                                            "asInt": "231463"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492636639337742",
+                                            "asInt": "231463"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492641643105978",
+                                            "asDouble": 105925368
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492641643105978",
+                                            "asDouble": 282115
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492641643105978",
+                                            "asInt": "245287"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492641643105978",
+                                            "asInt": "245287"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492646640861684",
+                                            "asDouble": 93198816
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492646640861684",
+                                            "asDouble": 383703
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492646640861684",
+                                            "asInt": "262183"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492646640861684",
+                                            "asInt": "262695"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "resourceMetrics": [
+            {
+                "resource": {
+                    "attributes": [
+                        {
+                            "key": "service.name",
+                            "value": {
+                                "stringValue": "unknown_service:java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.language",
+                            "value": {
+                                "stringValue": "java"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.name",
+                            "value": {
+                                "stringValue": "opentelemetry"
+                            }
+                        },
+                        {
+                            "key": "telemetry.sdk.version",
+                            "value": {
+                                "stringValue": "1.27.0"
+                            }
+                        }
+                    ]
+                },
+                "scopeMetrics": [
+                    {
+                        "scope": {
+                            "name": "jpetstore-main"
+                        },
+                        "metrics": [
+                            {
+                                "name": "jvm.memory.total",
+                                "description": "Current Memory Usage.",
+                                "unit": "byte",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492651643037097",
+                                            "asDouble": 71751056
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "jvm.total.cpu",
+                                "description": "Current CPU percentage.",
+                                "unit": "10000 * percentage",
+                                "gauge": {
+                                    "dataPoints": [
+                                        {
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492651643037097",
+                                            "asDouble": 307377
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "scope": {
+                            "name": "io.opentelemetry.exporters.otlp-grpc-okhttp"
+                        },
+                        "metrics": [
+                            {
+                                "name": "otlp.exporter.exported",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "success",
+                                                    "value": {
+                                                        "boolValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492651643037097",
+                                            "asInt": "277543"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            },
+                            {
+                                "name": "otlp.exporter.seen",
+                                "sum": {
+                                    "dataPoints": [
+                                        {
+                                            "attributes": [
+                                                {
+                                                    "key": "type",
+                                                    "value": {
+                                                        "stringValue": "span"
+                                                    }
+                                                }
+                                            ],
+                                            "startTimeUnixNano": "1691492541633561295",
+                                            "timeUnixNano": "1691492651643037097",
+                                            "asInt": "278055"
+                                        }
+                                    ],
+                                    "aggregationTemporality": 2,
+                                    "isMonotonic": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

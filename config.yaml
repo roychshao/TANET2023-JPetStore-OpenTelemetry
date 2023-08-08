@@ -18,7 +18,7 @@ exporters:
     tls:
       insecure: true
   file:
-    path: "./result.json"
+    path: "./testSignIn.json"
 
 processors:
   batch:
