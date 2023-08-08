@@ -16,13 +16,18 @@
 package org.mybatis.jpetstore.tracing;
 
 import com.sun.management.*;
-import java.lang.management.ManagementFactory;
+
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.Meter;
+import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
+import io.opentelemetry.context.propagation.ContextPropagators;
+import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
+import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.TimeUnit;
 
 public class Tracing {
@@ -36,14 +41,17 @@ public class Tracing {
      * Metrics
      */
     meterProvider = SdkMeterProvider.builder()
-        .registerView(InstrumentSelector.builder().setName("Num_Of_Actionbean").build(),
-            View.builder().setName("Num_Of_Actionbean").build())
-        .registerMetricReader(PeriodicMetricReader
-            .builder(OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build()).build())
+        .registerMetricReader(
+            PeriodicMetricReader.builder(OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build())
+                .setInterval(5, TimeUnit.SECONDS).build())
         .build();
+    // Create an OpenTelemetry instance with the given tracer provider and propagator
+    W3CTraceContextPropagator propagator = W3CTraceContextPropagator.getInstance();
+    ContextPropagators propagators = ContextPropagators.create(propagator);
 
     /* opentelemetry instance init */
-    openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(meterProvider).setPropagators(propagators).buildAndRegisterGlobal();
+    openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(meterProvider).setPropagators(propagators)
+        .buildAndRegisterGlobal();
 
     /*
      * get from OpenTelemetry instance
@@ -52,13 +60,14 @@ public class Tracing {
 
     // 獲取Memory使用情況
     meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
-        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+        .buildWithCallback(result -> result
+            .record((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()), Attributes.empty()));
 
     // 獲取CPU使用情況
     OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU time.").setUnit("ms")
+    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU percentage.").setUnit("10000 * percentage")
         .buildWithCallback(measurement -> {
-          measurement.record(osBean.getProcessCpuTime() / 1000000.0, Attributes.empty());
+          measurement.record((int) (osBean.getProcessCpuLoad() * 1000000.0), Attributes.empty());
         });
   }
 }

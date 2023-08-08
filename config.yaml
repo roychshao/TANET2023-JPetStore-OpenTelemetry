@@ -18,10 +18,17 @@ exporters:
     tls:
       insecure: true
   file:
-    path: "./result.json"
+    path: "./testSignIn.json"
 
 processors:
   batch:
+  filter:
+    metrics:
+      include:
+        match_type: strict
+        metric_names:
+          - process.runtime.jvm.cpu.utilization
+          - process.runtime.jvm.memory.usage
 
 service:
   pipelines:
@@ -31,7 +38,7 @@ service:
       exporters: [jaeger]
     metrics:
       receivers: [otlp]
-      processors: [batch]
+      processors: [filter]
       exporters: [file, logging]
     logs:
       receivers: [otlp]
