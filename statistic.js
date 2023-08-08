@@ -3,11 +3,16 @@ const fs = require('fs');
 
 
 var MemoryUsages = [];
-var CpuTimes = [];
+var CpuUsages = [];
+var totalCpuTime = 0;
 var meanMem = 0;
 var meanCpu = 0;
+var q1Mem = 0;
+var q1Cpu = 0;
 var medianMem = 0;
 var medianCpu = 0;
+var q3Mem = 0;
+var q3Cpu = 0;
 var p99Mem = 0;
 var p99Cpu = 0;
 var p95Mem = 0;
@@ -19,7 +24,7 @@ function printErr(err) {
 }
 
 function getGuages() {
-    const filePath = 'result.json';
+    const filePath = 'testOrder.json';
 
     fs.readFile(filePath, 'utf8', async (err, data) => {
         if (err) {
@@ -30,18 +35,20 @@ function getGuages() {
                 for (let i = 0; i < metricsData.length; ++i) {
                     var gauge = metricsData[i];
                     MemoryUsages.push(gauge.resourceMetrics[0].scopeMetrics[1].metrics[0].gauge.dataPoints[0].asDouble);
-                    CpuTimes.push(gauge.resourceMetrics[0].scopeMetrics[1].metrics[1].gauge.dataPoints[0].asDouble);
+                    CpuUsages.push(gauge.resourceMetrics[0].scopeMetrics[1].metrics[1].gauge.dataPoints[0].asDouble / 10000);
                 }
 
                 // sort gauges
                 MemoryUsages.sort((a, b) => a - b);
-                CpuTimes.sort((a, b) => a - b);
+                CpuUsages.sort((a, b) => a - b);
                 console.log("MemoryUsages: " + MemoryUsages);
-                console.log("CpuTimes: " + CpuTimes);
+                console.log("CpuUsages: " + CpuUsages);
 
                 // calculate statistic datas
                 await calMean().then().catch(printErr);
+                await calq1().then().catch(printErr);
                 await calMedian().then().catch(printErr);
+                await calq3().then().catch(printErr);
                 await calp99().then().catch(printErr);
                 await calp95().then().catch(printErr);
                 printStatistic();
@@ -58,13 +65,13 @@ function calMean() {
         try {
             var totalnum = MemoryUsages.length;
             var totalMemoryUsage = 0;
-            var totalCpuTime = 0;
+            var totalCpuUsage = 0;
             for(let i = 0; i < MemoryUsages.length; ++i) {
                 totalMemoryUsage += MemoryUsages[i];
-                totalCpuTime += CpuTimes[i];
+                totalCpuUsage += CpuUsages[i];
             }
             meanMem = totalMemoryUsage / totalnum;
-            meanCpu = totalCpuTime / totalnum;
+            meanCpu = totalCpuUsage / totalnum;
             resolve();
         } catch (err) {
             reject(err);
@@ -79,9 +86,9 @@ function calMedian() {
         medianMem = MemoryUsages.length % 2 === 0
             ? (MemoryUsages[middleIndex - 1] + MemoryUsages[middleIndex]) / 2
             : MemoryUsages[middleIndex];
-        medianCpu = CpuTimes.length % 2 === 0
-            ? (CpuTimes[middleIndex - 1] + CpuTimes[middleIndex]) / 2
-            : CpuTimes[middleIndex];
+        medianCpu = CpuUsages.length % 2 === 0
+            ? (CpuUsages[middleIndex - 1] + CpuUsages[middleIndex]) / 2
+            : CpuUsages[middleIndex];
             resolve();
         } catch (err) {
             reject(err);
@@ -89,12 +96,37 @@ function calMedian() {
     })
 }
 
+function calq1() {
+    return new Promise((resolve, reject) => {
+        try {
+            var q1Index = Math.ceil(MemoryUsages.length * 0.25) - 1;
+            q1Mem = MemoryUsages[q1Index];
+            q1Cpu = CpuUsages[q1Index];
+            resolve();
+        } catch (err) {
+            reject(err);
+        }
+    })
+}
+
+function calq3() {
+    return new Promise((resolve, reject) => {
+        try {
+            var q3Index = Math.ceil(MemoryUsages.length * 0.75) - 1;
+            q3Mem = MemoryUsages[q3Index];
+            q3Cpu = CpuUsages[q3Index];
+            resolve();
+        } catch (err) {
+            reject(err);
+        }
+    })
+}
 function calp99() {
     return new Promise((resolve, reject) => {
         try {
             var p99Index = Math.ceil(MemoryUsages.length * 0.99) - 1;
             p99Mem = MemoryUsages[p99Index];
-            p99Cpu = CpuTimes[p99Index];
+            p99Cpu = CpuUsages[p99Index];
             resolve();
         } catch (err) {
             reject(err);
@@ -107,7 +139,7 @@ function calp95() {
         try {
             var p95Index = Math.ceil(MemoryUsages.length * 0.95) - 1;
             p95Mem = MemoryUsages[p95Index];
-            p95Cpu = CpuTimes[p95Index];
+            p95Cpu = CpuUsages[p95Index];
             resolve();
         } catch (err) {
             reject(err);
@@ -117,26 +149,20 @@ function calp95() {
 
 function Gauge(Mem, Cpu) {
   this.Memory_Usage = Mem;
-  this.CPU_Time = Cpu;
+  this.CPU_Usage = Cpu;
 }
 
 function printStatistic() {
 
     var statistic = {};
-    statistic.mean = new Gauge(meanMem, meanCpu);
-    statistic.median = new Gauge(medianMem, medianCpu);
-    statistic.p99 = new Gauge(p99Mem, p99Cpu);
-    statistic.p95 = new Gauge(p95Mem, p95Cpu);
+    statistic.Mean = new Gauge(meanMem, meanCpu);
+    statistic.Q1 = new Gauge(q1Mem, q1Cpu);
+    statistic.Median = new Gauge(medianMem, medianCpu);
+    statistic.Q3 = new Gauge(q3Mem, q3Cpu);
+    statistic.P95 = new Gauge(p95Mem, p95Cpu);
+    statistic.P99 = new Gauge(p99Mem, p99Cpu);
 
     console.table(statistic);
-    // console.log("meanMemory: " + meanMem);
-    // console.log("meanCPU: " + meanCpu);
-    // console.log("medianMem: " + medianMem);
-    // console.log("medianCpu: " + medianCpu);
-    // console.log("p99Mem: " + p99Mem);
-    // console.log("p99Cpu: " + p99Cpu);
-    // console.log("p95Mem: " + p99Mem);
-    // console.log("p95Cpu: " + p99Cpu);
 }
 
 getGuages();

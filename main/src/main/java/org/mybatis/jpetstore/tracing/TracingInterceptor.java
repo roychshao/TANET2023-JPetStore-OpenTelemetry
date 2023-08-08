@@ -15,7 +15,6 @@
  */
 package org.mybatis.jpetstore.tracing;
 
-
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
@@ -95,7 +94,6 @@ public class TracingInterceptor implements Interceptor {
           span.setAttribute("username", accountBean.getUsername());
         }
       }
-
 
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法

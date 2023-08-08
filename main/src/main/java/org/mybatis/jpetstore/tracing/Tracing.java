@@ -18,7 +18,7 @@ package org.mybatis.jpetstore.tracing;
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
 
 import com.sun.management.*;
-import java.lang.management.ManagementFactory;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
@@ -36,15 +36,14 @@ import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppend
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.logs.SdkLoggerProvider;
 import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
-import io.opentelemetry.sdk.metrics.InstrumentSelector;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.View;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
 import io.opentelemetry.semconv.resource.attributes.ResourceAttributes;
 
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.TimeUnit;
 
 public class Tracing {
@@ -96,10 +95,9 @@ public class Tracing {
      * Metrics
      */
     meterProvider = SdkMeterProvider.builder()
-        .registerView(InstrumentSelector.builder().setName("Num_Of_Actionbean").build(),
-            View.builder().setName("Num_Of_Actionbean").build())
-        .registerMetricReader(PeriodicMetricReader
-            .builder(OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build()).build())
+        .registerMetricReader(
+            PeriodicMetricReader.builder(OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build())
+                .setInterval(5, TimeUnit.SECONDS).build())
         .build();
 
     // It is recommended that the API user keep a reference to Attributes they will record against
@@ -129,13 +127,14 @@ public class Tracing {
 
     // 獲取Memory使用情況
     meter.gaugeBuilder("jvm.memory.total").setDescription("Current Memory Usage.").setUnit("byte")
-        .buildWithCallback(result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
+        .buildWithCallback(result -> result
+            .record((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()), Attributes.empty()));
 
     // 獲取CPU使用情況
     OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU time.").setUnit("ms")
+    meter.gaugeBuilder("jvm.total.cpu").setDescription("Current CPU percentage.").setUnit("10000 * percentage")
         .buildWithCallback(measurement -> {
-          measurement.record(osBean.getProcessCpuTime() / 1000000.0, Attributes.empty());
+          measurement.record((int) (osBean.getProcessCpuLoad() * 1000000.0), Attributes.empty());
         });
   }
 

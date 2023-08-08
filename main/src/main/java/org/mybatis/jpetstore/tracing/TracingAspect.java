@@ -15,7 +15,6 @@
  */
 package org.mybatis.jpetstore.tracing;
 
-
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
@@ -109,11 +108,11 @@ public class TracingAspect {
       TracingInterceptor.setParentSpan(span);
     }
 
-
     Object result = null;
     try (Scope ss = span.makeCurrent()) {
-      // logger.info("log into spans");
+
       result = joinPoint.proceed();
+
       if (recordStatus)
         span.setStatus(StatusCode.OK);
     } catch (Throwable t) {
