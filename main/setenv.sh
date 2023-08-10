@@ -16,8 +16,12 @@
 
 export CATALINA_OPTS="$CATALINA_OPTS -javaagent:./opentelemetry-javaagent.jar"
 export OTEL_RESOURCE_ATTRIBUTES=service.name=jpetsotre-tomcat
-export OTEL_METRICS_EXPORTER=none
 
+export OTEL_INSTRUMENTATION_grpc_ENABLED=false
+export OTEL_INSTRUMENTATION_okhttp_ENABLED=false
+export OTEL_INSTRUMENTATION_servlet_ENABLED=false
+export OTEL_INSTRUMENTATION_spring_boot_ENABLED=false
+export OTEL_METRIC_EXPORT_INTERVAL=1000
 # use otelcol to be the backend, default is the one I want
 # export OTEL_TRACES_EXPORTER=jaeger
 # export OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14250/api/traces

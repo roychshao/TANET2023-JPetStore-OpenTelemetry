@@ -32,14 +32,14 @@ function getGuages() {
                 const metricsData = JSON.parse(data);
                 for (let i = 0; i < metricsData.length; ++i) {
                     var gauge = metricsData[i];
-                    var MemPart = gauge.resourceMetrics[0].scopeMetrics[0].metrics[0].sum.dataPoints;
+                    var MemPart = gauge.resourceMetrics[0].scopeMetrics[0].metrics[1].sum.dataPoints;
                     var MemSum = 0;
                     for (let j = 0; j < MemPart.length; ++j) {
                         MemSum += parseInt(MemPart[j].asInt);
                     }
                     console.log(MemSum);
                     MemoryUsages.push(MemSum);
-                    CpuUsages.push(gauge.resourceMetrics[0].scopeMetrics[0].metrics[1].gauge.dataPoints[0].asDouble * 100);
+                    CpuUsages.push(gauge.resourceMetrics[0].scopeMetrics[0].metrics[0].gauge.dataPoints[0].asDouble * 100);
                 }
 
                 // sort gauges
