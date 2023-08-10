@@ -34,8 +34,8 @@ function getGuages() {
                 const metricsData = JSON.parse(data);
                 for (let i = 0; i < metricsData.length; ++i) {
                     var gauge = metricsData[i];
-                    MemoryUsages.push(gauge.resourceMetrics[0].scopeMetrics[0].metrics[0].gauge.dataPoints[0].asDouble);
-                    CpuUsages.push(gauge.resourceMetrics[0].scopeMetrics[0].metrics[1].gauge.dataPoints[0].asDouble / 10000);
+                    MemoryUsages.push(gauge.resourceMetrics[0].scopeMetrics[1].metrics[0].gauge.dataPoints[0].asDouble);
+                    CpuUsages.push(gauge.resourceMetrics[0].scopeMetrics[1].metrics[1].gauge.dataPoints[0].asDouble / 10000);
                 }
 
                 // sort gauges

@@ -44,7 +44,6 @@ import org.springframework.stereotype.Component;
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
-  // private static final ContextKey<Span> PARENTSPAN_KEY = TracingInterceptor.getParentSpanKey();
   private transient final Logger logger = LogManager.getLogger(TracingAspect.class);
   private transient final Meter meter = Tracing.getMeter();
   private transient final LongCounter counter = Tracing.getCounter();
