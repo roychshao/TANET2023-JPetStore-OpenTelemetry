@@ -34,6 +34,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @TracingAOP
+@SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
+    @SpanConfig.KeyValue(key = "mode", value = "lower on class")
+})
 public class CatalogService {
 
   private final CategoryMapper categoryMapper;
@@ -51,7 +54,8 @@ public class CatalogService {
   }
 
   @SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
-      @SpanConfig.KeyValue(key = "testNewAnno", value = "methodSuccessOnString") })
+      @SpanConfig.KeyValue(key = "mode", value = "method")
+  })
   // @CounterConfig(incrementBy = 5)
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);

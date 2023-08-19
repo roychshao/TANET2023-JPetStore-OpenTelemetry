@@ -62,7 +62,8 @@ public class TracingAspect {
     Span span = null;
 
     // 獲得SpanConfig註解
-    SpanConfig spanConfig = method.getAnnotation(SpanConfig.class);
+    SpanConfig spanConfig = (method.getAnnotation(SpanConfig.class) != null) ? method.getAnnotation(SpanConfig.class)
+        : targetClass.getAnnotation(SpanConfig.class);
     SpanKind kindValue = SpanKind.INTERNAL; // SpanKind預設為Internal
     boolean recordStatus = false;
     boolean recordException = false;
