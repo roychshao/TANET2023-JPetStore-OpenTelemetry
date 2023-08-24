@@ -36,7 +36,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  * @author Eduardo Macarron
  */
 @SessionScope
-@TracingAOP
+@EnableTelemetry
 public class CartActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = -4038684592582714235L;

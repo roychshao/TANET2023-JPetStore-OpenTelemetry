@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
  * @author Eduardo Macarron
  */
 @Component
-@TracingAOP
+@EnableTelemetry
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 6321792448424424931L;

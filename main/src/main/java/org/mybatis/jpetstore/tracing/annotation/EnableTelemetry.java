@@ -19,8 +19,5 @@ import java.lang.annotation.*;
 
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TracingAOP {
-  String[] varNames() default {};
-
-  String[] comments() default {};
+public @interface EnableTelemetry {
 }

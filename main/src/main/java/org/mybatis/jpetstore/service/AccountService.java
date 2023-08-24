@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Eduardo Macarron
  */
 @Service
-@TracingAOP
+@EnableTelemetry
 public class AccountService {
 
   private final AccountMapper accountMapper;

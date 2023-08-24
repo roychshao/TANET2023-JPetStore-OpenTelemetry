@@ -25,7 +25,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  *
  * @author Eduardo Macarron
  */
-@TracingAOP
+@EnableTelemetry
 public interface LineItemMapper {
 
   List<LineItem> getLineItemsByOrderId(int orderId);

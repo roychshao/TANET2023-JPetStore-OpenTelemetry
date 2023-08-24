@@ -25,7 +25,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  *
  * @author Eduardo Macarron
  */
-@TracingAOP
+@EnableTelemetry
 public interface OrderMapper {
 
   List<Order> getOrdersByUsername(String username);

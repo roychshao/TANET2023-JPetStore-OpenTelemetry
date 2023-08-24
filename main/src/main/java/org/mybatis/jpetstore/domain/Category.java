@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @author Eduardo Macarron
  */
 @Component
-@TracingAOP
+@EnableTelemetry
 public class Category implements Serializable {
 
   private static final long serialVersionUID = 3992469837058393712L;

@@ -33,10 +33,9 @@ import org.springframework.stereotype.Service;
  * @author Eduardo Macarron
  */
 @Service
-@TracingAOP
-@SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
-    @SpanConfig.KeyValue(key = "mode", value = "lower on class")
-})
+@EnableTelemetry
+@TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
+    @TelemetryConfig.KeyValue(key = "mode", value = "lower on class") })
 public class CatalogService {
 
   private final CategoryMapper categoryMapper;
@@ -53,10 +52,8 @@ public class CatalogService {
     return categoryMapper.getCategoryList();
   }
 
-  @SpanConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
-      @SpanConfig.KeyValue(key = "mode", value = "method")
-  })
-  // @CounterConfig(incrementBy = 5)
+  @TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, incrementBy = 1, attributes = {
+      @TelemetryConfig.KeyValue(key = "mode", value = "method") })
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }

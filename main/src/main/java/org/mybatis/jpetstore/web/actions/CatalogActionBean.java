@@ -34,7 +34,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  * @author Eduardo Macarron
  */
 @SessionScope
-@TracingAOP
+@EnableTelemetry
 public class CatalogActionBean extends AbstractActionBean {
 
   private static final long serialVersionUID = 5849523372175050635L;
@@ -152,8 +152,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingAOP(varNames = { "categoryId", "categoryList", "category" }, comments = {
-      "Hello this is TracingAOP in viewCategory" })
+  @TelemetryConfig(varNames = { "categoryId", "categoryList", "category" })
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
@@ -167,8 +166,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingAOP(varNames = { "productId", "productList", "product" }, comments = {
-      " Hello this is TracingAOP in viewProduct" })
+  @TelemetryConfig(varNames = { "productId", "productList", "product" })
   public ForwardResolution viewProduct() {
     if (productId != null) {
       itemList = catalogService.getItemListByProduct(productId);
@@ -182,7 +180,7 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TracingAOP(varNames = { "itemId", "itemList", "item" }, comments = { "Hello this is TracingAOP in viewItem" })
+  @TelemetryConfig(varNames = { "itemId", "itemList", "item" })
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();

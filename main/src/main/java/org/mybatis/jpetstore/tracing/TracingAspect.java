@@ -17,7 +17,6 @@ package org.mybatis.jpetstore.tracing;
 
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
-import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
@@ -44,12 +43,11 @@ import org.springframework.stereotype.Component;
 public class TracingAspect {
 
   private transient final Tracer tracer = Tracing.getTracer();
-  private transient final Logger logger = LogManager.getLogger(TracingAspect.class);
-  private transient final Meter meter = Tracing.getMeter();
+  private transient final Logger logger = LogManager.getLogger(TracingAspect.class); // logger一般不在切面中使用,OpenTelemetry提供了bridge讓其直接被加入到span中
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
 
-  @Around("@annotation(org.mybatis.jpetstore.tracing.annotation.TracingAOP) || @within(org.mybatis.jpetstore.tracing.annotation.TracingAOP)")
+  @Around("@annotation(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry) || @within(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry)")
   public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 獲得joinPoint資訊
@@ -61,15 +59,15 @@ public class TracingAspect {
     Span parentSpan = TracingInterceptor.getParentSpan();
     Span span = null;
 
-    // 獲得SpanConfig註解
-    SpanConfig spanConfig = (method.getAnnotation(SpanConfig.class) != null) ? method.getAnnotation(SpanConfig.class)
-        : targetClass.getAnnotation(SpanConfig.class);
+    // 獲得TelemetryConfig註解,以方法上標注優先於類上標注的方式
+    TelemetryConfig telemetryConfig = (method.getAnnotation(TelemetryConfig.class) != null)
+        ? method.getAnnotation(TelemetryConfig.class) : targetClass.getAnnotation(TelemetryConfig.class);
     SpanKind kindValue = SpanKind.INTERNAL; // SpanKind預設為Internal
     boolean recordStatus = false;
     boolean recordException = false;
-    if (spanConfig != null) {
+    if (telemetryConfig != null) {
       // 決定span kind(預設INTERNAL)
-      String spanKind = spanConfig.kind();
+      String spanKind = telemetryConfig.kind();
       if (spanKind != "") {
         switch (spanKind) {
           case "Client":
@@ -78,7 +76,7 @@ public class TracingAspect {
           case "Server":
             kindValue = SpanKind.SERVER;
             break;
-          case "Interval":
+          case "Internal":
             kindValue = SpanKind.INTERNAL;
             break;
           case "Consumer":
@@ -92,8 +90,8 @@ public class TracingAspect {
         }
       }
       // 決定是否紀錄status和exception
-      recordStatus = spanConfig.recordStatus();
-      recordException = spanConfig.recordException();
+      recordStatus = telemetryConfig.recordStatus();
+      recordException = telemetryConfig.recordException();
     }
 
     if (parentSpan == null) {
@@ -121,34 +119,31 @@ public class TracingAspect {
       if (recordException)
         span.recordException(t);
     } finally {
-      // annotaion添加相關功能
-      TracingAOP tracingAOP = method.getAnnotation(TracingAOP.class);
-      if (tracingAOP != null) {
-        setVarNames(span, tracingAOP, joinPoint);
-      }
-      if (spanConfig != null) {
-        // for attributes
-        SpanConfig.KeyValue[] attributes = spanConfig.attributes();
+      // annotation後處理
+      if (telemetryConfig != null) {
+        // 以attribute的方式添加變數值至span中
+        setVarNames(span, telemetryConfig.varNames(), joinPoint);
+
+        // 添加attribute
+        TelemetryConfig.KeyValue[] attributes = telemetryConfig.attributes();
         if (attributes.length != 0) {
-          for (SpanConfig.KeyValue keyValue : attributes) {
+          for (TelemetryConfig.KeyValue keyValue : attributes) {
             span.setAttribute(keyValue.key(), keyValue.value());
           }
         }
-      }
-      CounterConfig counterConfig = method.getAnnotation(CounterConfig.class);
-      if (counterConfig != null) {
-        counter.add(counterConfig.incrementBy(), otel_attributes);
+
+        // 若有counter要添加則添加
+        counter.add(telemetryConfig.incrementBy(), otel_attributes);
       }
 
+      // 回復parent span
       TracingInterceptor.setParentSpan(parentSpan);
       span.end();
     }
     return result;
   }
 
-  public void setVarNames(Span span, TracingAOP tracingAOP, ProceedingJoinPoint joinPoint) {
-
-    String[] varNames = tracingAOP.varNames();
+  public void setVarNames(Span span, String[] varNames, ProceedingJoinPoint joinPoint) {
 
     if (varNames.length != 0) {
       Object[] varValues = new Object[varNames.length];
@@ -171,22 +166,4 @@ public class TracingAspect {
       }
     }
   }
-
-  public void setComments(Span span, TracingAOP tracingAOP) {
-
-    String[] comments = tracingAOP.comments();
-
-    if (comments.length != 0) {
-      for (int i = 0; i < comments.length; ++i) {
-        // 將comments中的任意字串寫入event中
-        try {
-          span.addEvent(comments[i]);
-        } catch (Throwable t) {
-          span.setStatus(StatusCode.ERROR, t.getMessage());
-          span.recordException(t);
-        }
-      }
-    }
-  }
-
 }

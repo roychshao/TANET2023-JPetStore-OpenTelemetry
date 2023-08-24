@@ -23,7 +23,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  *
  * @author Eduardo Macarron
  */
-@TracingAOP
+@EnableTelemetry
 public interface SequenceMapper {
 
   Sequence getSequence(Sequence sequence);

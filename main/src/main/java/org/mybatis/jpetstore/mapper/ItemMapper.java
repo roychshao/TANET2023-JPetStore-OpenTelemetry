@@ -26,7 +26,7 @@ import org.mybatis.jpetstore.tracing.annotation.*;
  *
  * @author Eduardo Macarron
  */
-@TracingAOP
+@EnableTelemetry
 public interface ItemMapper {
 
   void updateInventoryQuantity(Map<String, Object> param);

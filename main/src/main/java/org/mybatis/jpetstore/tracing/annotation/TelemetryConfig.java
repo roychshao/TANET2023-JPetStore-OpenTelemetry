@@ -19,7 +19,28 @@ import java.lang.annotation.*;
 
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CounterConfig {
+public @interface TelemetryConfig {
 
-  int incrementBy() default 1;
+  KeyValue[] attributes() default {};
+
+  String kind() default "";
+
+  boolean recordStatus() default false;
+
+  boolean recordException() default false;
+
+  String ContextPropagationUrl() default "";
+
+  int incrementBy() default 0;
+
+  // 添加能夠獲得變數值的功能,限於Field中
+  String[] varNames() default {};
+
+  @Target({})
+  @Retention(RetentionPolicy.RUNTIME)
+  @interface KeyValue {
+    String key() default "";
+
+    String value() default "";
+  }
 }
