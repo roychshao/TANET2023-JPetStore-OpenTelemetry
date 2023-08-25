@@ -24,7 +24,9 @@ import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
+import org.mybatis.jpetstore.tracing.ThreadLocalContext;
 import org.mybatis.jpetstore.tracing.annotation.*;
+import org.mybatis.jpetstore.tracing.split.AddEventImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,8 +36,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @EnableTelemetry
-@TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, attributes = {
-    @TelemetryConfig.KeyValue(key = "mode", value = "lower on class") })
+@TelemetryConfig(kind = "Client", recordStatus = true, recordException = true)
 public class CatalogService {
 
   private final CategoryMapper categoryMapper;
@@ -53,8 +54,12 @@ public class CatalogService {
   }
 
   @TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, incrementBy = 1, attributes = {
-      @TelemetryConfig.KeyValue(key = "mode", value = "method") })
+      "variableA", "ItemMapper" })
   public Category getCategory(String categoryId) {
+    int a = 1;
+    ThreadLocalContext.putAttributes("variableA", a);
+    ThreadLocalContext.putAttributes("ItemMapper", itemMapper);
+    AddEventImpl.impl("create event test");
     return categoryMapper.getCategory(categoryId);
   }
 

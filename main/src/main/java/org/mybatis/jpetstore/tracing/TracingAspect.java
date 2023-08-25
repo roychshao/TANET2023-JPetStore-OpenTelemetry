@@ -29,11 +29,15 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.*;
 
+// import net.sourceforge.stripes.action.After;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.mybatis.jpetstore.tracing.annotation.*;
 import org.springframework.stereotype.Component;
@@ -46,9 +50,28 @@ public class TracingAspect {
   private transient final Logger logger = LogManager.getLogger(TracingAspect.class); // logger一般不在切面中使用,OpenTelemetry提供了bridge讓其直接被加入到span中
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
+  private Span span = null;
+
+  @Pointcut("@annotation(org.mybatis.jpetstore.tracing.annotation.AddEvent)")
+  public void eventAddedMethod() {
+  }
+
+  @Pointcut("@annotation(org.mybatis.jpetstore.tracing.annotation.CxtProp)")
+  public void cxtPropMethod() {
+  }
+
+  @After("eventAddedMethod()")
+  public void SpanEventWeaving(JoinPoint joinPoint) throws Throwable {
+    span.addEvent((String) joinPoint.getArgs()[0]);
+  }
+
+  @After("cxtPropMethod()")
+  public void CxtPropWeaving(JoinPoint joinPoint) throws Throwable {
+    // 具體Context Propagation之實現
+  }
 
   @Around("@annotation(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry) || @within(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry)")
-  public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
+  public Object OTelWeaving(ProceedingJoinPoint joinPoint) throws Throwable {
 
     // 獲得joinPoint資訊
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -56,8 +79,7 @@ public class TracingAspect {
     Method method = targetClass.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
 
     // 使用ThreadLocal
-    Span parentSpan = TracingInterceptor.getParentSpan();
-    Span span = null;
+    Span parentSpan = ThreadLocalContext.getParentSpan();
 
     // 獲得TelemetryConfig註解,以方法上標注優先於類上標注的方式
     TelemetryConfig telemetryConfig = (method.getAnnotation(TelemetryConfig.class) != null)
@@ -103,7 +125,7 @@ public class TracingAspect {
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
           .setSpanKind(kindValue).setParent(Context.current().with(parentSpan)).startSpan();
       // 將原parentSpan改為現方法的span
-      TracingInterceptor.setParentSpan(span);
+      ThreadLocalContext.setParentSpan(span);
     }
 
     Object result = null;
@@ -125,10 +147,11 @@ public class TracingAspect {
         setVarNames(span, telemetryConfig.varNames(), joinPoint);
 
         // 添加attribute
-        TelemetryConfig.KeyValue[] attributes = telemetryConfig.attributes();
-        if (attributes.length != 0) {
-          for (TelemetryConfig.KeyValue keyValue : attributes) {
-            span.setAttribute(keyValue.key(), keyValue.value());
+        String[] attributes = telemetryConfig.attributes();
+        if (attributes != null) {
+          for (String key : attributes) {
+            Object attrValue = ThreadLocalContext.getAttributes(key);
+            span.setAttribute(key, attrValue.toString());
           }
         }
 
@@ -137,7 +160,7 @@ public class TracingAspect {
       }
 
       // 回復parent span
-      TracingInterceptor.setParentSpan(parentSpan);
+      ThreadLocalContext.setParentSpan(parentSpan);
       span.end();
     }
     return result;

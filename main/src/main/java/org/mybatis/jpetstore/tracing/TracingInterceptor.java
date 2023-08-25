@@ -41,9 +41,6 @@ public class TracingInterceptor implements Interceptor {
   private transient final Attributes otel_attributes = Tracing.getAttributes();
   private transient final LongCounter counter = Tracing.getCounter();
 
-  // 使用ThreadLocal
-  private static ThreadLocal<Span> threadLocal = new ThreadLocal<>();
-
   public void init() {
   }
 
@@ -67,7 +64,7 @@ public class TracingInterceptor implements Interceptor {
       Span span = tracer.spanBuilder(actionBeanClassName + ": " + actionBeanMethodName).startSpan();
 
       // 使用ThreadLocal
-      threadLocal.set(span);
+      ThreadLocalContext.setParentSpan(span);
 
       // 將sessionId寫入span中
       HttpServletRequest request = context.getActionBeanContext().getRequest();
@@ -85,39 +82,32 @@ public class TracingInterceptor implements Interceptor {
         }
       }
 
+      TelemetryConfig telemetryConfig = context.getHandler().getAnnotation(TelemetryConfig.class);
+
       try (Scope ss = span.makeCurrent()) {
         // 執行ActionBean方法
         resolution = context.proceed();
-        span.setStatus(StatusCode.OK);
+        if (telemetryConfig != null && telemetryConfig.recordStatus() == true)
+          span.setStatus(StatusCode.OK);
       } catch (Throwable t) {
-        span.setStatus(StatusCode.ERROR, t.getMessage());
-        span.recordException(t);
+        if (telemetryConfig != null && telemetryConfig.recordStatus() == true)
+          span.setStatus(StatusCode.ERROR, t.getMessage());
+        if (telemetryConfig != null && telemetryConfig.recordException() == true)
+          span.recordException(t);
       } finally {
         // 執行ActionBean方法後處理
 
         // 若TelemetryConfig不為空,則將varNames中的變數取出寫入到span中
-        TelemetryConfig telemetryConfig = context.getHandler().getAnnotation(TelemetryConfig.class);
         if (telemetryConfig != null) {
           setVarNames(span, telemetryConfig.varNames(), actionBean);
         }
         span.end();
 
-        // 從threadLocal中取出span
-        threadLocal.remove();
+        ThreadLocalContext.clearParentSpan();
+        ThreadLocalContext.clearAttributes();
       }
       return resolution;
     }
-  }
-
-  /*
-   * 使用ThreadLocal
-   */
-  public static Span getParentSpan() {
-    return threadLocal.get();
-  }
-
-  public static void setParentSpan(Span parentSpan) {
-    threadLocal.set(parentSpan);
   }
 
   public void setVarNames(Span span, String[] varNames, ActionBean actionBean) {
