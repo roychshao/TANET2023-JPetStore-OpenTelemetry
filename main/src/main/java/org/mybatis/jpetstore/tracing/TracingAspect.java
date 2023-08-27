@@ -29,7 +29,6 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.*;
 
-// import net.sourceforge.stripes.action.After;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -50,7 +49,6 @@ public class TracingAspect {
   private transient final Logger logger = LogManager.getLogger(TracingAspect.class); // logger一般不在切面中使用,OpenTelemetry提供了bridge讓其直接被加入到span中
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
-  private Span span = null;
 
   @Pointcut("@annotation(org.mybatis.jpetstore.tracing.annotation.AddEvent)")
   public void eventAddedMethod() {
@@ -60,9 +58,13 @@ public class TracingAspect {
   public void cxtPropMethod() {
   }
 
-  @After("eventAddedMethod()")
-  public void SpanEventWeaving(JoinPoint joinPoint) throws Throwable {
+  @Around("execution(* org.mybatis.jpetstore.service.AddEventImpl.*(..))")
+  public Object AddEventWeaving(ProceedingJoinPoint joinPoint) throws Throwable {
+    Span span = ThreadLocalContext.getParentSpan();
+    System.out.println(span);
     span.addEvent((String) joinPoint.getArgs()[0]);
+    Object result = joinPoint.proceed();
+    return result;
   }
 
   @After("cxtPropMethod()")
@@ -80,6 +82,7 @@ public class TracingAspect {
 
     // 使用ThreadLocal
     Span parentSpan = ThreadLocalContext.getParentSpan();
+    Span span = null;
 
     // 獲得TelemetryConfig註解,以方法上標注優先於類上標注的方式
     TelemetryConfig telemetryConfig = (method.getAnnotation(TelemetryConfig.class) != null)
@@ -124,9 +127,10 @@ public class TracingAspect {
       span = tracer
           .spanBuilder(joinPoint.getSignature().getDeclaringTypeName() + ": " + joinPoint.getSignature().getName())
           .setSpanKind(kindValue).setParent(Context.current().with(parentSpan)).startSpan();
-      // 將原parentSpan改為現方法的span
-      ThreadLocalContext.setParentSpan(span);
     }
+
+    // 將原parentSpan改為現方法的span
+    ThreadLocalContext.setParentSpan(span);
 
     Object result = null;
     try (Scope ss = span.makeCurrent()) {

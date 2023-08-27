@@ -13,15 +13,15 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.jpetstore.tracing.split;
+package org.mybatis.jpetstore.service;
 
-import org.mybatis.jpetstore.tracing.annotation.*;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AddEventImpl {
 
-  @AddEvent
   public static void impl(String eventName) {
-
+    System.out.println(eventName);
   }
 
   // 可根據需求實現更多種event

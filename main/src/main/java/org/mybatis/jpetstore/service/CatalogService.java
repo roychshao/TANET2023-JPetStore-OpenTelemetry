@@ -26,7 +26,6 @@ import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
 import org.mybatis.jpetstore.tracing.ThreadLocalContext;
 import org.mybatis.jpetstore.tracing.annotation.*;
-import org.mybatis.jpetstore.tracing.split.AddEventImpl;
 import org.springframework.stereotype.Service;
 
 /**
