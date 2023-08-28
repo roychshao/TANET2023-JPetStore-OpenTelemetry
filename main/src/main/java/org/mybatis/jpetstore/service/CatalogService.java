@@ -26,6 +26,7 @@ import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
 import org.mybatis.jpetstore.tracing.ThreadLocalContext;
 import org.mybatis.jpetstore.tracing.annotation.*;
+import org.mybatis.jpetstore.util.AddEventImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,6 +42,7 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
+  private final AddEventImpl addEventImpl = new AddEventImpl();
 
   public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
     this.categoryMapper = categoryMapper;
@@ -58,7 +60,7 @@ public class CatalogService {
     int a = 1;
     ThreadLocalContext.putAttributes("variableA", a);
     ThreadLocalContext.putAttributes("ItemMapper", itemMapper);
-    AddEventImpl.impl("create event test");
+    addEventImpl.impl("create event test");
     return categoryMapper.getCategory(categoryId);
   }
 

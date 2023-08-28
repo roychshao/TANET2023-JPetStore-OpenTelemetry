@@ -13,14 +13,17 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.jpetstore.service;
+package org.mybatis.jpetstore.util;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class AddEventImpl {
 
-  public static void impl(String eventName) {
+  public AddEventImpl() {
+  };
+
+  public void impl(String eventName) {
     System.out.println(eventName);
   }
 

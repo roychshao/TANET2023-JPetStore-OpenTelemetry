@@ -13,11 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.jpetstore.tracing.split;
+package org.mybatis.jpetstore.util;
 
 import org.mybatis.jpetstore.tracing.annotation.*;
 
 public class CxtPropImpl {
+
+  public CxtPropImpl() {
+  };
 
   @CxtProp
   public static void impl() {

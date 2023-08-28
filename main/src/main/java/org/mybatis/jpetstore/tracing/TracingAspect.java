@@ -36,6 +36,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.mybatis.jpetstore.tracing.annotation.*;
@@ -50,26 +51,12 @@ public class TracingAspect {
   private transient final LongCounter counter = Tracing.getCounter();
   private transient final Attributes otel_attributes = Tracing.getAttributes();
 
-  @Pointcut("@annotation(org.mybatis.jpetstore.tracing.annotation.AddEvent)")
-  public void eventAddedMethod() {
-  }
-
-  @Pointcut("@annotation(org.mybatis.jpetstore.tracing.annotation.CxtProp)")
-  public void cxtPropMethod() {
-  }
-
-  @Around("execution(* org.mybatis.jpetstore.service.AddEventImpl.*(..))")
-  public Object AddEventWeaving(ProceedingJoinPoint joinPoint) throws Throwable {
+  @Before("execution(* org.mybatis.jpetstore.util.AddEventImpl.*(..))")
+  public void AddEventWeaving(JoinPoint joinPoint) {
+    System.out.println("weaving into AddEventImpl");
     Span span = ThreadLocalContext.getParentSpan();
     System.out.println(span);
     span.addEvent((String) joinPoint.getArgs()[0]);
-    Object result = joinPoint.proceed();
-    return result;
-  }
-
-  @After("cxtPropMethod()")
-  public void CxtPropWeaving(JoinPoint joinPoint) throws Throwable {
-    // 具體Context Propagation之實現
   }
 
   @Around("@annotation(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry) || @within(org.mybatis.jpetstore.tracing.annotation.EnableTelemetry)")
