@@ -24,7 +24,7 @@ public class AddEventImpl {
   };
 
   public void impl(String eventName) {
-    System.out.println(eventName);
+    System.out.println("AddEventImpl receives event: " + eventName);
   }
 
   // 可根據需求實現更多種event

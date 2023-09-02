@@ -52,7 +52,9 @@ public class OrderActionBean extends AbstractActionBean {
   @SpringBean
   private transient OrderService orderService;
 
-  private Order order = new Order();
+  // added to be springbean in 2023/0902
+  @SpringBean
+  private Order order/* = new Order() */;
   private boolean shippingAddressRequired;
   private boolean confirmed;
   private List<Order> orderList;

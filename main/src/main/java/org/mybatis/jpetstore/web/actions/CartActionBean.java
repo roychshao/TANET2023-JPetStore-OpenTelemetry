@@ -47,7 +47,11 @@ public class CartActionBean extends AbstractActionBean {
   @SpringBean
   private transient CatalogService catalogService;
 
-  private Cart cart = new Cart();
+  // private Cart cart = new Cart();
+  // added to be springbean in 2023/0902
+  @SpringBean
+  private transient Cart cart;
+
   private String workingItemId;
 
   public Cart getCart() {

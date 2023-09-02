@@ -51,14 +51,20 @@ public class CatalogActionBean extends AbstractActionBean {
   private String keyword;
 
   private String categoryId;
+  // added to be springbean in 2023/0902
+  @SpringBean
   private Category category;
   private List<Category> categoryList;
 
   private String productId;
+  // added to be springbean in 2023/0902
+  @SpringBean
   private Product product;
   private List<Product> productList;
 
   private String itemId;
+  // added to be springbean in 2023/0902
+  @SpringBean
   private Item item;
   private List<Item> itemList;
 
@@ -152,7 +158,6 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TelemetryConfig(varNames = { "categoryId", "categoryList", "category" })
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
@@ -166,7 +171,6 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TelemetryConfig(varNames = { "productId", "productList", "product" })
   public ForwardResolution viewProduct() {
     if (productId != null) {
       itemList = catalogService.getItemListByProduct(productId);
@@ -180,7 +184,6 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
-  @TelemetryConfig(varNames = { "itemId", "itemList", "item" })
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();

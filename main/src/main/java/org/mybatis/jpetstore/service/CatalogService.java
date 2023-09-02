@@ -42,12 +42,14 @@ public class CatalogService {
   private final CategoryMapper categoryMapper;
   private final ItemMapper itemMapper;
   private final ProductMapper productMapper;
-  private final AddEventImpl addEventImpl = new AddEventImpl();
+  private final AddEventImpl addEventImpl;
 
-  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper) {
+  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper,
+      AddEventImpl addEventImpl) {
     this.categoryMapper = categoryMapper;
     this.itemMapper = itemMapper;
     this.productMapper = productMapper;
+    this.addEventImpl = addEventImpl;
   }
 
   public List<Category> getCategoryList() {
