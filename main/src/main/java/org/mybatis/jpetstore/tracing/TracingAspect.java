@@ -49,9 +49,7 @@ public class TracingAspect {
 
   @Before("execution(* org.mybatis.jpetstore.util.AddEventImpl.*(..))")
   public void AddEventWeaving(JoinPoint joinPoint) {
-    System.out.println("weaving into AddEventImpl");
     Span span = ThreadLocalContext.getParentSpan();
-    System.out.println(span);
     span.addEvent((String) joinPoint.getArgs()[0]);
   }
 
