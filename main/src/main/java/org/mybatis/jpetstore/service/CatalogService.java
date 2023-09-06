@@ -44,8 +44,7 @@ public class CatalogService {
   private final ProductMapper productMapper;
   private final AddEventImpl addEventImpl;
 
-  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper,
-      AddEventImpl addEventImpl) {
+  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper, AddEventImpl addEventImpl) {
     this.categoryMapper = categoryMapper;
     this.itemMapper = itemMapper;
     this.productMapper = productMapper;
@@ -62,7 +61,8 @@ public class CatalogService {
     int a = 1;
     ThreadLocalContext.putAttributes("variableA", a);
     ThreadLocalContext.putAttributes("ItemMapper", itemMapper);
-    addEventImpl.impl("create event test");
+    // addEventImpl.impl("create event test");
+    // addSpanEvent="ant task replaced"
     return categoryMapper.getCategory(categoryId);
   }
 
@@ -81,7 +81,7 @@ public class CatalogService {
    *          the keywords
    *
    * @return the list
-   */
+   /
   public List<Product> searchProductList(String keywords) {
     List<Product> products = new ArrayList<>();
     for (String keyword : keywords.split("\\s+")) {

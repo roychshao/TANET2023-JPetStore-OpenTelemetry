@@ -49,7 +49,8 @@ public class CartActionBean extends AbstractActionBean {
 
   // private Cart cart = new Cart();
   // added to be springbean in 2023/0902
-  @SpringBean private Cart cart;
+  @SpringBean
+  private Cart cart;
 
   private String workingItemId;
 

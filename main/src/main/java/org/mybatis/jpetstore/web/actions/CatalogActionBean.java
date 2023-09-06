@@ -52,17 +52,20 @@ public class CatalogActionBean extends AbstractActionBean {
 
   private String categoryId;
   // added to be springbean in 2023/0902
-  @SpringBean private Category category;
+  @SpringBean
+  private Category category;
   private List<Category> categoryList;
 
   private String productId;
   // added to be springbean in 2023/0902
-  @SpringBean private Product product;
+  @SpringBean
+  private Product product;
   private List<Product> productList;
 
   private String itemId;
   // added to be springbean in 2023/0902
-  @SpringBean private Item item;
+  @SpringBean
+  private Item item;
   private List<Item> itemList;
 
   public String getKeyword() {
