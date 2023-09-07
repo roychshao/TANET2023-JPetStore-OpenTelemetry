@@ -45,9 +45,9 @@ OpenTelemetry has traces, metrics and logs three signals, gauge of metrics and l
 since gauge should be set in OpenTelemetry SDK and logs should be used as usual but added to span through OpenTelemetry bridge.  
 So only traces need to use AOP.
 First of all, to enable a method to be a span, just add **@EnableTelemetry** on the class, this will enable whole method in the class to be a span.  
-if you just want to make a specific method to be a span, then add on the method.
-Second, use **@TelemetryConfig** on the class or method to configure the OpenTelemetry API
-for example
+if you just want to make a specific method to be a span, then add on the method.  
+Second, use **@TelemetryConfig** on the class or method to configure the OpenTelemetry API  
+for example, below config support span kind, span status and exception, metrics' counter also can calculate by this
 ```java
 @TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, incrementBy = 1)
 ```
