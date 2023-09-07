@@ -32,6 +32,7 @@ import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.*;
 
 import org.mybatis.jpetstore.tracing.annotation.*;
+import org.mybatis.jpetstore.util.*;
 import org.mybatis.jpetstore.web.actions.AccountActionBean;
 
 @Intercepts(LifecycleStage.EventHandling)

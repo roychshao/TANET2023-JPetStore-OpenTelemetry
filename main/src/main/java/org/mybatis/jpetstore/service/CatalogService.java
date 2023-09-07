@@ -24,9 +24,8 @@ import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
-import org.mybatis.jpetstore.tracing.ThreadLocalContext;
 import org.mybatis.jpetstore.tracing.annotation.*;
-import org.mybatis.jpetstore.util.AddEventImpl;
+import org.mybatis.jpetstore.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,7 +43,8 @@ public class CatalogService {
   private final ProductMapper productMapper;
   private final AddEventImpl addEventImpl;
 
-  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper, AddEventImpl addEventImpl) {
+  public CatalogService(CategoryMapper categoryMapper, ItemMapper itemMapper, ProductMapper productMapper,
+      AddEventImpl addEventImpl) {
     this.categoryMapper = categoryMapper;
     this.itemMapper = itemMapper;
     this.productMapper = productMapper;
@@ -59,10 +59,10 @@ public class CatalogService {
       "variableA", "ItemMapper" })
   public Category getCategory(String categoryId) {
     int a = 1;
-    ThreadLocalContext.putAttributes("variableA", a);
-    ThreadLocalContext.putAttributes("ItemMapper", itemMapper);
-    // addEventImpl.impl("create event test");
-    // addSpanEvent="ant task replaced"
+    // addSpanAttr=("variableA", a)
+    // addSpanAttr=("ItemMapper", itemMapper)
+    // addSpanEvent="eventA"
+    // addSpanEvent="eventB"
     return categoryMapper.getCategory(categoryId);
   }
 
@@ -81,7 +81,7 @@ public class CatalogService {
    *          the keywords
    *
    * @return the list
-   /
+   */
   public List<Product> searchProductList(String keywords) {
     List<Product> products = new ArrayList<>();
     for (String keyword : keywords.split("\\s+")) {

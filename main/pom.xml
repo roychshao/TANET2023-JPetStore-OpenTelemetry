@@ -55,7 +55,7 @@
             <url>git:ssh://git@github.com/mybatis/jpetstore-6.git?gh-pages#</url>
         </site>
     </distributionManagement>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -67,7 +67,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -104,9 +104,9 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
                 <!-- <exclusion> -->
-                <!--     <groupId>log4j</groupId> -->
-                <!--     <artifactId>log4j</artifactId> -->
-                <!-- </exclusion> -->
+                    <!--     <groupId>log4j</groupId> -->
+                    <!--     <artifactId>log4j</artifactId> -->
+                    <!-- </exclusion> -->
             </exclusions>
         </dependency>        
         <dependency>
@@ -262,11 +262,6 @@
             <artifactId>opentelemetry-log4j-appender-2.17</artifactId>
             <version>1.28.0-alpha</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.10.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -322,31 +317,6 @@
                         </daemon>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-ant-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <executions>
-                        <execution>
-                            <id>replace-text</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>replace</goal>
-                            </goals>
-                            <configuration>
-                                <task>
-                                    <replaceregexp>
-                                        <regexp pattern="addSpanEvent=(.*)"/>
-                                        <substitution expression="addEventImpl.impl(\1)"/>
-                                        <fileset dir="src/main/java">
-                                            <include name="*.java"/>
-                                        </fileset>
-                                    </replaceregexp>
-                                </task>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -378,6 +348,91 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <id>replace event</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <basedir>src/main/java/org/mybatis/jpetstore</basedir>
+                            <includes>
+                                <include>**/*.java</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token>// addSpanEvent="(.*)"</token>
+                                    <value>addEventImpl.impl("$1");</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                    <!-- 反向替換來還原文件,必須在確保addEventImpl.impl()不會被手動呼叫 -->
+                    <execution>
+                        <id>recover event to comment</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <basedir>src/main/java/org/mybatis/jpetstore</basedir>
+                            <includes>
+                                <include>**/*.java</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token>addEventImpl.impl\("(.*)"\);</token>
+                                    <value>// addSpanEvent="$1"</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>replace attr</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <basedir>src/main/java/org/mybatis/jpetstore</basedir>
+                            <includes>
+                                <include>**/*.java</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token>// addSpanAttr=\("(.*)", (.*)\)</token>
+                                    <value>ThreadLocalContext.putAttributes("$1", $2);</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                    <!-- 反向替換來還原文件,必須在確保ThreadLocalContext.put()不會被手動呼叫 -->
+                    <execution>
+                        <id>recover attr to comment</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <basedir>src/main/java/org/mybatis/jpetstore</basedir>
+                            <includes>
+                                <include>**/*.java</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token>ThreadLocalContext.putAttributes\("(.*)", (.*)\);</token>
+                                    <value>// addSpanAttr=("$1", $2)</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
