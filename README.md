@@ -1,6 +1,7 @@
 ## Intro
 This is a project implementation for researching OpenTelemetry using AOP mechanism  
-The research objective is JPetStore form https://github.com/mybatis/jpetstore-6
+provide a reference to use OpenTelemetry with AOP, aiming to improve the maintenance of code while having the ability to customize details.  
+based on : JPetStore (https://github.com/mybatis/jpetstore-6)
 
 ## How to Start
 For running this project, there are some pre-works needed.  
