@@ -41,7 +41,7 @@ you can see the traces in Jaeger UI while metrcis and logs in otelcol console
 
 ## AOP usage
 #### general
-OpenTelemetry has traces, metrics and logs three signals, gauge of metrics and logs will not use AOP to fullfill the usage  
+OpenTelemetry has traces, metrics and logs three signals, gauge of metrics and logs will not use AOP to fulfill the usage  
 since gauge should be set in OpenTelemetry SDK and logs should be used as usual but added to span through OpenTelemetry bridge.  
 So only traces need to use AOP.
 First of all, to enable a method to be a span, just add **@EnableTelemetry** on the class, this will enable whole method in the class to be a span.  
