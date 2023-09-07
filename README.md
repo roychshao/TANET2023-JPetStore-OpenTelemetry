@@ -47,14 +47,14 @@ First of all, to enable a method to be a span, just add **@EnableTelemetry** on 
 if you just want to make a specific method to be a span, then add on the method.
 Second, use **@TelemetryConfig** on the class or method to configure the OpenTelemetry API
 for example
-```
+```java
 @TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, incrementBy = 1)
 ```
 #### span attributes
 however, for some APIs, this simple approach cannot perfectly support, like attributes and event .etc  
 so we have other approach to do it.
 for attributes, do
-```
+```java
 @TelemetryConfig(attributes = {"attrA", "attrB"})
 public void foo() {
     int a = 1;
@@ -69,7 +69,7 @@ It use replacer to turn it into method call, after compiling, it will be turn ba
 
 #### span event
 span event is valued by the event happened time, so it also needs to be commented inside the method.
-```
+```java
 @TelemetryConfig
 public void foo() {
     ...
