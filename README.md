@@ -83,6 +83,7 @@ context prpagation have similar approach with this. Although we do not implement
 ## Notice
 * all of the approach is designed to improve the maintenance of commented
 * you should import org.mybatis.jpetstore.tracing.annotation.\* and org.mybatis.jpetstore.util.\* to use the annotation and the comments.
+* all the method in org.mybatis.jpetstore.util shouldn't and no need to be call maually, it may be rewritten by the replacer.
 * span link haven't be implement, we are trying to do this.
 * we use spring aop in the project, that is, only spring bean can be weaving. So we do little revise on the original Jpetstore to make domain modules be spring bean.
 * use AspectJ can avoid much problem and some unreasonable code, but spring aop is much convinient if your whole project is compose of Spring.
