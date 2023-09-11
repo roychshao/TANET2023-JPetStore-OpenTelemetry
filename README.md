@@ -1,6 +1,7 @@
 ## Intro
 This is a project implementation for researching OpenTelemetry using AOP mechanism  
-The research objective is JPetStore form https://github.com/mybatis/jpetstore-6
+provide a reference to use OpenTelemetry with AOP, aiming to improve the maintenance of code while having the ability to customize details.  
+based on : JPetStore (https://github.com/mybatis/jpetstore-6)
 
 ## How to Start
 For running this project, there are some pre-works needed.  
@@ -40,21 +41,21 @@ you can see the traces in Jaeger UI while metrcis and logs in otelcol console
 
 ## AOP usage
 #### general
-OpenTelemetry has traces, metrics and logs three signals, gauge of metrics and logs will not use AOP to fullfill the usage  
+OpenTelemetry has traces, metrics and logs three signals, gauge of metrics and logs will not use AOP to fulfill the usage  
 since gauge should be set in OpenTelemetry SDK and logs should be used as usual but added to span through OpenTelemetry bridge.  
 So only traces need to use AOP.
 First of all, to enable a method to be a span, just add **@EnableTelemetry** on the class, this will enable whole method in the class to be a span.  
-if you just want to make a specific method to be a span, then add on the method.
-Second, use **@TelemetryConfig** on the class or method to configure the OpenTelemetry API
-for example
-```
+if you just want to make a specific method to be a span, then add on the method.  
+Second, use **@TelemetryConfig** on the class or method to configure the OpenTelemetry API  
+for example, below config support span kind, span status and exception, metrics' counter also can calculate by this
+```java
 @TelemetryConfig(kind = "Client", recordStatus = true, recordException = true, incrementBy = 1)
 ```
 #### span attributes
 however, for some APIs, this simple approach cannot perfectly support, like attributes and event .etc  
 so we have other approach to do it.
 for attributes, do
-```
+```java
 @TelemetryConfig(attributes = {"attrA", "attrB"})
 public void foo() {
     int a = 1;
@@ -69,7 +70,7 @@ It use replacer to turn it into method call, after compiling, it will be turn ba
 
 #### span event
 span event is valued by the event happened time, so it also needs to be commented inside the method.
-```
+```java
 @TelemetryConfig
 public void foo() {
     ...
