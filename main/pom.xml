@@ -369,7 +369,7 @@
                             </includes>
                             <replacements>
                                 <replacement>
-                                    <token>// addSpanEvent="(.*)"</token>
+                                    <token>// @addSpanEvent="(.*)"@</token>
                                     <value>addEventImpl.__impl("$1");</value>
                                 </replacement>
                             </replacements>
@@ -390,7 +390,7 @@
                             <replacements>
                                 <replacement>
                                     <token>addEventImpl.__impl\("(.*)"\);</token>
-                                    <value>// addSpanEvent="$1"</value>
+                                    <value>// @addSpanEvent="$1"@</value>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -408,7 +408,7 @@
                             </includes>
                             <replacements>
                                 <replacement>
-                                    <token>// addSpanAttr=\("(.*)", (.*)\)</token>
+                                    <token>// @addSpanAttr=\("(.*)", (.*)\)@</token>
                                     <value>ThreadLocalContext.__putAttributes("$1", $2);</value>
                                 </replacement>
                             </replacements>
@@ -429,7 +429,7 @@
                             <replacements>
                                 <replacement>
                                     <token>ThreadLocalContext.__putAttributes\("(.*)", (.*)\);</token>
-                                    <value>// addSpanAttr=("$1", $2)</value>
+                                    <value>// @addSpanAttr=("$1", $2)@</value>
                                 </replacement>
                             </replacements>
                         </configuration>

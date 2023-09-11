@@ -60,8 +60,8 @@ for attributes, do
 public void foo() {
     int a = 1;
     int b = 2;
-    // addSpanAttr=("attrA", a)
-    // addSpanAttr=("attrB", b)
+    // @addSpanAttr=("attrA", a)@
+    // @addSpanAttr=("attrB", b)@
 }
 ```
 besides of @TelemetryConfig, you should also add the comments.  
@@ -74,7 +74,7 @@ span event is valued by the event happened time, so it also needs to be commente
 @TelemetryConfig
 public void foo() {
     ...
-    // addSpanEvent="eventA"
+    // @addSpanEvent="eventA"@
     ...
 }
 ```
