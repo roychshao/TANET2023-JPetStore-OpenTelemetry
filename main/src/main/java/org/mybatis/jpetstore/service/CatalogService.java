@@ -59,10 +59,10 @@ public class CatalogService {
       "variableA", "ItemMapper" })
   public Category getCategory(String categoryId) {
     int a = 1;
-    // addSpanAttr=("variableA", a)
-    // addSpanAttr=("ItemMapper", itemMapper)
     // addSpanEvent="eventA"
     // addSpanEvent="eventB"
+    // addSpanAttr=("variableA", a)
+    // addSpanAttr=("ItemMapper", itemMapper)
     return categoryMapper.getCategory(categoryId);
   }
 

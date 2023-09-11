@@ -22,7 +22,7 @@ public class CxtPropImpl {
   public CxtPropImpl() {
   };
 
-  public void impl() {
+  public void __impl() {
     // 將遠端方法的調用拆分至此
   }
 }

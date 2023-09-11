@@ -23,7 +23,7 @@ public class AddEventImpl {
   public AddEventImpl() {
   };
 
-  public void impl(String eventName) {
+  public void __impl(String eventName) {
     System.out.println("AddEventImpl receives event: " + eventName);
   }
 

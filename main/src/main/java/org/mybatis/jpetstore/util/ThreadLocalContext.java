@@ -41,7 +41,7 @@ public class ThreadLocalContext {
     return attributesMap.get(key);
   }
 
-  public static void putAttributes(String key, Object value) {
+  public static void __putAttributes(String key, Object value) {
     HashMap<String, Object> attributesMap = attributes.get();
     attributesMap.put(key, value);
   }
