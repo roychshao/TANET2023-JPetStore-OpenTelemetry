@@ -3,6 +3,8 @@
 like AOP, it needs to run Jaeger and otelcol before start JPetStore.  
 However, Automatic need to do more things
 
+**you should do the mysql settings the same as otel_aop**
+
 * before instrumentation, it need to build once to get tomcat
 ```
 cd main
