@@ -28,7 +28,8 @@ we muted 4317 port since it has a conflict with OpenTelemetry Collector, which u
 
 download form https://opentelemetry.io/docs/collector/getting-started/, and use config.yaml to startup
 
-* Last, the modify the mysql settings to your mysql connection in main/src/main/resources  
+* Last, modify the mysql settings to your mysql connection in main/src/main/resources. Also remember to import sql files into mysql under /resource directory.
+
 and run the following in /main
 ```
 ./exec.sh
