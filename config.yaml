@@ -17,6 +17,8 @@ exporters:
     endpoint: localhost:14250
     tls:
       insecure: true
+  prometheus:
+    endpoint: localhost:9404
   file:
     path: "./testSignIn.json"
 
@@ -39,7 +41,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [filter]
-      exporters: [file, logging]
+      exporters: [prometheus, logging]
     logs:
       receivers: [otlp]
       processors: [batch]
